@@ -534,7 +534,7 @@
       }
 
       const data = await res.json();
-      showResults(data);
+      showResults(data, frontData.preview);
     } catch (err) {
       clearInterval(stepInterval);
       document.getElementById('loading').style.display = 'none';
@@ -544,13 +544,15 @@
   }
 
   // ── Render results ──
-  function showResults({ card, tcgCard, prices, cardmarketUrl }) {
+  function showResults({ card, tcgCard, prices, cardmarketUrl }, uploadedPreview) {
     document.getElementById('loading').style.display = 'none';
 
-    // Card image
+    const isJapanese = card.language === 'Japanese';
+
+    // Always show the uploaded card photo — it's the actual card, never wrong
     const imgWrap = document.getElementById('result-img-wrap');
-    if (tcgCard?.imageUrl) {
-      imgWrap.innerHTML = `<img src="${tcgCard.imageUrl}" alt="${card.name}" loading="lazy" />`;
+    if (uploadedPreview) {
+      imgWrap.innerHTML = `<img src="${uploadedPreview}" alt="${card.name}" />`;
     } else {
       imgWrap.innerHTML = `<div class="no-img">🃏</div>`;
     }
@@ -559,21 +561,26 @@
     const conf = Math.round((card.confidence || 0) * 100);
     document.getElementById('result-confidence').textContent = `AI confidence: ${conf}%`;
 
-    // Name & set
-    document.getElementById('result-name').textContent = card.name || 'Unknown Card';
-    const setStr = [card.setName, card.setNumber, card.year].filter(Boolean).join(' · ');
+    // Name & set — show English name alongside Japanese name
+    const displayName = isJapanese && card.englishName
+      ? `${card.name} (${card.englishName})`
+      : (card.name || 'Unknown Card');
+    document.getElementById('result-name').textContent = displayName;
+
+    const setCode = card.japaneseSetCode ? ` · ${card.japaneseSetCode}` : '';
+    const setNum  = card.setNumber ? `${card.setNumber}/${card.setTotal || '?'}` : '';
+    const setStr  = [card.setName + setCode, setNum, card.year].filter(Boolean).join(' · ');
     document.getElementById('result-set').textContent = setStr;
 
-    // Badges
+    // Badges — rarity comes from Claude, NOT from pokemontcg.io (avoids wrong English card rarity)
     const badges = document.getElementById('result-badges');
     badges.innerHTML = '';
-    if (card.variantLabel) badges.innerHTML += `<span class="badge variant">${card.variantLabel}</span>`;
-    if (card.stage)        badges.innerHTML += `<span class="badge">${card.stage}</span>`;
-    if (card.hp)           badges.innerHTML += `<span class="badge">${card.hp} HP</span>`;
+    if (card.variantLabel)   badges.innerHTML += `<span class="badge variant">${card.variantLabel}</span>`;
+    if (card.stage)          badges.innerHTML += `<span class="badge">${card.stage}</span>`;
+    if (card.hp)             badges.innerHTML += `<span class="badge">${card.hp} HP</span>`;
     if (card.language && card.language !== 'English') badges.innerHTML += `<span class="badge">${card.language}</span>`;
     if (card.isFirstEdition) badges.innerHTML += `<span class="badge edition">1st Edition</span>`;
     if (card.isShadowless)   badges.innerHTML += `<span class="badge edition">Shadowless</span>`;
-    if (tcgCard?.rarity)     badges.innerHTML += `<span class="badge">${tcgCard.rarity}</span>`;
 
     // Condition
     const score = card.conditionScore || 5;
@@ -626,14 +633,14 @@
             <div class="price-value">${fmt(priceData.high)}</div>
           </div>
         </div>
-        <div class="price-note">TCGPlayer prices in USD · Cardmarket (EUR) may differ</div>
+        <div class="price-note">${isJapanese ? `English equivalent prices (TCGPlayer/USD) — Japanese prices may differ` : `TCGPlayer prices in USD · Cardmarket (EUR) may differ`}</div>
         <a class="btn-cardmarket" href="${cardmarketUrl}" target="_blank" rel="noopener">
           View on Cardmarket ↗
         </a>
       `;
     } else {
       priceEl.innerHTML = `
-        <p class="no-prices">Price data not available for this card via TCGPlayer.</p>
+        <p class="no-prices">${isJapanese ? 'No TCGPlayer data for Japanese sets.' : 'Price data not available via TCGPlayer.'}</p>
         <br/>
         <a class="btn-cardmarket" href="${cardmarketUrl}" target="_blank" rel="noopener" style="margin-top:8px">
           Search on Cardmarket ↗
