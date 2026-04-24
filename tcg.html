@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astrelia — Pokémon TCG</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    #services { padding: 80px 60px; }
+
+    .info-strip {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; padding: 0 60px 100px;
+    }
+    .info-visual { display: flex; align-items: center; justify-content: center; }
+
+    .orb {
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(var(--a1r),.27), rgba(var(--a2r),.2), rgba(0,0,0,.4));
+      border: 1px solid rgba(var(--a2r),.27);
+      box-shadow: 0 0 60px rgba(var(--a1r),.13), 0 0 120px rgba(var(--a2r),.09), inset 0 0 60px rgba(var(--a2r),.09);
+      display: flex; align-items: center; justify-content: center;
+      animation: orb-pulse 4s ease-in-out infinite;
+    }
+    @keyframes orb-pulse {
+      0%, 100% { box-shadow: 0 0 60px rgba(var(--a1r),.13), 0 0 120px rgba(var(--a2r),.09); }
+      50%       { box-shadow: 0 0 100px rgba(var(--a1r),.27), 0 0 200px rgba(var(--a2r),.2); }
+    }
+    .orb-inner { font-size: 4.5rem; filter: drop-shadow(0 0 20px rgba(var(--a1r),.8)); animation: float 5s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+
+    .info-content .section-label,
+    .info-content .section-title { text-align: left; }
+
+    .info-list { list-style: none; margin: 28px 0 36px; display: flex; flex-direction: column; gap: 14px; }
+    .info-list li { display: flex; align-items: flex-start; gap: 14px; font-size: .85rem; color: var(--tx3); line-height: 1.7; }
+    .info-list li::before { content: '✦'; color: var(--a1); text-shadow: 0 0 8px rgba(var(--a1r),.53); flex-shrink: 0; margin-top: 2px; }
+
+    @media (max-width: 900px) {
+      #services, #cta { padding-left: 28px; padding-right: 28px; }
+      .info-strip { grid-template-columns: 1fr; gap: 48px; padding: 0 28px 60px; }
+      .info-visual { order: -1; }
+      .orb { width: 220px; height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a class="nav-logo" href="index.html"><img src="Logga Astrelia.png" alt="Astrelia" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="tcg.html" class="active">TCG</a></li>
+    <li><a href="music.html">Music</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon">☀️</span>
+      <span id="toggle-label">Sun</span>
+    </button>
+    <a class="nav-cta" href="#cta">Get in Touch</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="page-hero-label">✦ Pokémon TCG ✦</p>
+  <h1 class="page-hero-title">Cards & Collections</h1>
+  <div class="page-hero-line"></div>
+  <p class="page-hero-sub">Buy, sell, and discover the true value of your Pokémon cards — with honest, passionate service.</p>
+</div>
+
+<div class="divider" style="padding: 0 60px;"><span class="divider-icon">✦</span></div>
+
+<section id="services">
+  <p class="section-label">✦ What We Offer ✦</p>
+  <h2 class="section-title">TCG Services</h2>
+  <p class="section-sub">Everything you need — whether you're building a collection, selling one, or just curious about its worth.</p>
+  <div class="cards-grid">
+    <div class="card">
+      <span class="card-icon">💰</span>
+      <h3 class="card-title">Buy Cards</h3>
+      <p class="card-text">Browse a curated selection of Pokémon cards — from everyday staples to rare holographics. Fair prices, quality guaranteed.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🤝</span>
+      <h3 class="card-title">Sell Cards</h3>
+      <p class="card-text">Looking to move your collection or a specific card? Get a quick, honest offer with no hassle and a smooth transaction.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔍</span>
+      <h3 class="card-title">Collection Valuation</h3>
+      <p class="card-text">Not sure what your collection is worth? Send it over and get a thorough, transparent valuation based on current market prices.</p>
+    </div>
+  </div>
+</section>
+
+<div class="info-strip">
+  <div class="info-visual">
+    <div class="orb"><span class="orb-inner">⚡</span></div>
+  </div>
+  <div class="info-content">
+    <p class="section-label">✦ Why Astrelia ✦</p>
+    <h2 class="section-title">Trusted by Collectors</h2>
+    <ul class="info-list">
+      <li>Genuine passion for Pokémon TCG — not just a business, but a hobby turned calling.</li>
+      <li>Transparent pricing based on real market data, so you always know what you're getting.</li>
+      <li>Personal service — every collection is treated with care and respect, big or small.</li>
+      <li>Fast, reliable communication whether you're buying a single card or an entire collection.</li>
+    </ul>
+    <div class="btn-row" style="justify-content:flex-start;gap:14px">
+      <a class="btn-primary" href="scan.html">Scan a Card ✦</a>
+      <a class="btn-outline" href="#cta">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider" style="padding: 0 60px;"><span class="divider-icon">✦</span></div>
+
+<section id="cta">
+  <div class="cta-inner">
+    <h2 class="cta-title">Let's Make a Deal</h2>
+    <p class="cta-sub">Got a collection to value? A card to buy or sell?<br />Reach out and let's make something happen.</p>
+    <div class="btn-row">
+      <a class="btn-primary" href="mailto:hello@astrelia.com">Send a Message ✦</a>
+      <a class="btn-outline" href="index.html">← Back to Home</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="Logga Astrelia.png" alt="Astrelia" />
+      <p>Two worlds, one brand. Pokémon TCG and music, crafted with cosmic passion.</p>
+    </div>
+    <div class="footer-col">
+      <h4>TCG</h4>
+      <ul>
+        <li><a href="#">Buy Cards</a></li>
+        <li><a href="#">Sell Cards</a></li>
+        <li><a href="#">Collection Valuation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="music.html">Music</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="#">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Astrelia. All rights reserved.</p>
+    <div class="social-links">
+      <a class="social-link" href="#" title="Instagram">📸</a>
+      <a class="social-link" href="#" title="TikTok">🎵</a>
+      <a class="social-link" href="#" title="YouTube">▶️</a>
+    </div>
+    <p>Crafted with ✦ cosmic love</p>
+  </div>
+</footer>
+
+<script src="theme.js"></script>
+<script src="stars.js"></script>
+</body>
+</html>
