@@ -1,5 +1,33 @@
 import Anthropic from '@anthropic-ai/sdk';
 
+// Converts "Scarlet & Violet—Twilight Masquerade" → "Twilight-Masquerade"
+function toSlug(str) {
+  return (str || '')
+    .split(/[—–]/).pop()          // strip "Series—" prefix
+    .replace(/['']/g, '')          // remove apostrophes
+    .replace(/[^a-zA-Z0-9\s]/g, ' ')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+// Tries to build a direct Cardmarket product URL, falls back to search
+function buildCardmarketUrl(card, tcgCard) {
+  const base = 'https://www.cardmarket.com/en/Pokemon/Products/Singles';
+
+  if (tcgCard?.setName && tcgCard?.name) {
+    const expansionSlug = toSlug(tcgCard.setName);
+    // Product slug: "Magcargo-ex-TWM-029"
+    const nameSlug = toSlug(tcgCard.name);
+    const abbr = tcgCard.setPtcgoCode || '';
+    const num  = (tcgCard.number || '').replace(/\/.+$/, '').padStart(3, '0');
+    const productSlug = abbr && num ? `${nameSlug}-${abbr}-${num}` : nameSlug;
+    return `${base}/${expansionSlug}/${productSlug}`;
+  }
+
+  // Fallback: search by name
+  return `${base}?searchString=${encodeURIComponent(card.name || '')}`;
+}
+
 export const config = {
   api: { bodyParser: { sizeLimit: '20mb' } },
 };
@@ -97,6 +125,7 @@ export default async function handler(req, res) {
         name: match.name,
         setName: match.set.name,
         setId: match.set.id,
+        setPtcgoCode: match.set.ptcgoCode || match.set.id?.toUpperCase(),
         number: match.number,
         rarity: match.rarity,
         imageUrl: match.images?.large || match.images?.small || null,
@@ -106,8 +135,8 @@ export default async function handler(req, res) {
     }
   } catch (_) { /* continue without */ }
 
-  // --- Step 3: Cardmarket search URL ---
-  const cardmarketUrl = `https://www.cardmarket.com/en/Pokemon/Products/Singles?searchString=${encodeURIComponent(card.name || '')}`;
+  // --- Step 3: Cardmarket URL (direct product page when possible) ---
+  const cardmarketUrl = buildCardmarketUrl(card, tcgCard);
 
   return res.status(200).json({ card, tcgCard, prices, cardmarketUrl });
 }
