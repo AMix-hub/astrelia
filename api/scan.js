@@ -44,17 +44,25 @@ const PROMPT = `You are a professional Pokémon card grader and expert with deep
 
 Analyze the provided card image(s). The first image is the front of the card. If a second image is provided it is the back.
 
+IDENTIFICATION STEPS — follow these carefully before filling in the JSON:
+1. Read the card number printed at the bottom of the card (e.g. "099/098", "024/100"). This is the single most reliable identifier — read it exactly.
+2. Read the set symbol in the bottom right corner — use this to identify the exact set.
+3. For Japanese cards: identify the Japanese set code (s6a, s12a, sv3pt5, sv2D, sv4K, etc.) from the set symbol and card layout. Japanese sets from the Sword & Shield era start with "s", Scarlet & Violet era with "sv".
+4. Read the Pokémon name as printed, then determine the English name.
+5. Identify the card variant by examining the card surface: reverse holo has a sparkle pattern on the border/background but not the artwork; holo rare has a sparkle/foil pattern in the artwork; full art covers the entire card; normal has no foil.
+
 Return ONLY a valid JSON object — no markdown fences, no explanation outside the JSON.
 
 {
   "name": "card name exactly as printed on the card",
-  "englishName": "English name of the Pokémon/card — always provide this even for non-English cards, e.g. Magcargo",
-  "setName": "full set name in its original language",
-  "setNumber": "number/total e.g. 4/102, or null",
-  "japaneseSetCode": "for Japanese cards: the set code used on Cardmarket e.g. s6a, s12a, sv3pt5, sv2D — null for non-Japanese cards",
-  "year": "year on card or estimated year, or null",
+  "englishName": "English name — always provide this even for non-English cards e.g. Magcargo not マグカルゴ",
+  "setName": "full set name",
+  "setNumber": "collector number only e.g. 099 — NOT the total, just the card's own number",
+  "setTotal": "total cards in set e.g. 098, or null",
+  "japaneseSetCode": "for Japanese cards ONLY: set code e.g. s6a, s12a, sv3pt5 — null for non-Japanese",
+  "year": "year printed on card or null",
   "variant": "normal|reverseHolo|holo|fullArt|secretRare|altArt|rainbowRare|goldRare|promo|ultraRare|vMax|vStar|other",
-  "variantLabel": "human readable e.g. Reverse Holo, Full Art, Secret Rare",
+  "variantLabel": "human readable e.g. Reverse Holo, Holo Rare, Full Art, Secret Rare",
   "stage": "Basic|Stage1|Stage2|EX|GX|V|VMAX|VSTAR|Trainer|Energy|other",
   "hp": "HP value as string or null",
   "isFirstEdition": true or false,
@@ -63,12 +71,12 @@ Return ONLY a valid JSON object — no markdown fences, no explanation outside t
   "condition": "Mint|NearMint|Excellent|LightPlayed|Played|Damaged",
   "conditionScore": <integer 1-10, 10=Mint>,
   "centering": "Centered|SlightlyOff|Off",
-  "surfaceIssues": ["list scratch lines, scuffs, print defects on front face"],
-  "edgeIssues": ["list whitening, chipping on edges"],
-  "cornerIssues": ["list corner wear, bends, dents"],
-  "backIssues": ["list issues found on back, or empty array if no back image"],
-  "confidence": <0.0-1.0, how confident you are in the identification>,
-  "notes": "any extra observations worth knowing"
+  "surfaceIssues": ["scratch lines, scuffs, print defects on front face"],
+  "edgeIssues": ["whitening, chipping on edges"],
+  "cornerIssues": ["corner wear, bends, dents"],
+  "backIssues": ["issues on back, or empty array if no back image"],
+  "confidence": <0.0-1.0>,
+  "notes": "any extra observations"
 }`;
 
 export default async function handler(req, res) {
@@ -113,38 +121,58 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Card analysis failed', details: e.message });
   }
 
-  // --- Step 2: pokemontcg.io lookup (English name for better match) ---
+  // --- Step 2: pokemontcg.io lookup ---
   let tcgCard = null;
   let prices  = null;
   try {
-    const headers  = process.env.POKEMONTCG_API_KEY
+    const headers    = process.env.POKEMONTCG_API_KEY
       ? { 'X-Api-Key': process.env.POKEMONTCG_API_KEY }
       : {};
     const lookupName = card.englishName || card.name;
-    const q = encodeURIComponent(`name:"${lookupName}"`);
-    const r = await fetch(`https://api.pokemontcg.io/v2/cards?q=${q}&orderBy=-set.releaseDate&pageSize=20`, { headers });
-    const json = await r.json();
+    const cardNum    = (card.setNumber || '').replace(/^0+/, ''); // strip leading zeros for query
 
-    if (json.data?.length > 0) {
-      const setLower = (card.setName || '').toLowerCase();
-      const match =
-        json.data.find(c =>
-          c.set.name.toLowerCase().includes(setLower) ||
-          setLower.includes(c.set.name.toLowerCase())
-        ) || json.data[0];
+    // Try precise lookup: name + number first
+    let found = null;
+    if (cardNum) {
+      const q = encodeURIComponent(`name:"${lookupName}" number:${cardNum}`);
+      const r = await fetch(`https://api.pokemontcg.io/v2/cards?q=${q}&pageSize=20`, { headers });
+      const json = await r.json();
+      if (json.data?.length > 0) {
+        // Among matches, prefer the one whose set matches the identified set/code
+        const setLower  = (card.setName || '').toLowerCase();
+        const setCode   = (card.japaneseSetCode || '').toLowerCase();
+        found =
+          json.data.find(c => c.set.id.toLowerCase() === setCode) ||
+          json.data.find(c => c.set.name.toLowerCase().includes(setLower) || setLower.includes(c.set.name.toLowerCase())) ||
+          json.data[0];
+      }
+    }
 
+    // Fallback: name-only search
+    if (!found) {
+      const q = encodeURIComponent(`name:"${lookupName}"`);
+      const r = await fetch(`https://api.pokemontcg.io/v2/cards?q=${q}&orderBy=-set.releaseDate&pageSize=20`, { headers });
+      const json = await r.json();
+      if (json.data?.length > 0) {
+        const setLower = (card.setName || '').toLowerCase();
+        found =
+          json.data.find(c => c.set.name.toLowerCase().includes(setLower) || setLower.includes(c.set.name.toLowerCase())) ||
+          json.data[0];
+      }
+    }
+
+    if (found) {
       tcgCard = {
-        id:           match.id,
-        name:         match.name,
-        setName:      match.set.name,
-        setId:        match.set.id,
-        setPtcgoCode: match.set.ptcgoCode || match.set.id?.toUpperCase(),
-        number:       match.number,
-        rarity:       match.rarity,
-        imageUrl:     match.images?.large || match.images?.small || null,
+        id:           found.id,
+        name:         found.name,
+        setName:      found.set.name,
+        setId:        found.set.id,
+        setPtcgoCode: found.set.ptcgoCode || found.set.id?.toUpperCase(),
+        number:       found.number,
+        rarity:       found.rarity,
+        imageUrl:     found.images?.large || found.images?.small || null,
       };
-
-      if (match.tcgplayer?.prices) prices = match.tcgplayer.prices;
+      if (found.tcgplayer?.prices) prices = found.tcgplayer.prices;
     }
   } catch (_) { /* continue without */ }
 
