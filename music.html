@@ -63,8 +63,29 @@
     <li><a href="tcg.html">TCG</a></li>
     <li><a href="music.html" class="active">Music</a></li>
   </ul>
-  <a class="nav-cta" href="index.html">← Home</a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon">☀️</span>
+      <span id="toggle-label">Sun</span>
+    </button>
+    <a class="nav-cta" href="index.html">← Home</a>
+  </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="tcg.html">TCG</a>
+  <a href="music.html" class="active">Music</a>
+  <div class="nav-mobile-toggle">
+    <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
+      <span id="toggle-label-mobile">Sun</span>
+    </button>
+  </div>
+</div>
 
 <!-- Page hero -->
 <div class="page-hero">
@@ -125,6 +146,23 @@
   </div>
 </footer>
 
+<script src="theme.js"></script>
 <script src="stars.js"></script>
+<script>
+  function toggleMobileMenu() {
+    const menu = document.getElementById('nav-mobile-menu');
+    const btn  = document.getElementById('nav-hamburger');
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  document.querySelectorAll('.nav-mobile-menu a').forEach(a =>
+    a.addEventListener('click', () => {
+      document.getElementById('nav-mobile-menu').classList.remove('open');
+      document.getElementById('nav-hamburger').classList.remove('open');
+      document.body.style.overflow = '';
+    })
+  );
+</script>
 </body>
 </html>

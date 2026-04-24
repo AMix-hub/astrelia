@@ -6,18 +6,17 @@ function applyTheme(theme, animate) {
   document.documentElement.dataset.theme = theme;
   localStorage.setItem('astrelia-theme', theme);
 
-  const btn   = document.getElementById('theme-toggle');
-  const icon  = document.getElementById('toggle-icon');
-  const label = document.getElementById('toggle-label');
-  if (!btn) return;
+  const isSun   = theme === 'sun';
+  const newIcon = isSun ? '🌙' : '☀️';
+  const newLabel = isSun ? 'Moon' : 'Sun';
 
-  if (theme === 'sun') {
-    icon.textContent  = '🌙';
-    label.textContent = 'Moon';
-  } else {
-    icon.textContent  = '☀️';
-    label.textContent = 'Sun';
-  }
+  // Update all toggle instances (desktop + mobile menu)
+  ['', '-mobile'].forEach(suffix => {
+    const icon  = document.getElementById(`toggle-icon${suffix}`);
+    const label = document.getElementById(`toggle-label${suffix}`);
+    if (icon)  icon.textContent  = newIcon;
+    if (label) label.textContent = newLabel;
+  });
 }
 
 function toggleTheme() {

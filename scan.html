@@ -271,9 +271,24 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 820px) {
       .scanner-page { padding: 100px 24px 60px; }
-      .upload-grid { grid-template-columns: 1fr; }
+      .upload-grid { grid-template-columns: 1fr; gap: 18px; }
       .results-grid { grid-template-columns: 1fr; }
       .result-card-img { max-width: 260px; margin: 0 auto; }
+    }
+    @media (max-width: 600px) {
+      .scanner-page { padding: 88px 16px 48px; }
+      .scanner-header { margin-bottom: 36px; }
+      .scanner-header h1 { font-size: 1.7rem; }
+      .upload-zone { min-height: 180px; padding: 28px 16px; }
+      .upload-icon { font-size: 2rem; margin-bottom: 10px; }
+      .btn-scan { width: 100%; padding: 16px 24px; font-size: .84rem; }
+      .scan-btn-wrap { padding: 0 4px; }
+      .result-card-img { max-width: 200px; }
+      .result-panel { padding: 18px 16px; }
+      .card-name-display { font-size: 1.5rem; }
+      .price-grid { grid-template-columns: repeat(2, 1fr); }
+      .btn-cardmarket { width: 100%; justify-content: center; padding: 12px 20px; }
+      .scan-again .btn-scan { padding: 14px 24px; }
     }
   </style>
 </head>
@@ -295,7 +310,23 @@
     </button>
     <a class="nav-cta" href="tcg.html">← TCG</a>
   </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="tcg.html">TCG</a>
+  <a href="music.html">Music</a>
+  <a class="nav-cta" href="tcg.html">← TCG</a>
+  <div class="nav-mobile-toggle">
+    <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
+      <span id="toggle-label-mobile">Sun</span>
+    </button>
+  </div>
+</div>
 
 <div class="scanner-page">
 
@@ -657,6 +688,21 @@
     document.getElementById('results').style.display = 'block';
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+
+  function toggleMobileMenu() {
+    const menu = document.getElementById('nav-mobile-menu');
+    const btn  = document.getElementById('nav-hamburger');
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  document.querySelectorAll('.nav-mobile-menu a').forEach(a =>
+    a.addEventListener('click', () => {
+      document.getElementById('nav-mobile-menu').classList.remove('open');
+      document.getElementById('nav-hamburger').classList.remove('open');
+      document.body.style.overflow = '';
+    })
+  );
 
   function resetScanner() {
     frontData = null;

@@ -39,10 +39,16 @@
     .info-list li::before { content: '✦'; color: var(--a1); text-shadow: 0 0 8px rgba(var(--a1r),.53); flex-shrink: 0; margin-top: 2px; }
 
     @media (max-width: 900px) {
-      #services, #cta { padding-left: 28px; padding-right: 28px; }
-      .info-strip { grid-template-columns: 1fr; gap: 48px; padding: 0 28px 60px; }
+      #services, #cta { padding-left: 24px; padding-right: 24px; }
+      .info-strip { grid-template-columns: 1fr; gap: 40px; padding: 0 24px 60px; }
       .info-visual { order: -1; }
-      .orb { width: 220px; height: 220px; }
+      .orb { width: 200px; height: 200px; }
+    }
+    @media (max-width: 600px) {
+      #services, #cta { padding-left: 16px; padding-right: 16px; }
+      .info-strip { padding: 0 16px 48px; }
+      .orb { width: 160px; height: 160px; }
+      .orb-inner { font-size: 3.2rem; }
     }
   </style>
 </head>
@@ -64,7 +70,23 @@
     </button>
     <a class="nav-cta" href="#cta">Get in Touch</a>
   </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="tcg.html" class="active">TCG</a>
+  <a href="music.html">Music</a>
+  <a class="nav-cta" href="#cta" onclick="toggleMobileMenu()">Get in Touch</a>
+  <div class="nav-mobile-toggle">
+    <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
+      <span id="toggle-label-mobile">Sun</span>
+    </button>
+  </div>
+</div>
 
 <div class="page-hero">
   <p class="page-hero-label">✦ Pokémon TCG ✦</p>
@@ -174,5 +196,21 @@
 
 <script src="theme.js"></script>
 <script src="stars.js"></script>
+<script>
+  function toggleMobileMenu() {
+    const menu = document.getElementById('nav-mobile-menu');
+    const btn  = document.getElementById('nav-hamburger');
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  document.querySelectorAll('.nav-mobile-menu a').forEach(a =>
+    a.addEventListener('click', () => {
+      document.getElementById('nav-mobile-menu').classList.remove('open');
+      document.getElementById('nav-hamburger').classList.remove('open');
+      document.body.style.overflow = '';
+    })
+  );
+</script>
 </body>
 </html>
