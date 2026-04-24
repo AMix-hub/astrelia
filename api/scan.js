@@ -3,45 +3,55 @@ import Anthropic from '@anthropic-ai/sdk';
 // Converts "Scarlet & Violet—Twilight Masquerade" → "Twilight-Masquerade"
 function toSlug(str) {
   return (str || '')
-    .split(/[—–]/).pop()          // strip "Series—" prefix
-    .replace(/['']/g, '')          // remove apostrophes
+    .split(/[—–]/).pop()
+    .replace(/['']/g, '')
     .replace(/[^a-zA-Z0-9\s]/g, ' ')
     .trim()
     .replace(/\s+/g, '-');
 }
 
-// Tries to build a direct Cardmarket product URL, falls back to search
 function buildCardmarketUrl(card, tcgCard) {
   const base = 'https://www.cardmarket.com/en/Pokemon/Products/Singles';
+  const isJapanese = card.language === 'Japanese';
 
+  // Japanese cards: search with English name + Japanese set code (e.g. "Magcargo s6a")
+  if (isJapanese) {
+    const englishName = card.englishName || card.name;
+    const setCode     = card.japaneseSetCode || '';
+    const searchTerm  = setCode ? `${englishName} ${setCode}` : englishName;
+    return `${base}?searchString=${encodeURIComponent(searchTerm)}`;
+  }
+
+  // English/other: try direct product page URL
   if (tcgCard?.setName && tcgCard?.name) {
     const expansionSlug = toSlug(tcgCard.setName);
-    // Product slug: "Magcargo-ex-TWM-029"
-    const nameSlug = toSlug(tcgCard.name);
-    const abbr = tcgCard.setPtcgoCode || '';
-    const num  = (tcgCard.number || '').replace(/\/.+$/, '').padStart(3, '0');
-    const productSlug = abbr && num ? `${nameSlug}-${abbr}-${num}` : nameSlug;
+    const nameSlug      = toSlug(tcgCard.name);
+    const abbr          = tcgCard.setPtcgoCode || '';
+    const num           = (tcgCard.number || '').replace(/\/.+$/, '').padStart(3, '0');
+    const productSlug   = abbr && num ? `${nameSlug}-${abbr}-${num}` : nameSlug;
     return `${base}/${expansionSlug}/${productSlug}`;
   }
 
-  // Fallback: search by name
-  return `${base}?searchString=${encodeURIComponent(card.name || '')}`;
+  // Fallback: plain name search
+  return `${base}?searchString=${encodeURIComponent(card.englishName || card.name || '')}`;
 }
 
 export const config = {
   api: { bodyParser: { sizeLimit: '20mb' } },
 };
 
-const PROMPT = `You are a professional Pokémon card grader and expert with deep knowledge of all sets, variants, and editions.
+const PROMPT = `You are a professional Pokémon card grader and expert with deep knowledge of all sets, variants, and editions, including all Japanese sets.
 
 Analyze the provided card image(s). The first image is the front of the card. If a second image is provided it is the back.
 
 Return ONLY a valid JSON object — no markdown fences, no explanation outside the JSON.
 
 {
-  "name": "exact card name as printed",
-  "setName": "full set name",
+  "name": "card name exactly as printed on the card",
+  "englishName": "English name of the Pokémon/card — always provide this even for non-English cards, e.g. Magcargo",
+  "setName": "full set name in its original language",
   "setNumber": "number/total e.g. 4/102, or null",
+  "japaneseSetCode": "for Japanese cards: the set code used on Cardmarket e.g. s6a, s12a, sv3pt5, sv2D — null for non-Japanese cards",
   "year": "year on card or estimated year, or null",
   "variant": "normal|reverseHolo|holo|fullArt|secretRare|altArt|rainbowRare|goldRare|promo|ultraRare|vMax|vStar|other",
   "variantLabel": "human readable e.g. Reverse Holo, Full Art, Secret Rare",
@@ -103,39 +113,42 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Card analysis failed', details: e.message });
   }
 
-  // --- Step 2: pokemontcg.io lookup ---
+  // --- Step 2: pokemontcg.io lookup (English name for better match) ---
   let tcgCard = null;
-  let prices = null;
+  let prices  = null;
   try {
-    const headers = process.env.POKEMONTCG_API_KEY
+    const headers  = process.env.POKEMONTCG_API_KEY
       ? { 'X-Api-Key': process.env.POKEMONTCG_API_KEY }
       : {};
-    const q = encodeURIComponent(`name:"${card.name}"`);
+    const lookupName = card.englishName || card.name;
+    const q = encodeURIComponent(`name:"${lookupName}"`);
     const r = await fetch(`https://api.pokemontcg.io/v2/cards?q=${q}&orderBy=-set.releaseDate&pageSize=20`, { headers });
     const json = await r.json();
 
     if (json.data?.length > 0) {
       const setLower = (card.setName || '').toLowerCase();
       const match =
-        json.data.find(c => c.set.name.toLowerCase().includes(setLower) || setLower.includes(c.set.name.toLowerCase())) ||
-        json.data[0];
+        json.data.find(c =>
+          c.set.name.toLowerCase().includes(setLower) ||
+          setLower.includes(c.set.name.toLowerCase())
+        ) || json.data[0];
 
       tcgCard = {
-        id: match.id,
-        name: match.name,
-        setName: match.set.name,
-        setId: match.set.id,
+        id:           match.id,
+        name:         match.name,
+        setName:      match.set.name,
+        setId:        match.set.id,
         setPtcgoCode: match.set.ptcgoCode || match.set.id?.toUpperCase(),
-        number: match.number,
-        rarity: match.rarity,
-        imageUrl: match.images?.large || match.images?.small || null,
+        number:       match.number,
+        rarity:       match.rarity,
+        imageUrl:     match.images?.large || match.images?.small || null,
       };
 
       if (match.tcgplayer?.prices) prices = match.tcgplayer.prices;
     }
   } catch (_) { /* continue without */ }
 
-  // --- Step 3: Cardmarket URL (direct product page when possible) ---
+  // --- Step 3: Cardmarket URL ---
   const cardmarketUrl = buildCardmarketUrl(card, tcgCard);
 
   return res.status(200).json({ card, tcgCard, prices, cardmarketUrl });
