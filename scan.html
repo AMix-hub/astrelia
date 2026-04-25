@@ -721,7 +721,7 @@
     const marketPrice = priceData?.market || null;
 
     // Card image URL from pokemontcg.io (English cards only — Japanese have no image in API)
-    const cardImageUrl = tcgCard?.images?.small || tcgCard?.images?.large || null;
+    const cardImageUrl = tcgCard?.imageUrl || null;
 
     const { error } = await sb.from('collection_cards').insert({
       user_id:         session.user.id,
