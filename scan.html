@@ -433,13 +433,16 @@
       <p style="font-size:.84rem;color:var(--tx4);line-height:1.8" id="result-notes"></p>
     </div>
 
-    <div class="scan-again">
+    <div class="scan-again" style="display:flex;flex-direction:column;align-items:center;gap:14px">
+      <div id="save-collection-wrap"></div>
       <button class="btn-scan" style="padding:14px 48px" onclick="resetScanner()">Scan Another Card ✦</button>
     </div>
   </div>
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
 <script src="theme.js"></script>
 <script src="stars.js"></script>
 <script>
@@ -687,6 +690,42 @@
 
     document.getElementById('results').style.display = 'block';
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Show save button
+    renderSaveBtn(card);
+  }
+
+  let _lastCard = null;
+  function renderSaveBtn(card) {
+    _lastCard = card;
+    const wrap = document.getElementById('save-collection-wrap');
+    wrap.innerHTML = `<button class="btn-scan" style="padding:12px 36px;background:linear-gradient(135deg,rgba(var(--a2r),.4),rgba(var(--a1r),.3));box-shadow:none;border:1px solid rgba(var(--a1r),.3)" id="save-coll-btn" onclick="saveToCollection()">+ Save to My Collection</button>`;
+  }
+
+  async function saveToCollection() {
+    const btn = document.getElementById('save-coll-btn');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) {
+      sessionStorage.setItem('scan-save-card', JSON.stringify(_lastCard));
+      location.href = 'login.html?return=collection.html';
+      return;
+    }
+    const c = _lastCard;
+    const { error } = await sb.from('collection_cards').insert({
+      user_id:      session.user.id,
+      card_name:    c.name        || 'Unknown',
+      english_name: c.englishName || null,
+      set_name:     c.setName     || null,
+      set_number:   c.setNumber   ? `${c.setNumber}/${c.setTotal || '?'}` : null,
+      condition:    c.condition   || null,
+      condition_score: c.conditionScore || null,
+      variant:      c.variantLabel || null,
+      language:     c.language    || 'English',
+    });
+    if (error) { btn.disabled = false; btn.textContent = 'Error — Try Again'; return; }
+    btn.textContent = '✦ Saved to Collection!';
+    btn.style.background = 'linear-gradient(135deg, var(--a1), var(--a2))';
   }
 
   function toggleMobileMenu() {

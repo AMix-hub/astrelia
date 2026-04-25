@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astrelia — My Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .coll-page { min-height: 100vh; padding: 80px 0 140px; }
+
+    /* ── PAGE HEADER ── */
+    .coll-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 40px 60px 32px; gap: 16px; flex-wrap: wrap;
+    }
+    .coll-header-left h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300; color: var(--tx); letter-spacing: .06em;
+    }
+    .coll-header-left p { font-size: .8rem; color: var(--tx5); margin-top: 4px; }
+    .coll-header-right { display: flex; align-items: center; gap: 12px; }
+    .btn-logout {
+      font-size: .74rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--tx4); background: none; border: 1px solid rgba(var(--a2r),.3);
+      border-radius: 30px; padding: 8px 18px; cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-logout:hover { border-color: rgba(var(--a1r),.4); color: var(--tx2); }
+
+    /* ── STATS ── */
+    .coll-stats {
+      display: flex; gap: 20px; padding: 0 60px 28px; flex-wrap: wrap;
+    }
+    .stat-pill {
+      background: linear-gradient(145deg, var(--card-bg), var(--card-bg2));
+      border: 1px solid rgba(var(--a2r),.2);
+      border-radius: 40px; padding: 10px 22px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .stat-pill-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--a1);
+      text-shadow: 0 0 10px rgba(var(--a1r),.3);
+    }
+    .stat-pill-label { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--tx4); }
+
+    /* ── FILTER + ADD BAR ── */
+    .coll-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px 32px; gap: 12px; flex-wrap: wrap;
+    }
+    .filter-pills { display: flex; gap: 8px; }
+    .filter-pill {
+      font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+      padding: 7px 18px; border-radius: 30px; cursor: pointer;
+      border: 1px solid rgba(var(--a2r),.25); color: var(--tx4);
+      background: none; transition: all .2s;
+    }
+    .filter-pill.active {
+      background: linear-gradient(135deg, var(--a1), var(--a2));
+      border-color: transparent; color: #fff;
+      box-shadow: 0 0 16px rgba(var(--a1r),.3);
+    }
+    .btn-add-card {
+      background: linear-gradient(135deg, var(--a1), var(--a2));
+      color: #fff; border: none; border-radius: 40px;
+      padding: 10px 24px; font-family: 'Montserrat', sans-serif;
+      font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+      cursor: pointer; box-shadow: 0 0 20px rgba(var(--a1r),.3);
+      transition: box-shadow .25s, transform .2s;
+    }
+    .btn-add-card:hover { box-shadow: 0 0 34px rgba(var(--a1r),.5); transform: translateY(-2px); }
+
+    /* ── CARD GRID ── */
+    .coll-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px; padding: 0 60px;
+    }
+
+    .coll-card {
+      background: linear-gradient(145deg, var(--card-bg), var(--card-bg2));
+      border: 1px solid rgba(var(--a2r),.2);
+      border-radius: 20px; overflow: hidden;
+      transition: border-color .3s, box-shadow .3s, transform .3s;
+      position: relative;
+    }
+    .coll-card.for-sale {
+      border-color: rgba(var(--a1r),.45);
+      box-shadow: 0 0 24px rgba(var(--a1r),.1);
+    }
+    .coll-card:hover { transform: translateY(-4px); }
+
+    .coll-card-body { padding: 22px 20px 14px; }
+    .coll-card-icon { font-size: 2rem; margin-bottom: 12px; display: block; filter: drop-shadow(0 0 8px rgba(var(--a1r),.5)); }
+    .coll-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--tx); margin-bottom: 4px;
+    }
+    .coll-card-set { font-size: .74rem; color: var(--tx5); margin-bottom: 12px; }
+    .coll-card-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+    .coll-badge {
+      font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 20px;
+      border: 1px solid rgba(var(--a2r),.35); color: var(--tx3);
+      background: rgba(var(--a2r),.08);
+    }
+    .coll-badge.sale { border-color: rgba(var(--a1r),.5); color: var(--a1); background: rgba(var(--a1r),.1); }
+
+    .coll-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px 16px;
+      border-top: 1px solid rgba(var(--a2r),.12);
+    }
+    .sale-toggle-wrap { display: flex; align-items: center; gap: 10px; }
+    .sale-toggle-label { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--tx4); }
+
+    /* Toggle switch */
+    .toggle-switch {
+      position: relative; width: 40px; height: 22px; cursor: pointer;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-track {
+      position: absolute; inset: 0; border-radius: 22px;
+      background: rgba(var(--a2r),.2); border: 1px solid rgba(var(--a2r),.3);
+      transition: background .25s, border-color .25s;
+    }
+    .toggle-thumb {
+      position: absolute; top: 3px; left: 3px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--tx4);
+      transition: transform .25s, background .25s;
+    }
+    .toggle-switch input:checked ~ .toggle-track {
+      background: linear-gradient(135deg, var(--a1), var(--a2));
+      border-color: transparent;
+    }
+    .toggle-switch input:checked ~ .toggle-thumb {
+      transform: translateX(18px); background: #fff;
+    }
+
+    .btn-delete {
+      background: none; border: none;
+      color: var(--tx5); font-size: 1rem; cursor: pointer;
+      padding: 4px 6px; border-radius: 8px;
+      transition: color .2s, background .2s;
+    }
+    .btn-delete:hover { color: #f87171; background: rgba(200,50,50,.1); }
+
+    /* ── EMPTY STATE ── */
+    .coll-empty {
+      display: none;
+      text-align: center; padding: 80px 24px;
+      max-width: 480px; margin: 0 auto;
+    }
+    .coll-empty-icon { font-size: 3.5rem; margin-bottom: 20px; filter: drop-shadow(0 0 12px rgba(var(--a1r),.4)); }
+    .coll-empty h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; color: var(--tx); margin-bottom: 10px;
+    }
+    .coll-empty p { font-size: .86rem; color: var(--tx4); line-height: 1.8; margin-bottom: 28px; }
+
+    /* ── STICKY OFFER BAR ── */
+    .offer-bar {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+      background: linear-gradient(135deg, rgba(20,0,40,.95), rgba(10,0,28,.95));
+      border-top: 1px solid rgba(var(--a1r),.3);
+      backdrop-filter: blur(20px);
+      padding: 18px 40px;
+      display: none; align-items: center; justify-content: space-between; gap: 16px;
+      box-shadow: 0 -8px 40px rgba(var(--a1r),.15);
+    }
+    .offer-bar.visible { display: flex; }
+    .offer-bar-text { font-size: .86rem; color: var(--tx2); }
+    .offer-bar-count {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--a1);
+      text-shadow: 0 0 10px rgba(var(--a1r),.4);
+    }
+    .btn-get-offer {
+      background: linear-gradient(135deg, var(--a1), var(--a2));
+      color: #fff; border: none; border-radius: 40px;
+      padding: 13px 32px; font-family: 'Montserrat', sans-serif;
+      font-size: .82rem; letter-spacing: .16em; text-transform: uppercase;
+      cursor: pointer; box-shadow: 0 0 24px rgba(var(--a1r),.4);
+      transition: box-shadow .25s, transform .2s; white-space: nowrap;
+    }
+    .btn-get-offer:hover { box-shadow: 0 0 40px rgba(var(--a1r),.6); transform: translateY(-2px); }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,.7); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      width: 100%; max-width: 520px;
+      background: linear-gradient(145deg, var(--card-bg), var(--card-bg2));
+      border: 1px solid rgba(var(--a2r),.25);
+      border-radius: 24px; padding: 40px 36px;
+      position: relative; max-height: 90vh; overflow-y: auto;
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 18px;
+      background: none; border: none; color: var(--tx4);
+      font-size: 1.2rem; cursor: pointer; padding: 4px 8px;
+      border-radius: 8px; transition: color .2s, background .2s;
+    }
+    .modal-close:hover { color: var(--tx); background: rgba(var(--a2r),.1); }
+
+    .modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; color: var(--tx); margin-bottom: 6px;
+    }
+    .modal-sub { font-size: .82rem; color: var(--tx4); line-height: 1.7; margin-bottom: 24px; }
+
+    .modal-form-group { margin-bottom: 18px; }
+    .modal-label {
+      display: block; font-size: .7rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--tx4); margin-bottom: 7px;
+    }
+    .modal-label span { color: var(--a1); }
+    .modal-input, .modal-select, .modal-textarea {
+      width: 100%; padding: 11px 14px; box-sizing: border-box;
+      background: rgba(var(--a2r),.07);
+      border: 1px solid rgba(var(--a2r),.25);
+      border-radius: 10px; color: var(--tx);
+      font-family: 'Montserrat', sans-serif; font-size: .86rem;
+      outline: none; transition: border-color .2s, box-shadow .2s;
+    }
+    .modal-select option { background: #1a003a; color: var(--tx); }
+    .modal-input:focus, .modal-select:focus, .modal-textarea:focus {
+      border-color: rgba(var(--a1r),.5);
+      box-shadow: 0 0 0 3px rgba(var(--a1r),.07);
+    }
+    .modal-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .modal-toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 0;
+      border-top: 1px solid rgba(var(--a2r),.12);
+      border-bottom: 1px solid rgba(var(--a2r),.12);
+      margin: 4px 0 18px;
+    }
+    .modal-toggle-label { font-size: .82rem; color: var(--tx3); }
+
+    .btn-modal-submit {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, var(--a1), var(--a2));
+      color: #fff; border: none; border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .82rem; letter-spacing: .14em; text-transform: uppercase;
+      cursor: pointer; margin-top: 8px;
+      box-shadow: 0 0 20px rgba(var(--a1r),.3);
+      transition: box-shadow .25s, opacity .2s;
+    }
+    .btn-modal-submit:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-modal-submit:hover:not(:disabled) { box-shadow: 0 0 36px rgba(var(--a1r),.5); }
+
+    .modal-error {
+      display: none; margin-top: 12px; padding: 10px 14px;
+      background: rgba(200,50,50,.1); border: 1px solid rgba(200,50,50,.3);
+      border-radius: 8px; font-size: .8rem; color: #f87171; text-align: center;
+    }
+
+    /* Offer modal specifics */
+    .offer-card-list {
+      display: flex; flex-direction: column; gap: 6px;
+      margin-bottom: 24px; max-height: 200px; overflow-y: auto;
+      padding-right: 4px;
+    }
+    .offer-card-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 12px;
+      background: rgba(var(--a2r),.06); border-radius: 8px;
+      font-size: .82rem; color: var(--tx3);
+    }
+    .offer-card-item::before { content: '✦'; color: var(--a1); font-size: .7rem; flex-shrink: 0; }
+
+    /* Success state */
+    .success-state {
+      text-align: center; padding: 20px 0;
+    }
+    .success-icon { font-size: 3rem; margin-bottom: 16px; filter: drop-shadow(0 0 12px rgba(var(--a1r),.5)); }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; color: var(--tx); margin-bottom: 8px;
+    }
+    .success-text { font-size: .84rem; color: var(--tx4); line-height: 1.8; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .coll-header, .coll-stats, .coll-toolbar, .coll-grid { padding-left: 24px; padding-right: 24px; }
+    }
+    @media (max-width: 600px) {
+      .coll-header { padding: 28px 16px 20px; }
+      .coll-stats, .coll-toolbar { padding-left: 16px; padding-right: 16px; }
+      .coll-grid { padding: 0 16px; grid-template-columns: 1fr; }
+      .offer-bar { padding: 14px 16px; }
+      .modal { padding: 28px 20px; }
+      .modal-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a class="nav-logo" href="index.html"><img src="Logga Astrelia.png" alt="Astrelia" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="tcg.html">TCG</a></li>
+    <li><a href="music.html">Music</a></li>
+    <li><a href="collection.html" class="active">My Collection</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon">☀️</span>
+      <span id="toggle-label">Sun</span>
+    </button>
+    <a class="nav-cta" href="tcg.html">← TCG</a>
+  </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="tcg.html">TCG</a>
+  <a href="music.html">Music</a>
+  <a href="collection.html" class="active">My Collection</a>
+  <div class="nav-mobile-toggle">
+    <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
+      <span id="toggle-label-mobile">Sun</span>
+    </button>
+  </div>
+</div>
+
+<div class="coll-page" id="coll-page" style="display:none">
+
+  <!-- Header -->
+  <div class="coll-header">
+    <div class="coll-header-left">
+      <p class="page-hero-label" style="text-align:left;margin-bottom:6px">✦ My Collection ✦</p>
+      <h1>Your Cards</h1>
+      <p id="user-email-display"></p>
+    </div>
+    <div class="coll-header-right">
+      <a class="btn-outline" href="scan.html" style="font-size:.78rem;padding:9px 20px">Scan a Card ✦</a>
+      <button class="btn-logout" onclick="signOut()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="coll-stats">
+    <div class="stat-pill">
+      <span class="stat-pill-num" id="stat-total">0</span>
+      <span class="stat-pill-label">Total Cards</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-pill-num" id="stat-forsale">0</span>
+      <span class="stat-pill-label">For Sale</span>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="coll-toolbar">
+    <div class="filter-pills">
+      <button class="filter-pill active" id="filter-all" onclick="setFilter('all')">All Cards</button>
+      <button class="filter-pill" id="filter-sale" onclick="setFilter('sale')">For Sale</button>
+    </div>
+    <button class="btn-add-card" onclick="openAddModal()">+ Add Card</button>
+  </div>
+
+  <!-- Grid -->
+  <div class="coll-grid" id="coll-grid"></div>
+
+  <!-- Empty state -->
+  <div class="coll-empty" id="coll-empty">
+    <div class="coll-empty-icon">🃏</div>
+    <h2>No cards yet</h2>
+    <p>Add your first card manually or scan one with our AI scanner to get started.</p>
+    <div class="btn-row" style="justify-content:center;gap:12px">
+      <button class="btn-primary" onclick="openAddModal()">+ Add Card</button>
+      <a class="btn-outline" href="scan.html">Scan a Card ✦</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Offer bar -->
+<div class="offer-bar" id="offer-bar">
+  <div>
+    <div class="offer-bar-count"><span id="bar-count">0</span> cards for sale</div>
+    <div class="offer-bar-text">Ready to send for an offer?</div>
+  </div>
+  <button class="btn-get-offer" onclick="openOfferModal()">Get Offer ✦</button>
+</div>
+
+<!-- ── ADD CARD MODAL ── -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('add-modal')">✕</button>
+    <h2>Add a Card</h2>
+    <p class="modal-sub">Fill in what you know — the more detail, the better the offer.</p>
+
+    <div class="modal-form-group">
+      <label class="modal-label">Card Name <span>*</span></label>
+      <input class="modal-input" type="text" id="add-name" placeholder="e.g. Charizard" />
+    </div>
+    <div class="modal-form-group">
+      <label class="modal-label">English Name <span style="color:var(--tx5)">(if Japanese card)</span></label>
+      <input class="modal-input" type="text" id="add-english-name" placeholder="Optional" />
+    </div>
+    <div class="modal-row">
+      <div class="modal-form-group">
+        <label class="modal-label">Set Name</label>
+        <input class="modal-input" type="text" id="add-set" placeholder="e.g. Base Set" />
+      </div>
+      <div class="modal-form-group">
+        <label class="modal-label">Card Number</label>
+        <input class="modal-input" type="text" id="add-number" placeholder="e.g. 4/102" />
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-form-group">
+        <label class="modal-label">Condition</label>
+        <select class="modal-select" id="add-condition">
+          <option value="">— Select —</option>
+          <option value="Mint">Mint</option>
+          <option value="Near Mint">Near Mint</option>
+          <option value="Excellent">Excellent</option>
+          <option value="Good">Good</option>
+          <option value="Played">Played</option>
+          <option value="Poor">Poor</option>
+        </select>
+      </div>
+      <div class="modal-form-group">
+        <label class="modal-label">Variant</label>
+        <select class="modal-select" id="add-variant">
+          <option value="">— Select —</option>
+          <option value="Normal">Normal</option>
+          <option value="Holo">Holo</option>
+          <option value="Reverse Holo">Reverse Holo</option>
+          <option value="Full Art">Full Art</option>
+          <option value="Secret Rare">Secret Rare</option>
+          <option value="Promo">Promo</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-form-group">
+      <label class="modal-label">Language</label>
+      <select class="modal-select" id="add-language">
+        <option value="English">English</option>
+        <option value="Japanese">Japanese</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="modal-form-group">
+      <label class="modal-label">Notes</label>
+      <textarea class="modal-textarea" id="add-notes" placeholder="Any extra details…"></textarea>
+    </div>
+    <div class="modal-toggle-row">
+      <span class="modal-toggle-label">Mark as For Sale</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="add-forsale" />
+        <span class="toggle-track"></span>
+        <span class="toggle-thumb"></span>
+      </label>
+    </div>
+    <button class="btn-modal-submit" id="add-submit-btn" onclick="submitAddCard()">Add to Collection ✦</button>
+    <div class="modal-error" id="add-error"></div>
+  </div>
+</div>
+
+<!-- ── OFFER MODAL ── -->
+<div class="modal-overlay" id="offer-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('offer-modal')">✕</button>
+    <div id="offer-form-content">
+      <p class="page-hero-label" style="text-align:left;margin-bottom:8px">✦ Request an Offer ✦</p>
+      <h2>Let's Make a Deal</h2>
+      <p class="modal-sub">You're offering these cards for valuation. We'll get back to you within 24 hours.</p>
+
+      <div class="offer-card-list" id="offer-card-list"></div>
+
+      <div class="modal-form-group">
+        <label class="modal-label">Your Name <span>*</span></label>
+        <input class="modal-input" type="text" id="offer-name" placeholder="First name" />
+      </div>
+      <div class="modal-form-group">
+        <label class="modal-label">Message <span style="color:var(--tx5)">(optional)</span></label>
+        <textarea class="modal-textarea" id="offer-message" placeholder="Anything you'd like us to know…"></textarea>
+      </div>
+      <button class="btn-modal-submit" id="offer-submit-btn" onclick="submitOffer()">Send Request ✦</button>
+      <div class="modal-error" id="offer-error"></div>
+    </div>
+    <div class="success-state" id="offer-success" style="display:none">
+      <div class="success-icon">✦</div>
+      <div class="success-title">Request Sent!</div>
+      <p class="success-text">We'll review your cards and get back to you within 24 hours.<br />Keep an eye on your email.</p>
+      <button class="btn-modal-submit" style="margin-top:24px" onclick="closeModal('offer-modal')">Back to Collection</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
+<script src="theme.js"></script>
+<script src="stars.js"></script>
+<script>
+  let currentUser = null;
+  let cards       = [];
+  let activeFilter = 'all';
+
+  // ── INIT ──
+  async function init() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { location.href = 'login.html?return=collection.html'; return; }
+    currentUser = session.user;
+    document.getElementById('user-email-display').textContent = currentUser.email;
+    document.getElementById('coll-page').style.display = 'block';
+
+    // Pre-fill name from session storage (if coming from scanner save)
+    const scanCard = sessionStorage.getItem('scan-save-card');
+    if (scanCard) { sessionStorage.removeItem('scan-save-card'); prefillFromScan(JSON.parse(scanCard)); }
+
+    await loadCards();
+  }
+
+  // ── LOAD ──
+  async function loadCards() {
+    const { data, error } = await sb.from('collection_cards').select('*').order('created_at', { ascending: false });
+    if (error) { console.error(error); return; }
+    cards = data || [];
+    render();
+  }
+
+  // ── RENDER ──
+  function render() {
+    const forSaleCards = cards.filter(c => c.for_sale);
+    document.getElementById('stat-total').textContent   = cards.length;
+    document.getElementById('stat-forsale').textContent = forSaleCards.length;
+    document.getElementById('bar-count').textContent    = forSaleCards.length;
+    document.getElementById('offer-bar').classList.toggle('visible', forSaleCards.length > 0);
+
+    const filtered = activeFilter === 'sale' ? forSaleCards : cards;
+    const grid     = document.getElementById('coll-grid');
+    const empty    = document.getElementById('coll-empty');
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '';
+      empty.style.display = 'block';
+      // Change empty message for sale filter with no results
+      if (activeFilter === 'sale' && cards.length > 0) {
+        empty.querySelector('p').textContent = 'No cards marked for sale yet. Toggle the switch on any card to mark it.';
+      } else {
+        empty.querySelector('p').textContent = 'Add your first card manually or scan one with our AI scanner to get started.';
+      }
+      return;
+    }
+    empty.style.display = 'none';
+    grid.innerHTML = filtered.map(cardTileHTML).join('');
+  }
+
+  function cardTileHTML(c) {
+    const condBadge  = c.condition ? `<span class="coll-badge">${c.condition}</span>` : '';
+    const varBadge   = c.variant   ? `<span class="coll-badge">${c.variant}</span>` : '';
+    const langBadge  = c.language && c.language !== 'English' ? `<span class="coll-badge">${c.language}</span>` : '';
+    const saleBadge  = c.for_sale  ? `<span class="coll-badge sale">For Sale</span>` : '';
+    const setStr     = [c.set_name, c.set_number].filter(Boolean).join(' · ') || '—';
+    const nameDisplay = c.english_name ? `${c.card_name} <span style="font-size:.85em;opacity:.6">(${c.english_name})</span>` : c.card_name;
+    return `
+      <div class="coll-card ${c.for_sale ? 'for-sale' : ''}" id="card-${c.id}">
+        <div class="coll-card-body">
+          <span class="coll-card-icon">🃏</span>
+          <div class="coll-card-name">${nameDisplay}</div>
+          <div class="coll-card-set">${setStr}</div>
+          <div class="coll-card-badges">${condBadge}${varBadge}${langBadge}${saleBadge}</div>
+          ${c.notes ? `<div style="font-size:.74rem;color:var(--tx5);margin-top:6px;line-height:1.5">${escHtml(c.notes)}</div>` : ''}
+        </div>
+        <div class="coll-card-footer">
+          <div class="sale-toggle-wrap">
+            <span class="sale-toggle-label">For Sale</span>
+            <label class="toggle-switch" title="Mark as for sale">
+              <input type="checkbox" ${c.for_sale ? 'checked' : ''} onchange="toggleForSale('${c.id}', this.checked)" />
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </label>
+          </div>
+          <button class="btn-delete" title="Delete card" onclick="deleteCard('${c.id}')">🗑</button>
+        </div>
+      </div>`;
+  }
+
+  // ── TOGGLE FOR SALE ──
+  async function toggleForSale(id, value) {
+    await sb.from('collection_cards').update({ for_sale: value }).eq('id', id);
+    const card = cards.find(c => c.id === id);
+    if (card) card.for_sale = value;
+    render();
+  }
+
+  // ── DELETE ──
+  async function deleteCard(id) {
+    if (!confirm('Remove this card from your collection?')) return;
+    await sb.from('collection_cards').delete().eq('id', id);
+    cards = cards.filter(c => c.id !== id);
+    render();
+  }
+
+  // ── FILTER ──
+  function setFilter(f) {
+    activeFilter = f;
+    document.getElementById('filter-all').classList.toggle('active', f === 'all');
+    document.getElementById('filter-sale').classList.toggle('active', f === 'sale');
+    render();
+  }
+
+  // ── ADD CARD ──
+  function openAddModal() {
+    document.getElementById('add-error').style.display = 'none';
+    document.getElementById('add-modal').classList.add('open');
+  }
+
+  function prefillFromScan(card) {
+    openAddModal();
+    document.getElementById('add-name').value         = card.name        || '';
+    document.getElementById('add-english-name').value = card.englishName || '';
+    document.getElementById('add-set').value          = card.setName     || '';
+    document.getElementById('add-number').value       = card.setNumber ? `${card.setNumber}/${card.setTotal || '?'}` : '';
+    document.getElementById('add-condition').value    = card.condition   || '';
+    document.getElementById('add-variant').value      = card.variantLabel || '';
+    document.getElementById('add-language').value     = card.language    || 'English';
+  }
+
+  async function submitAddCard() {
+    const name = document.getElementById('add-name').value.trim();
+    const err  = document.getElementById('add-error');
+    const btn  = document.getElementById('add-submit-btn');
+    err.style.display = 'none';
+    if (!name) { err.textContent = 'Card name is required.'; err.style.display = 'block'; return; }
+
+    btn.disabled = true; btn.textContent = 'Adding…';
+    const { error } = await sb.from('collection_cards').insert({
+      user_id:       currentUser.id,
+      card_name:     name,
+      english_name:  document.getElementById('add-english-name').value.trim() || null,
+      set_name:      document.getElementById('add-set').value.trim()      || null,
+      set_number:    document.getElementById('add-number').value.trim()   || null,
+      condition:     document.getElementById('add-condition').value       || null,
+      variant:       document.getElementById('add-variant').value         || null,
+      language:      document.getElementById('add-language').value        || 'English',
+      notes:         document.getElementById('add-notes').value.trim()    || null,
+      for_sale:      document.getElementById('add-forsale').checked,
+    });
+
+    btn.disabled = false; btn.textContent = 'Add to Collection ✦';
+    if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
+
+    // Reset form
+    ['add-name','add-english-name','add-set','add-number','add-notes'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('add-condition').value = '';
+    document.getElementById('add-variant').value   = '';
+    document.getElementById('add-language').value  = 'English';
+    document.getElementById('add-forsale').checked = false;
+
+    closeModal('add-modal');
+    await loadCards();
+  }
+
+  // ── OFFER ──
+  function openOfferModal() {
+    const forSaleCards = cards.filter(c => c.for_sale);
+    if (!forSaleCards.length) return;
+    document.getElementById('offer-success').style.display = 'none';
+    document.getElementById('offer-form-content').style.display = 'block';
+    document.getElementById('offer-error').style.display = 'none';
+
+    const list = document.getElementById('offer-card-list');
+    list.innerHTML = forSaleCards.map(c => {
+      const detail = [c.condition, c.variant, c.language !== 'English' ? c.language : null].filter(Boolean).join(' · ');
+      return `<div class="offer-card-item">${escHtml(c.card_name)}${detail ? ` <span style="color:var(--tx5)">— ${escHtml(detail)}</span>` : ''}</div>`;
+    }).join('');
+
+    document.getElementById('offer-modal').classList.add('open');
+  }
+
+  async function submitOffer() {
+    const name    = document.getElementById('offer-name').value.trim();
+    const message = document.getElementById('offer-message').value.trim();
+    const err     = document.getElementById('offer-error');
+    const btn     = document.getElementById('offer-submit-btn');
+    err.style.display = 'none';
+    if (!name) { err.textContent = 'Please enter your name.'; err.style.display = 'block'; return; }
+
+    const forSaleCards = cards.filter(c => c.for_sale);
+    btn.disabled = true; btn.textContent = 'Sending…';
+
+    const { error } = await sb.from('offer_requests').insert({
+      user_id:         currentUser.id,
+      card_ids:        forSaleCards.map(c => c.id),
+      cards_snapshot:  forSaleCards,
+      sender_name:     name,
+      user_message:    message || null,
+    });
+
+    btn.disabled = false; btn.textContent = 'Send Request ✦';
+    if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
+
+    document.getElementById('offer-form-content').style.display = 'none';
+    document.getElementById('offer-success').style.display = 'block';
+  }
+
+  // ── UTILS ──
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  function escHtml(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; }
+
+  async function signOut() {
+    await sb.auth.signOut();
+    location.href = 'index.html';
+  }
+
+  function toggleMobileMenu() {
+    const menu = document.getElementById('nav-mobile-menu');
+    const btn  = document.getElementById('nav-hamburger');
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  document.querySelectorAll('.nav-mobile-menu a').forEach(a =>
+    a.addEventListener('click', () => {
+      document.getElementById('nav-mobile-menu').classList.remove('open');
+      document.getElementById('nav-hamburger').classList.remove('open');
+      document.body.style.overflow = '';
+    })
+  );
+
+  // Close modals on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(overlay =>
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); })
+  );
+
+  init();
+</script>
+</body>
+</html>
