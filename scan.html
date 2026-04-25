@@ -737,7 +737,7 @@
       market_price:    marketPrice,
       cardmarket_url:  cardmarketUrl || null,
     });
-    if (error) { btn.disabled = false; btn.textContent = 'Error — Try Again'; return; }
+    if (error) { btn.disabled = false; btn.textContent = 'Error — Try Again'; btn.title = error.message; console.error('Save error:', error.message); return; }
     btn.textContent = '✦ Saved to Collection!';
     btn.style.background = 'linear-gradient(135deg, var(--a1), var(--a2))';
   }
