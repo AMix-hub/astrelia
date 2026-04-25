@@ -223,6 +223,36 @@
     }
     .btn-get-offer:hover { box-shadow: 0 0 40px rgba(var(--a1r),.6); transform: translateY(-2px); }
 
+    /* ── LOOKUP ── */
+    .lookup-row { display: flex; gap: 8px; align-items: flex-end; margin-bottom: 18px; }
+    .lookup-row .modal-form-group { flex: 1; margin-bottom: 0; }
+    .btn-lookup {
+      background: linear-gradient(135deg, var(--a1), var(--a2));
+      color: #fff; border: none; border-radius: 10px;
+      padding: 11px 16px; font-family: 'Montserrat', sans-serif;
+      font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 0 14px rgba(var(--a1r),.3);
+      transition: box-shadow .2s, opacity .2s;
+    }
+    .btn-lookup:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-lookup:hover:not(:disabled) { box-shadow: 0 0 24px rgba(var(--a1r),.5); }
+
+    .lookup-preview {
+      display: none; gap: 14px; align-items: center;
+      padding: 14px 16px; border-radius: 12px;
+      background: rgba(var(--a1r), .06);
+      border: 1px solid rgba(var(--a1r), .2);
+      margin-bottom: 18px;
+    }
+    .lookup-preview.visible { display: flex; }
+    .lookup-preview img { width: 52px; height: 73px; object-fit: contain; border-radius: 6px; flex-shrink: 0; }
+    .lookup-preview-info { flex: 1; min-width: 0; }
+    .lookup-preview-name { font-size: .9rem; color: var(--tx); margin-bottom: 2px; }
+    .lookup-preview-set  { font-size: .74rem; color: var(--tx4); margin-bottom: 4px; }
+    .lookup-preview-price { font-size: .82rem; color: var(--a1); font-weight: 500; }
+    .lookup-not-found { font-size: .78rem; color: #f87171; padding: 10px 14px; background: rgba(200,50,50,.08); border: 1px solid rgba(200,50,50,.2); border-radius: 10px; margin-bottom: 18px; display: none; }
+
     /* ── MODAL OVERLAY ── */
     .modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 300;
@@ -451,10 +481,26 @@
     <h2>Add a Card</h2>
     <p class="modal-sub">Fill in what you know — the more detail, the better the offer.</p>
 
-    <div class="modal-form-group">
-      <label class="modal-label">Card Name <span>*</span></label>
-      <input class="modal-input" type="text" id="add-name" placeholder="e.g. Charizard" />
+    <!-- Name + fetch button -->
+    <div class="lookup-row">
+      <div class="modal-form-group">
+        <label class="modal-label">Card Name <span>*</span></label>
+        <input class="modal-input" type="text" id="add-name" placeholder="e.g. Charizard ex" />
+      </div>
+      <button class="btn-lookup" id="lookup-btn" type="button" onclick="lookupCard()">Fetch ✦</button>
     </div>
+
+    <!-- Lookup result preview -->
+    <div class="lookup-preview" id="lookup-preview">
+      <img id="lookup-img" src="" alt="" />
+      <div class="lookup-preview-info">
+        <div class="lookup-preview-name" id="lookup-found-name"></div>
+        <div class="lookup-preview-set"  id="lookup-found-set"></div>
+        <div class="lookup-preview-price" id="lookup-found-price"></div>
+      </div>
+    </div>
+    <div class="lookup-not-found" id="lookup-not-found">Card not found on pokemontcg.io — fill in details manually.</div>
+
     <div class="modal-form-group">
       <label class="modal-label">English Name <span style="color:var(--tx5)">(if Japanese card)</span></label>
       <input class="modal-input" type="text" id="add-english-name" placeholder="Optional" />
@@ -468,6 +514,10 @@
         <label class="modal-label">Card Number</label>
         <input class="modal-input" type="text" id="add-number" placeholder="e.g. 4/102" />
       </div>
+    </div>
+    <div class="modal-form-group">
+      <label class="modal-label">Market Price (USD) <span style="color:var(--tx5)">— auto-filled by Fetch</span></label>
+      <input class="modal-input" type="number" id="add-price" placeholder="e.g. 12.50" step="0.01" min="0" />
     </div>
     <div class="modal-row">
       <div class="modal-form-group">
@@ -688,9 +738,61 @@
   }
 
   // ── ADD CARD ──
+  let _lookupResult = null;
+
   function openAddModal() {
     document.getElementById('add-error').style.display = 'none';
+    document.getElementById('lookup-preview').classList.remove('visible');
+    document.getElementById('lookup-not-found').style.display = 'none';
+    _lookupResult = null;
     document.getElementById('add-modal').classList.add('open');
+  }
+
+  async function lookupCard() {
+    const name   = document.getElementById('add-name').value.trim();
+    const setName = document.getElementById('add-set').value.trim();
+    const setNumber = document.getElementById('add-number').value.trim();
+    if (!name) { document.getElementById('add-name').focus(); return; }
+
+    const btn = document.getElementById('lookup-btn');
+    btn.disabled = true; btn.textContent = '…';
+    document.getElementById('lookup-preview').classList.remove('visible');
+    document.getElementById('lookup-not-found').style.display = 'none';
+
+    try {
+      const res = await fetch('/api/lookup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, setName, setNumber }),
+      });
+
+      if (!res.ok) {
+        document.getElementById('lookup-not-found').style.display = 'block';
+        return;
+      }
+
+      const data = await res.json();
+      _lookupResult = data;
+
+      // Show preview
+      const img = document.getElementById('lookup-img');
+      if (data.imageUrl) { img.src = data.imageUrl; img.style.display = 'block'; }
+      else img.style.display = 'none';
+      document.getElementById('lookup-found-name').textContent  = data.name;
+      document.getElementById('lookup-found-set').textContent   = data.setName;
+      document.getElementById('lookup-found-price').textContent = data.marketPrice ? `Market: $${data.marketPrice.toFixed(2)}` : 'No price data';
+      document.getElementById('lookup-preview').classList.add('visible');
+
+      // Auto-fill fields
+      if (data.setName)    document.getElementById('add-set').value    = data.setName;
+      if (data.number)     document.getElementById('add-number').value = data.number;
+      if (data.marketPrice) document.getElementById('add-price').value = data.marketPrice.toFixed(2);
+
+    } catch (e) {
+      document.getElementById('lookup-not-found').style.display = 'block';
+    } finally {
+      btn.disabled = false; btn.textContent = 'Fetch ✦';
+    }
   }
 
   function prefillFromScan(card) {
@@ -712,24 +814,29 @@
     if (!name) { err.textContent = 'Card name is required.'; err.style.display = 'block'; return; }
 
     btn.disabled = true; btn.textContent = 'Adding…';
+    const manualPrice = parseFloat(document.getElementById('add-price').value) || null;
+
     const { error } = await sb.from('collection_cards').insert({
-      user_id:       currentUser.id,
-      card_name:     name,
-      english_name:  document.getElementById('add-english-name').value.trim() || null,
-      set_name:      document.getElementById('add-set').value.trim()      || null,
-      set_number:    document.getElementById('add-number').value.trim()   || null,
-      condition:     document.getElementById('add-condition').value       || null,
-      variant:       document.getElementById('add-variant').value         || null,
-      language:      document.getElementById('add-language').value        || 'English',
-      notes:         document.getElementById('add-notes').value.trim()    || null,
-      for_sale:      document.getElementById('add-forsale').checked,
+      user_id:         currentUser.id,
+      card_name:       name,
+      english_name:    document.getElementById('add-english-name').value.trim() || null,
+      set_name:        document.getElementById('add-set').value.trim()          || null,
+      set_number:      document.getElementById('add-number').value.trim()       || null,
+      condition:       document.getElementById('add-condition').value           || null,
+      variant:         document.getElementById('add-variant').value             || null,
+      language:        document.getElementById('add-language').value            || 'English',
+      notes:           document.getElementById('add-notes').value.trim()        || null,
+      for_sale:        document.getElementById('add-forsale').checked,
+      card_image_url:  _lookupResult?.imageUrl      || null,
+      market_price:    manualPrice ?? _lookupResult?.marketPrice ?? null,
+      cardmarket_url:  _lookupResult?.cardmarketUrl || null,
     });
 
     btn.disabled = false; btn.textContent = 'Add to Collection ✦';
     if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
 
     // Reset form
-    ['add-name','add-english-name','add-set','add-number','add-notes'].forEach(id => document.getElementById(id).value = '');
+    ['add-name','add-english-name','add-set','add-number','add-notes','add-price'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('add-condition').value = '';
     document.getElementById('add-variant').value   = '';
     document.getElementById('add-language').value  = 'English';
