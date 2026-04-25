@@ -404,6 +404,10 @@
       <span class="stat-pill-num" id="stat-forsale">0</span>
       <span class="stat-pill-label">For Sale</span>
     </div>
+    <div class="stat-pill" id="stat-value-pill" style="display:none">
+      <span class="stat-pill-num" id="stat-value">$0</span>
+      <span class="stat-pill-label">Collection Value</span>
+    </div>
   </div>
 
   <!-- Toolbar -->
@@ -435,7 +439,7 @@
 <div class="offer-bar" id="offer-bar">
   <div>
     <div class="offer-bar-count"><span id="bar-count">0</span> cards for sale</div>
-    <div class="offer-bar-text">Ready to send for an offer?</div>
+    <div class="offer-bar-text">Est. value: <span id="bar-value" style="color:var(--a1);font-weight:500">—</span> &nbsp;·&nbsp; Ready to send for an offer?</div>
   </div>
   <button class="btn-get-offer" onclick="openOfferModal()">Get Offer ✦</button>
 </div>
@@ -583,10 +587,23 @@
   // ── RENDER ──
   function render() {
     const forSaleCards = cards.filter(c => c.for_sale);
+
+    // Compute values
+    const fmt = v => v > 0 ? `$${v.toFixed(2)}` : '—';
+    const totalValue  = cards.reduce((s, c) => s + (Number(c.market_price) || 0), 0);
+    const saleValue   = forSaleCards.reduce((s, c) => s + (Number(c.market_price) || 0), 0);
+    const valuedCards = cards.filter(c => c.market_price).length;
+
     document.getElementById('stat-total').textContent   = cards.length;
     document.getElementById('stat-forsale').textContent = forSaleCards.length;
     document.getElementById('bar-count').textContent    = forSaleCards.length;
+    document.getElementById('bar-value').textContent    = fmt(saleValue);
     document.getElementById('offer-bar').classList.toggle('visible', forSaleCards.length > 0);
+
+    // Only show collection value pill if at least one card has a price
+    const valuePill = document.getElementById('stat-value-pill');
+    valuePill.style.display = valuedCards > 0 ? 'flex' : 'none';
+    document.getElementById('stat-value').textContent = fmt(totalValue);
 
     const filtered = activeFilter === 'sale' ? forSaleCards : cards;
     const grid     = document.getElementById('coll-grid');
