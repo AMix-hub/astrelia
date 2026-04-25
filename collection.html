@@ -387,7 +387,7 @@
 
   <!-- Empty state -->
   <div class="coll-empty" id="coll-empty">
-    <div class="coll-empty-icon">🃏</div>
+    <div class="coll-empty-icon"><img src="card-back.png" class="card-back-img" style="width:72px;height:101px;margin:0 auto" alt="" /></div>
     <h2>No cards yet</h2>
     <p>Add your first card manually or scan one with our AI scanner to get started.</p>
     <div class="btn-row" style="justify-content:center;gap:12px">
@@ -584,7 +584,7 @@
     return `
       <div class="coll-card ${c.for_sale ? 'for-sale' : ''}" id="card-${c.id}">
         <div class="coll-card-body">
-          <span class="coll-card-icon">🃏</span>
+          <span class="coll-card-icon"><img src="card-back.png" class="card-back-img" style="width:40px;height:56px" alt="" /></span>
           <div class="coll-card-name">${nameDisplay}</div>
           <div class="coll-card-set">${setStr}</div>
           <div class="coll-card-badges">${condBadge}${varBadge}${langBadge}${saleBadge}</div>

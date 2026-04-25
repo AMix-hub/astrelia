@@ -343,7 +343,7 @@
 
       <div class="upload-zone" id="front-zone">
         <input type="file" id="front-input" accept="image/*" />
-        <span class="upload-icon">🃏</span>
+        <span class="upload-icon"><img src="card-back.png" class="card-back-img" style="width:52px;height:73px" alt="" /></span>
         <div class="upload-label">Front of card</div>
         <div class="upload-hint">JPG, PNG, WEBP</div>
         <div class="upload-required">Required</div>
@@ -507,7 +507,7 @@
     const zoneId  = side === 'front' ? 'front-zone' : 'back-zone';
     const inputId = side === 'front' ? 'front-input' : 'back-input';
     const label   = side === 'front' ? 'Front of card' : 'Back of card';
-    const icon    = side === 'front' ? '🃏' : '🔄';
+    const icon    = side === 'front' ? '<img src="card-back.png" class="card-back-img" style="width:52px;height:73px" alt="" />' : '🔄';
     const req     = side === 'front' ? 'Required' : 'Recommended';
     const reqCol  = side === 'front' ? 'var(--a1)' : 'var(--tx5)';
 
@@ -588,7 +588,7 @@
     if (uploadedPreview) {
       imgWrap.innerHTML = `<img src="${uploadedPreview}" alt="${card.name}" />`;
     } else {
-      imgWrap.innerHTML = `<div class="no-img">🃏</div>`;
+      imgWrap.innerHTML = `<div class="no-img"><img src="card-back.png" class="card-back-img" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="" /></div>`;
     }
 
     // Confidence
@@ -754,7 +754,7 @@
     document.getElementById('front-zone').outerHTML = `
       <div class="upload-zone" id="front-zone">
         <input type="file" id="front-input" accept="image/*" />
-        <span class="upload-icon">🃏</span>
+        <span class="upload-icon"><img src="card-back.png" class="card-back-img" style="width:52px;height:73px" alt="" /></span>
         <div class="upload-label">Front of card</div>
         <div class="upload-hint">JPG, PNG, WEBP</div>
         <div class="upload-required">Required</div>
