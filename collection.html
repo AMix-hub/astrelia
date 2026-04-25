@@ -93,7 +93,40 @@
     }
     .coll-card:hover { transform: translateY(-4px); }
 
-    .coll-card-body { padding: 22px 20px 14px; }
+    /* Card image preview */
+    .coll-card-img-wrap {
+      background: rgba(var(--a2r), .06);
+      border-radius: 14px 14px 0 0;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 160px;
+    }
+    .coll-card-img-wrap .front-img {
+      width: 100%; max-height: 200px;
+      object-fit: contain; display: block;
+      padding: 10px; box-sizing: border-box;
+    }
+    .coll-card-img-wrap .back-fallback {
+      padding: 24px 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .coll-card-img-wrap .back-fallback img {
+      width: 60px; height: 84px;
+      object-fit: cover; border-radius: 6px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.35);
+    }
+    .coll-card-price {
+      font-size: .76rem; color: var(--a1);
+      text-shadow: 0 0 8px rgba(var(--a1r),.3);
+      margin-top: 6px; font-weight: 500;
+    }
+    .coll-card-price a {
+      font-size: .68rem; color: var(--tx5); margin-left: 8px;
+      text-decoration: none;
+    }
+    .coll-card-price a:hover { color: var(--a1); }
+
+    .coll-card-body { padding: 14px 16px 10px; }
     .coll-card-icon { font-size: 2rem; margin-bottom: 12px; display: block; filter: drop-shadow(0 0 8px rgba(var(--a1r),.5)); }
     .coll-card-name {
       font-family: 'Cormorant Garamond', serif;
@@ -581,13 +614,22 @@
     const saleBadge  = c.for_sale  ? `<span class="coll-badge sale">For Sale</span>` : '';
     const setStr     = [c.set_name, c.set_number].filter(Boolean).join(' · ') || '—';
     const nameDisplay = c.english_name ? `${c.card_name} <span style="font-size:.85em;opacity:.6">(${c.english_name})</span>` : c.card_name;
+    const imgSection = c.card_image_url
+      ? `<div class="coll-card-img-wrap"><img class="front-img" src="${c.card_image_url}" alt="${escHtml(c.card_name)}" loading="lazy" /></div>`
+      : `<div class="coll-card-img-wrap"><div class="back-fallback"><img src="card-back.png" class="card-back-img" alt="" /></div></div>`;
+
+    const priceSection = c.market_price
+      ? `<div class="coll-card-price">$${Number(c.market_price).toFixed(2)} market${c.cardmarket_url ? ` <a href="${c.cardmarket_url}" target="_blank" rel="noopener">Cardmarket ↗</a>` : ''}</div>`
+      : '';
+
     return `
       <div class="coll-card ${c.for_sale ? 'for-sale' : ''}" id="card-${c.id}">
+        ${imgSection}
         <div class="coll-card-body">
-          <span class="coll-card-icon"><img src="card-back.png" class="card-back-img" style="width:40px;height:56px" alt="" /></span>
           <div class="coll-card-name">${nameDisplay}</div>
           <div class="coll-card-set">${setStr}</div>
           <div class="coll-card-badges">${condBadge}${varBadge}${langBadge}${saleBadge}</div>
+          ${priceSection}
           ${c.notes ? `<div style="font-size:.74rem;color:var(--tx5);margin-top:6px;line-height:1.5">${escHtml(c.notes)}</div>` : ''}
         </div>
         <div class="coll-card-footer">

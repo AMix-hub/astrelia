@@ -694,12 +694,12 @@
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     // Show save button
-    renderSaveBtn(card);
+    renderSaveBtn(card, tcgCard, prices, cardmarketUrl);
   }
 
-  let _lastCard = null;
-  function renderSaveBtn(card) {
-    _lastCard = card;
+  let _lastScan = null;
+  function renderSaveBtn(card, tcgCard, prices, cardmarketUrl) {
+    _lastScan = { card, tcgCard, prices, cardmarketUrl };
     const wrap = document.getElementById('save-collection-wrap');
     wrap.innerHTML = `<button class="btn-scan" style="padding:12px 36px;background:linear-gradient(135deg,rgba(var(--a2r),.4),rgba(var(--a1r),.3));box-shadow:none;border:1px solid rgba(var(--a1r),.3)" id="save-coll-btn" onclick="saveToCollection()">+ Save to My Collection</button>`;
   }
@@ -709,21 +709,33 @@
     btn.disabled = true; btn.textContent = 'Saving…';
     const { data: { session } } = await sb.auth.getSession();
     if (!session) {
-      sessionStorage.setItem('scan-save-card', JSON.stringify(_lastCard));
+      sessionStorage.setItem('scan-save-card', JSON.stringify(_lastScan.card));
       location.href = 'login.html?return=collection.html';
       return;
     }
-    const c = _lastCard;
+    const { card: c, tcgCard, prices, cardmarketUrl } = _lastScan;
+
+    // Resolve market price
+    const variantKey = { normal: 'normal', holo: 'holofoil', reverseHolo: 'reverseHolofoil' }[c.variant] || 'holofoil';
+    const priceData  = prices?.[variantKey] || prices?.holofoil || prices?.normal || null;
+    const marketPrice = priceData?.market || null;
+
+    // Card image URL from pokemontcg.io (English cards only — Japanese have no image in API)
+    const cardImageUrl = tcgCard?.images?.small || tcgCard?.images?.large || null;
+
     const { error } = await sb.from('collection_cards').insert({
-      user_id:      session.user.id,
-      card_name:    c.name        || 'Unknown',
-      english_name: c.englishName || null,
-      set_name:     c.setName     || null,
-      set_number:   c.setNumber   ? `${c.setNumber}/${c.setTotal || '?'}` : null,
-      condition:    c.condition   || null,
+      user_id:         session.user.id,
+      card_name:       c.name        || 'Unknown',
+      english_name:    c.englishName || null,
+      set_name:        c.setName     || null,
+      set_number:      c.setNumber   ? `${c.setNumber}/${c.setTotal || '?'}` : null,
+      condition:       c.condition   || null,
       condition_score: c.conditionScore || null,
-      variant:      c.variantLabel || null,
-      language:     c.language    || 'English',
+      variant:         c.variantLabel || null,
+      language:        c.language    || 'English',
+      card_image_url:  cardImageUrl,
+      market_price:    marketPrice,
+      cardmarket_url:  cardmarketUrl || null,
     });
     if (error) { btn.disabled = false; btn.textContent = 'Error — Try Again'; return; }
     btn.textContent = '✦ Saved to Collection!';
