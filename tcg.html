@@ -427,6 +427,7 @@
       .val-pricing-grid { grid-template-columns: 1fr; }
       .val-two-col { grid-template-columns: 1fr; }
       .val-disclaimer { padding: 24px 20px; }
+      .val-sealed [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr 1fr !important; }
     }
     @media (max-width: 600px) {
       .tcg-hero { padding: 48px 16px 0; }
@@ -631,7 +632,7 @@
         </div>
       </div>
 
-      <!-- Includes + affects -->
+      <!-- Includes + sealed -->
       <div class="val-two-col">
         <div class="val-section-card">
           <h3>Vad ingår i en detaljerad värdering?</h3>
@@ -647,35 +648,45 @@
           </ul>
         </div>
         <div class="val-section-card">
-          <h3>Vad påverkar värdet?</h3>
-          <div class="val-affects-item">
-            <h5>Skick</h5>
-            <p>Repor, vita kanter, böjningar och slitage påverkar värdet — ofta en av de viktigaste faktorerna.</p>
-          </div>
-          <div class="val-affects-item">
-            <h5>Utgåva och set</h5>
-            <p>Vissa expansioner, äldre kort och särskilda utgåvor är mer eftertraktade än andra.</p>
-          </div>
-          <div class="val-affects-item">
-            <h5>Språk</h5>
-            <p>Engelska, japanska och andra språk kan värderas olika beroende på kort, marknad och efterfrågan.</p>
-          </div>
-          <div class="val-affects-item">
-            <h5>Rarity och version</h5>
-            <p>Holo, reverse holo, first edition, promo och secret rare kan alla påverka värdet.</p>
-          </div>
-          <div class="val-affects-item">
-            <h5>Efterfrågan &amp; gradering</h5>
-            <p>Marknadspriser förändras med tid och samlartrender. Graderade kort kan ha ett annat värde än ograderade.</p>
-          </div>
+          <h3>Förseglade produkter</h3>
+          <p style="font-size:.82rem;color:var(--tx4);line-height:1.8;margin-bottom:16px">Förseglade produkter kan ofta värderas online med tydliga bilder.</p>
+          <ul class="val-list" style="margin-bottom:16px">
+            <li>Marknadsvärde</li>
+            <li>Samlat dokument med tillgång 24/7 under värderingsprocessen vid flera produkter</li>
+          </ul>
+          <p style="font-size:.78rem;color:var(--tx4);line-height:1.7">Allt som skickas till Astrelia hanteras varsamt och förvaras enligt våra rutiner. Kunders egendom omfattas av vår företagsförsäkring.</p>
         </div>
       </div>
 
-      <!-- Sealed products -->
+      <!-- What affects value -->
       <div class="val-sealed">
-        <h3>Förseglade produkter</h3>
-        <p>Förseglade produkter kan ofta värderas online med tydliga bilder. Ingår: marknadsvärde och samlat dokument med tillgång 24/7 under värderingsprocessen vid flera produkter.</p>
-        <p style="margin-top:10px;font-size:.8rem;color:var(--tx4)">Allt som skickas till Astrelia hanteras varsamt och förvaras enligt våra rutiner. Kunders egendom omfattas av vår företagsförsäkring.</p>
+        <h3>Vad påverkar värdet?</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:16px">
+          <div class="val-affects-item" style="margin-bottom:0">
+            <h5>Skick</h5>
+            <p>Repor, vita kanter, böjningar och slitage påverkar värdet — ofta en av de viktigaste faktorerna.</p>
+          </div>
+          <div class="val-affects-item" style="margin-bottom:0">
+            <h5>Utgåva och set</h5>
+            <p>Vissa expansioner, äldre kort och särskilda utgåvor är mer eftertraktade än andra.</p>
+          </div>
+          <div class="val-affects-item" style="margin-bottom:0">
+            <h5>Språk</h5>
+            <p>Engelska, japanska och andra språk kan värderas olika beroende på kort, marknad och efterfrågan.</p>
+          </div>
+          <div class="val-affects-item" style="margin-bottom:0">
+            <h5>Rarity och version</h5>
+            <p>Holo, reverse holo, first edition, promo och secret rare kan alla påverka värdet.</p>
+          </div>
+          <div class="val-affects-item" style="margin-bottom:0">
+            <h5>Efterfrågan</h5>
+            <p>Marknadspriser förändras med tid och samlartrender.</p>
+          </div>
+          <div class="val-affects-item" style="margin-bottom:0">
+            <h5>Gradering</h5>
+            <p>Graderade kort kan ha ett annat värde än ograderade beroende på skick och centering.</p>
+          </div>
+        </div>
       </div>
 
       <!-- Closing CTA -->
