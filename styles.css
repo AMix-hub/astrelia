@@ -145,7 +145,7 @@ nav {
   color: var(--tx);
 }
 .toggle-icon { font-size: 1rem; line-height: 1; }
-.theme-toggle span:last-child { min-width: 2.8em; text-align: left; }
+.theme-toggle span:last-child { display: inline-block; min-width: 2.8em; text-align: left; }
 
 .nav-cta {
   background: linear-gradient(135deg, var(--a1), var(--a2));
