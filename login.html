@@ -123,11 +123,13 @@
 <nav>
   <a class="nav-logo" href="index.html"><img src="Logga Astrelia.png" alt="Astrelia" /></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="tcg.html">TCG</a></li>
-    <li><a href="music.html">Music</a></li>
+    <li><a href="index.html" data-i18n="nav.home">Hem</a></li>
+    <li><a href="tcg.html" data-i18n="nav.tcg">TCG</a></li>
+    <li><a href="music.html" data-i18n="nav.music">Musik</a></li>
+    <li><a href="collection.html" data-i18n="nav.collection">Min samling</a></li>
   </ul>
   <div class="nav-right">
+    <button class="lang-toggle" onclick="toggleLang()">EN</button>
     <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon">☀️</span>
       <span id="toggle-label">Sun</span>
@@ -139,14 +141,16 @@
 </nav>
 
 <div class="nav-mobile-menu" id="nav-mobile-menu">
-  <a href="index.html">Home</a>
-  <a href="tcg.html">TCG</a>
-  <a href="music.html">Music</a>
+  <a href="index.html" data-i18n="nav.home">Hem</a>
+  <a href="tcg.html" data-i18n="nav.tcg">TCG</a>
+  <a href="music.html" data-i18n="nav.music">Musik</a>
+  <a href="collection.html" data-i18n="nav.collection">Min samling</a>
   <div class="nav-mobile-toggle">
     <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
       <span id="toggle-label-mobile">Sun</span>
     </button>
+    <button class="lang-toggle" onclick="toggleLang(); toggleMobileMenu()">EN</button>
   </div>
 </div>
 
@@ -157,45 +161,45 @@
     </div>
 
     <div class="login-tabs">
-      <button class="login-tab active" id="tab-signin" onclick="showTab('signin')">Sign In</button>
-      <button class="login-tab" id="tab-signup" onclick="showTab('signup')">Create Account</button>
+      <button class="login-tab active" id="tab-signin" onclick="showTab('signin')" data-i18n="login.tab-signin">Logga in</button>
+      <button class="login-tab" id="tab-signup" onclick="showTab('signup')" data-i18n="login.tab-signup">Skapa konto</button>
     </div>
 
     <!-- Sign In -->
     <div id="form-signin">
       <div class="form-group">
-        <label class="form-label">Email</label>
-        <input class="form-input" type="email" id="signin-email" placeholder="you@example.com" autocomplete="email" />
+        <label class="form-label" data-i18n="login.label-email">E-post</label>
+        <input class="form-input" type="email" id="signin-email" data-i18n-ph="login.ph-email" placeholder="du@exempel.se" autocomplete="email" />
       </div>
       <div class="form-group">
-        <label class="form-label">Password</label>
-        <input class="form-input" type="password" id="signin-password" placeholder="••••••••" autocomplete="current-password" />
+        <label class="form-label" data-i18n="login.label-password">Lösenord</label>
+        <input class="form-input" type="password" id="signin-password" data-i18n-ph="login.ph-pw-current" placeholder="••••••••" autocomplete="current-password" />
       </div>
-      <button class="btn-auth" id="signin-btn" onclick="signIn()">Sign In ✦</button>
+      <button class="btn-auth" id="signin-btn" onclick="signIn()" data-i18n="login.btn-signin">Logga in ✦</button>
       <div class="auth-error" id="signin-error"></div>
     </div>
 
     <!-- Sign Up -->
     <div id="form-signup" style="display:none">
       <div class="form-group">
-        <label class="form-label">Your Name</label>
-        <input class="form-input" type="text" id="signup-name" placeholder="First name" autocomplete="given-name" />
+        <label class="form-label" data-i18n="login.label-name">Ditt namn</label>
+        <input class="form-input" type="text" id="signup-name" data-i18n-ph="login.ph-name" placeholder="Förnamn" autocomplete="given-name" />
       </div>
       <div class="form-group">
-        <label class="form-label">Email</label>
-        <input class="form-input" type="email" id="signup-email" placeholder="you@example.com" autocomplete="email" />
+        <label class="form-label" data-i18n="login.label-email">E-post</label>
+        <input class="form-input" type="email" id="signup-email" data-i18n-ph="login.ph-email" placeholder="du@exempel.se" autocomplete="email" />
       </div>
       <div class="form-group">
-        <label class="form-label">Password</label>
-        <input class="form-input" type="password" id="signup-password" placeholder="Min. 6 characters" autocomplete="new-password" />
+        <label class="form-label" data-i18n="login.label-password">Lösenord</label>
+        <input class="form-input" type="password" id="signup-password" data-i18n-ph="login.ph-pw-new" placeholder="Min. 6 tecken" autocomplete="new-password" />
       </div>
-      <button class="btn-auth" id="signup-btn" onclick="signUp()">Create Account ✦</button>
+      <button class="btn-auth" id="signup-btn" onclick="signUp()" data-i18n="login.btn-signup">Skapa konto ✦</button>
       <div class="auth-error" id="signup-error"></div>
       <div class="auth-success" id="signup-success"></div>
     </div>
 
-    <p class="login-footer">
-      By signing in you agree to our <a href="#">terms</a> — your data is safe with us ✦
+    <p class="login-footer" data-i18n="login.footer">
+      Genom att logga in godkänner du våra <a href="#">villkor</a> — din data är säker hos oss ✦
     </p>
   </div>
 </div>
@@ -204,6 +208,7 @@
 <script src="supabase-client.js"></script>
 <script src="theme.js"></script>
 <script src="stars.js"></script>
+<script src="lang.js?v=2"></script>
 <script>
   // Redirect if already logged in
   sb.auth.getSession().then(({ data: { session } }) => {

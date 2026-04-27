@@ -198,6 +198,20 @@ const translations = {
     'scan.try-again':    'Försök igen',
     'scan.card-id':      '✦ Kort identifierat',
 
+    /* ── LOGIN PAGE ── */
+    'login.tab-signin':    'Logga in',
+    'login.tab-signup':    'Skapa konto',
+    'login.label-name':    'Ditt namn',
+    'login.ph-name':       'Förnamn',
+    'login.label-email':   'E-post',
+    'login.ph-email':      'du@exempel.se',
+    'login.label-password':'Lösenord',
+    'login.ph-pw-current': '••••••••',
+    'login.ph-pw-new':     'Min. 6 tecken',
+    'login.btn-signin':    'Logga in ✦',
+    'login.btn-signup':    'Skapa konto ✦',
+    'login.footer':        'Genom att logga in godkänner du våra <a href="#">villkor</a> — din data är säker hos oss ✦',
+
     /* ── VALUATION FORM ── */
     'vf.label':         '✦ Skicka in ✦',
     'vf.title':         'Skicka in värderingsförfrågan',
@@ -440,6 +454,20 @@ const translations = {
     'scan.step-3':       '✦ Fetching market prices',
     'scan.try-again':    'Try Again',
     'scan.card-id':      '✦ Card Identified',
+
+    /* ── LOGIN PAGE ── */
+    'login.tab-signin':    'Sign In',
+    'login.tab-signup':    'Create Account',
+    'login.label-name':    'Your Name',
+    'login.ph-name':       'First name',
+    'login.label-email':   'Email',
+    'login.ph-email':      'you@example.com',
+    'login.label-password':'Password',
+    'login.ph-pw-current': '••••••••',
+    'login.ph-pw-new':     'Min. 6 characters',
+    'login.btn-signin':    'Sign In ✦',
+    'login.btn-signup':    'Create Account ✦',
+    'login.footer':        'By signing in you agree to our <a href="#">terms</a> — your data is safe with us ✦',
 
     /* ── VALUATION FORM ── */
     'vf.label':         '✦ Submit ✦',
