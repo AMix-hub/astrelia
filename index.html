@@ -127,16 +127,17 @@
 <nav>
   <a class="nav-logo" href="index.html"><img src="Logga Astrelia.png" alt="Astrelia" /></a>
   <ul class="nav-links">
-    <li><a href="tcg.html">TCG</a></li>
-    <li><a href="music.html">Music</a></li>
-    <li><a href="collection.html">My Collection</a></li>
+    <li><a href="tcg.html" data-i18n="nav.tcg">TCG</a></li>
+    <li><a href="music.html" data-i18n="nav.music">Musik</a></li>
+    <li><a href="collection.html" data-i18n="nav.collection">Min samling</a></li>
   </ul>
   <div class="nav-right">
+    <button class="lang-toggle" onclick="toggleLang()">EN</button>
     <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon">☀️</span>
       <span id="toggle-label">Sun</span>
     </button>
-    <a class="nav-cta" href="tcg.html">Get Started</a>
+    <a class="nav-cta" href="tcg.html" data-i18n="index.cta">Kom igång</a>
   </div>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
@@ -144,46 +145,47 @@
 </nav>
 
 <div class="nav-mobile-menu" id="nav-mobile-menu">
-  <a href="tcg.html">TCG</a>
-  <a href="music.html">Music</a>
-  <a href="collection.html">My Collection</a>
-  <a class="nav-cta" href="tcg.html">Get Started</a>
+  <a href="tcg.html" data-i18n="nav.tcg">TCG</a>
+  <a href="music.html" data-i18n="nav.music">Musik</a>
+  <a href="collection.html" data-i18n="nav.collection">Min samling</a>
+  <a class="nav-cta" href="tcg.html" data-i18n="index.cta">Kom igång</a>
   <div class="nav-mobile-toggle">
     <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
       <span id="toggle-label-mobile">Sun</span>
     </button>
+    <button class="lang-toggle" onclick="toggleLang(); toggleMobileMenu()">EN</button>
   </div>
 </div>
 
 <section id="hero">
   <div class="hero-banner">
-    <p class="hero-tagline">Choose your universe</p>
+    <p class="hero-tagline" data-i18n="index.tagline">Välj din värld</p>
     <h1 class="hero-title">Astrelia</h1>
     <div class="hero-banner-line"></div>
   </div>
-  <p class="hero-sub">
-    Two worlds, one brand. Explore the cosmic realm of Pokémon Trading Cards
-    or step into the soundscape of original music — both crafted with passion.
+  <p class="hero-sub" data-i18n="index.sub">
+    Två världar, ett varumärke. Utforska Pokémon Trading Cards eller ge dig in i originalmusikens ljudlandskap — båda skapade med passion.
   </p>
   <div class="path-cards">
     <a class="path-card" href="tcg.html">
       <span class="path-card-icon"><img src="card-back.png" class="card-back-img" style="width:62px;height:87px" alt="" /></span>
-      <div class="path-card-title">Pokémon TCG</div>
-      <p class="path-card-text">Buy, sell, and value your Pokémon card collection. Expert guidance for collectors and players alike.</p>
-      <span class="path-card-cta">Explore Cards ✦</span>
+      <div class="path-card-title" data-i18n="index.tcg-title">Pokémon TCG</div>
+      <p class="path-card-text" data-i18n="index.tcg-text">Köp, sälj och värdera din Pokémon-kortsamling. Expertguide för samlare och spelare.</p>
+      <span class="path-card-cta" data-i18n="index.tcg-cta">Utforska kort ✦</span>
     </a>
     <a class="path-card" href="music.html">
       <span class="path-card-icon">🎵</span>
-      <div class="path-card-title">Music</div>
-      <p class="path-card-text">Original sounds from the cosmos. A new chapter is being written — stay tuned for what's coming.</p>
-      <span class="path-card-cta">Coming Soon ✦</span>
+      <div class="path-card-title" data-i18n="index.music-title">Musik</div>
+      <p class="path-card-text" data-i18n="index.music-text">Originalljud från kosmos. Ett nytt kapitel skrivs — håll utkik efter vad som kommer.</p>
+      <span class="path-card-cta" data-i18n="index.music-cta">Kommer snart ✦</span>
     </a>
   </div>
 </section>
 
 <script src="theme.js"></script>
 <script src="stars.js"></script>
+<script src="lang.js"></script>
 <script>
   function toggleMobileMenu() {
     const menu = document.getElementById('nav-mobile-menu');

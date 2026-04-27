@@ -59,16 +59,17 @@
 <nav>
   <a class="nav-logo" href="index.html"><img src="Logga Astrelia.png" alt="Astrelia" /></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="tcg.html">TCG</a></li>
-    <li><a href="music.html" class="active">Music</a></li>
+    <li><a href="index.html" data-i18n="nav.home">Hem</a></li>
+    <li><a href="tcg.html" data-i18n="nav.tcg">TCG</a></li>
+    <li><a href="music.html" class="active" data-i18n="nav.music">Musik</a></li>
   </ul>
   <div class="nav-right">
+    <button class="lang-toggle" onclick="toggleLang()">EN</button>
     <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon">☀️</span>
       <span id="toggle-label">Sun</span>
     </button>
-    <a class="nav-cta" href="index.html">← Home</a>
+    <a class="nav-cta" href="index.html" data-i18n="music.nav-cta">← Hem</a>
   </div>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
@@ -76,23 +77,24 @@
 </nav>
 
 <div class="nav-mobile-menu" id="nav-mobile-menu">
-  <a href="index.html">Home</a>
-  <a href="tcg.html">TCG</a>
-  <a href="music.html" class="active">Music</a>
+  <a href="index.html" data-i18n="nav.home">Hem</a>
+  <a href="tcg.html" data-i18n="nav.tcg">TCG</a>
+  <a href="music.html" class="active" data-i18n="nav.music">Musik</a>
   <div class="nav-mobile-toggle">
     <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
       <span id="toggle-label-mobile">Sun</span>
     </button>
+    <button class="lang-toggle" onclick="toggleLang(); toggleMobileMenu()">EN</button>
   </div>
 </div>
 
 <!-- Page hero -->
 <div class="page-hero">
-  <p class="page-hero-label">✦ Music ✦</p>
-  <h1 class="page-hero-title">Astrelia Sounds</h1>
+  <p class="page-hero-label" data-i18n="music.hero-label">✦ Musik ✦</p>
+  <h1 class="page-hero-title" data-i18n="music.hero-title">Astrelia Sounds</h1>
   <div class="page-hero-line"></div>
-  <p class="page-hero-sub">A new creative universe is taking shape. Something is coming.</p>
+  <p class="page-hero-sub" data-i18n="music.hero-sub">Ett nytt kreativt universum tar form. Något är på gång.</p>
 </div>
 
 <div class="divider" style="padding: 0 60px;"><span class="divider-icon">✦</span></div>
@@ -101,13 +103,11 @@
 <section id="music">
   <div class="coming-soon-box">
     <span class="coming-soon-icon">🎶</span>
-    <div class="coming-soon-title">Coming Soon</div>
-    <p class="coming-soon-text">
-      Original music is on the way. This space will be home to releases,
-      projects, and everything that makes Astrelia's sound unique.<br /><br />
-      Stay tuned — the stars are aligning.
+    <div class="coming-soon-title" data-i18n="music.soon-title">Kommer snart</div>
+    <p class="coming-soon-text" data-i18n="music.soon-text">
+      Originalmusik är på väg. Det här utrymmet kommer att vara hem för releases, projekt och allt som gör Astrelias sound unikt.<br /><br />Håll utkik — stjärnorna ställer in sig.
     </p>
-    <a class="btn-outline" href="index.html">← Back to Home</a>
+    <a class="btn-outline" href="index.html" data-i18n="music.soon-back">← Tillbaka till startsidan</a>
   </div>
 </section>
 
@@ -116,18 +116,18 @@
   <div class="footer-top">
     <div class="footer-brand">
       <img src="Logga Astrelia.png" alt="Astrelia" />
-      <p>Two worlds, one brand. Pokémon TCG and music, crafted with cosmic passion.</p>
+      <p data-i18n="music.ft-brand">Två världar, ett varumärke. Pokémon TCG och musik, skapade med kosmisk passion.</p>
     </div>
     <div class="footer-col">
-      <h4>Explore</h4>
+      <h4 data-i18n="music.ft-explore">Utforska</h4>
       <ul>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html" data-i18n="nav.home">Hem</a></li>
         <li><a href="tcg.html">Pokémon TCG</a></li>
-        <li><a href="music.html">Music</a></li>
+        <li><a href="music.html" data-i18n="nav.music">Musik</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Follow</h4>
+      <h4 data-i18n="music.ft-follow">Följ oss</h4>
       <ul>
         <li><a href="#">Instagram</a></li>
         <li><a href="#">TikTok</a></li>
@@ -136,14 +136,14 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 Astrelia. All rights reserved.</p>
-
-    <p>Crafted with ✦ cosmic love</p>
+    <p data-i18n="ft.copyright">© 2026 Astrelia. Alla rättigheter förbehålls.</p>
+    <p data-i18n="ft.crafted">Skapad med ✦ kosmisk kärlek</p>
   </div>
 </footer>
 
 <script src="theme.js"></script>
 <script src="stars.js"></script>
+<script src="lang.js"></script>
 <script>
   function toggleMobileMenu() {
     const menu = document.getElementById('nav-mobile-menu');

@@ -299,17 +299,18 @@
 <nav>
   <a class="nav-logo" href="index.html"><img src="Logga Astrelia.png" alt="Astrelia" /></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="tcg.html">TCG</a></li>
-    <li><a href="music.html">Music</a></li>
-    <li><a href="collection.html">My Collection</a></li>
+    <li><a href="index.html" data-i18n="nav.home">Hem</a></li>
+    <li><a href="tcg.html" data-i18n="nav.tcg">TCG</a></li>
+    <li><a href="music.html" data-i18n="nav.music">Musik</a></li>
+    <li><a href="collection.html" data-i18n="nav.collection">Min samling</a></li>
   </ul>
   <div class="nav-right">
+    <button class="lang-toggle" onclick="toggleLang()">EN</button>
     <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon">☀️</span>
       <span id="toggle-label">Sun</span>
     </button>
-    <a class="nav-cta" href="tcg.html">← TCG</a>
+    <a class="nav-cta" href="tcg.html" data-i18n="scan.nav-cta">← TCG</a>
   </div>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
@@ -317,16 +318,17 @@
 </nav>
 
 <div class="nav-mobile-menu" id="nav-mobile-menu">
-  <a href="index.html">Home</a>
-  <a href="tcg.html">TCG</a>
-  <a href="music.html">Music</a>
-  <a href="collection.html">My Collection</a>
-  <a class="nav-cta" href="tcg.html">← TCG</a>
+  <a href="index.html" data-i18n="nav.home">Hem</a>
+  <a href="tcg.html" data-i18n="nav.tcg">TCG</a>
+  <a href="music.html" data-i18n="nav.music">Musik</a>
+  <a href="collection.html" data-i18n="nav.collection">Min samling</a>
+  <a class="nav-cta" href="tcg.html" data-i18n="scan.nav-cta">← TCG</a>
   <div class="nav-mobile-toggle">
     <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
       <span id="toggle-label-mobile">Sun</span>
     </button>
+    <button class="lang-toggle" onclick="toggleLang(); toggleMobileMenu()">EN</button>
   </div>
 </div>
 
@@ -334,9 +336,9 @@
 
   <!-- Header -->
   <div class="scanner-header">
-    <p class="page-hero-label">✦ Card Scanner ✦</p>
-    <h1>Identify & Value Your Card</h1>
-    <p>Upload a photo of the front and back of your Pokémon card.<br />Our AI will identify it, assess its condition, and pull current market prices.</p>
+    <p class="page-hero-label" data-i18n="scan.hero-label">✦ Kortscanner ✦</p>
+    <h1 data-i18n="scan.title">Identifiera & värdera ditt kort</h1>
+    <p data-i18n="scan.sub">Ladda upp ett foto av fram- och baksidan på ditt Pokémonkort.<br />Vår AI identifierar det, bedömer skicket och hämtar aktuella marknadspriser.</p>
   </div>
 
   <!-- Upload form -->
@@ -346,24 +348,24 @@
       <div class="upload-zone" id="front-zone">
         <input type="file" id="front-input" accept="image/*" />
         <span class="upload-icon"><img src="card-back.png" class="card-back-img" style="width:52px;height:73px" alt="" /></span>
-        <div class="upload-label">Front of card</div>
+        <div class="upload-label" data-i18n="scan.front-label">Kortets framsida</div>
         <div class="upload-hint">JPG, PNG, WEBP</div>
-        <div class="upload-required">Required</div>
+        <div class="upload-required" data-i18n="scan.required">Obligatorisk</div>
       </div>
 
       <div class="upload-zone" id="back-zone">
         <input type="file" id="back-input" accept="image/*" />
         <span class="upload-icon">🔄</span>
-        <div class="upload-label">Back of card</div>
+        <div class="upload-label" data-i18n="scan.back-label">Kortets baksida</div>
         <div class="upload-hint">JPG, PNG, WEBP</div>
-        <div class="upload-required" style="color:var(--tx5)">Recommended</div>
+        <div class="upload-required" style="color:var(--tx5)" data-i18n="scan.recommended">Rekommenderas</div>
       </div>
 
     </div>
 
     <div class="scan-btn-wrap">
-      <button class="btn-scan" id="scan-btn" disabled onclick="runScan()">
-        ✦ Identify Card
+      <button class="btn-scan" id="scan-btn" disabled onclick="runScan()" data-i18n="scan.identify-btn">
+        ✦ Identifiera kort
       </button>
     </div>
   </div>
@@ -371,11 +373,11 @@
   <!-- Loading -->
   <div id="loading">
     <div class="loading-orb">🔮</div>
-    <div class="loading-title">Reading the cards…</div>
+    <div class="loading-title" data-i18n="scan.loading">Läser av korten…</div>
     <div class="loading-steps">
-      <div class="loading-step" id="step-1">✦ Sending to AI vision</div>
-      <div class="loading-step" id="step-2">✦ Identifying card & condition</div>
-      <div class="loading-step" id="step-3">✦ Fetching market prices</div>
+      <div class="loading-step" id="step-1" data-i18n="scan.step-1">✦ Skickar till AI-vision</div>
+      <div class="loading-step" id="step-2" data-i18n="scan.step-2">✦ Identifierar kort & skick</div>
+      <div class="loading-step" id="step-3" data-i18n="scan.step-3">✦ Hämtar marknadspriser</div>
     </div>
   </div>
 
@@ -401,7 +403,7 @@
 
         <!-- Card identity -->
         <div class="result-panel">
-          <h3>✦ Card Identified</h3>
+          <h3 data-i18n="scan.card-id">✦ Kort identifierat</h3>
           <div class="card-name-display" id="result-name"></div>
           <div style="font-size:.82rem;color:var(--tx4)" id="result-set"></div>
           <div class="card-meta" id="result-badges"></div>
@@ -447,6 +449,7 @@
 <script src="supabase-client.js"></script>
 <script src="theme.js"></script>
 <script src="stars.js"></script>
+<script src="lang.js"></script>
 <script>
   let frontData = null;
   let backData  = null;

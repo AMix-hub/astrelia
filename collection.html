@@ -379,17 +379,18 @@
 <nav>
   <a class="nav-logo" href="index.html"><img src="Logga Astrelia.png" alt="Astrelia" /></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="tcg.html">TCG</a></li>
-    <li><a href="music.html">Music</a></li>
-    <li><a href="collection.html" class="active">My Collection</a></li>
+    <li><a href="index.html" data-i18n="nav.home">Hem</a></li>
+    <li><a href="tcg.html" data-i18n="nav.tcg">TCG</a></li>
+    <li><a href="music.html" data-i18n="nav.music">Musik</a></li>
+    <li><a href="collection.html" class="active" data-i18n="nav.collection">Min samling</a></li>
   </ul>
   <div class="nav-right">
+    <button class="lang-toggle" onclick="toggleLang()">EN</button>
     <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon">☀️</span>
       <span id="toggle-label">Sun</span>
     </button>
-    <a class="nav-cta" href="tcg.html">← TCG</a>
+    <a class="nav-cta" href="tcg.html" data-i18n="coll.nav-cta">← TCG</a>
   </div>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
@@ -397,15 +398,16 @@
 </nav>
 
 <div class="nav-mobile-menu" id="nav-mobile-menu">
-  <a href="index.html">Home</a>
-  <a href="tcg.html">TCG</a>
-  <a href="music.html">Music</a>
-  <a href="collection.html" class="active">My Collection</a>
+  <a href="index.html" data-i18n="nav.home">Hem</a>
+  <a href="tcg.html" data-i18n="nav.tcg">TCG</a>
+  <a href="music.html" data-i18n="nav.music">Musik</a>
+  <a href="collection.html" class="active" data-i18n="nav.collection">Min samling</a>
   <div class="nav-mobile-toggle">
     <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
       <span id="toggle-label-mobile">Sun</span>
     </button>
+    <button class="lang-toggle" onclick="toggleLang(); toggleMobileMenu()">EN</button>
   </div>
 </div>
 
@@ -414,13 +416,13 @@
   <!-- Header -->
   <div class="coll-header">
     <div class="coll-header-left">
-      <p class="page-hero-label" style="text-align:left;margin-bottom:6px">✦ My Collection ✦</p>
-      <h1>Your Cards</h1>
+      <p class="page-hero-label" style="text-align:left;margin-bottom:6px" data-i18n="coll.hero-label">✦ Min samling ✦</p>
+      <h1 data-i18n="coll.title">Dina kort</h1>
       <p id="user-email-display"></p>
     </div>
     <div class="coll-header-right">
-      <a class="btn-outline" href="scan.html" style="font-size:.78rem;padding:9px 20px">Scan a Card ✦</a>
-      <button class="btn-logout" onclick="signOut()">Sign Out</button>
+      <a class="btn-outline" href="scan.html" style="font-size:.78rem;padding:9px 20px" data-i18n="coll.scan-btn">Skanna ett kort ✦</a>
+      <button class="btn-logout" onclick="signOut()" data-i18n="coll.signout">Logga ut</button>
     </div>
   </div>
 
@@ -428,25 +430,25 @@
   <div class="coll-stats">
     <div class="stat-pill">
       <span class="stat-pill-num" id="stat-total">0</span>
-      <span class="stat-pill-label">Total Cards</span>
+      <span class="stat-pill-label" data-i18n="coll.total">Totalt antal kort</span>
     </div>
     <div class="stat-pill">
       <span class="stat-pill-num" id="stat-forsale">0</span>
-      <span class="stat-pill-label">For Sale</span>
+      <span class="stat-pill-label" data-i18n="coll.forsale">Till salu</span>
     </div>
     <div class="stat-pill" id="stat-value-pill" style="display:none">
       <span class="stat-pill-num" id="stat-value">$0</span>
-      <span class="stat-pill-label">Collection Value</span>
+      <span class="stat-pill-label" data-i18n="coll.value">Samlingsvärde</span>
     </div>
   </div>
 
   <!-- Toolbar -->
   <div class="coll-toolbar">
     <div class="filter-pills">
-      <button class="filter-pill active" id="filter-all" onclick="setFilter('all')">All Cards</button>
-      <button class="filter-pill" id="filter-sale" onclick="setFilter('sale')">For Sale</button>
+      <button class="filter-pill active" id="filter-all" onclick="setFilter('all')" data-i18n="coll.filter-all">Alla kort</button>
+      <button class="filter-pill" id="filter-sale" onclick="setFilter('sale')" data-i18n="coll.filter-sale">Till salu</button>
     </div>
-    <button class="btn-add-card" onclick="openAddModal()">+ Add Card</button>
+    <button class="btn-add-card" onclick="openAddModal()" data-i18n="coll.add-btn">+ Lägg till kort</button>
   </div>
 
   <!-- Grid -->
@@ -455,11 +457,11 @@
   <!-- Empty state -->
   <div class="coll-empty" id="coll-empty">
     <div class="coll-empty-icon"><img src="card-back.png" class="card-back-img" style="width:72px;height:101px;margin:0 auto" alt="" /></div>
-    <h2>No cards yet</h2>
-    <p>Add your first card manually or scan one with our AI scanner to get started.</p>
+    <h2 data-i18n="coll.empty-title">Inga kort ännu</h2>
+    <p data-i18n="coll.empty-p">Lägg till ditt första kort manuellt eller skanna ett med vår AI-scanner för att komma igång.</p>
     <div class="btn-row" style="justify-content:center;gap:12px">
-      <button class="btn-primary" onclick="openAddModal()">+ Add Card</button>
-      <a class="btn-outline" href="scan.html">Scan a Card ✦</a>
+      <button class="btn-primary" onclick="openAddModal()" data-i18n="coll.add-btn2">+ Lägg till kort</button>
+      <a class="btn-outline" href="scan.html" data-i18n="coll.scan-btn">Skanna ett kort ✦</a>
     </div>
   </div>
 
@@ -636,6 +638,7 @@
 <script src="supabase-client.js"></script>
 <script src="theme.js"></script>
 <script src="stars.js"></script>
+<script src="lang.js"></script>
 <script>
   let currentUser = null;
   let cards       = [];

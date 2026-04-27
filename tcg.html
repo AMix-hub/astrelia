@@ -446,17 +446,18 @@
 <nav>
   <a class="nav-logo" href="index.html"><img src="Logga Astrelia.png" alt="Astrelia" /></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="tcg.html" class="active">TCG</a></li>
-    <li><a href="music.html">Music</a></li>
-    <li><a href="collection.html">My Collection</a></li>
+    <li><a href="index.html" data-i18n="nav.home">Hem</a></li>
+    <li><a href="tcg.html" class="active" data-i18n="nav.tcg">TCG</a></li>
+    <li><a href="music.html" data-i18n="nav.music">Musik</a></li>
+    <li><a href="collection.html" data-i18n="nav.collection">Min samling</a></li>
   </ul>
   <div class="nav-right">
+    <button class="lang-toggle" onclick="toggleLang()">EN</button>
     <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon">☀️</span>
       <span id="toggle-label">Sun</span>
     </button>
-    <a class="nav-cta" href="#" onclick="switchTab('contact', null); return false;">Get in Touch</a>
+    <a class="nav-cta" href="#" onclick="switchTab('contact', null); return false;" data-i18n="tcg.nav-cta">Kontakt</a>
   </div>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
@@ -464,16 +465,17 @@
 </nav>
 
 <div class="nav-mobile-menu" id="nav-mobile-menu">
-  <a href="index.html">Home</a>
-  <a href="tcg.html" class="active">TCG</a>
-  <a href="music.html">Music</a>
-  <a href="collection.html">My Collection</a>
-  <a class="nav-cta" href="#" onclick="switchTab('contact', null); toggleMobileMenu(); return false;">Get in Touch</a>
+  <a href="index.html" data-i18n="nav.home">Hem</a>
+  <a href="tcg.html" class="active" data-i18n="nav.tcg">TCG</a>
+  <a href="music.html" data-i18n="nav.music">Musik</a>
+  <a href="collection.html" data-i18n="nav.collection">Min samling</a>
+  <a class="nav-cta" href="#" onclick="switchTab('contact', null); toggleMobileMenu(); return false;" data-i18n="tcg.nav-cta">Kontakt</a>
   <div class="nav-mobile-toggle">
     <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
       <span id="toggle-label-mobile">Sun</span>
     </button>
+    <button class="lang-toggle" onclick="toggleLang(); toggleMobileMenu()">EN</button>
   </div>
 </div>
 
@@ -481,18 +483,18 @@
 
   <!-- Compact hero -->
   <div class="tcg-hero">
-    <p class="page-hero-label">✦ Pokémon TCG ✦</p>
-    <h1>Cards & Collections</h1>
-    <p>Buy, sell, and discover the true value of your Pokémon cards — with honest, passionate service.</p>
+    <p class="page-hero-label" data-i18n="tcg.hero-label">✦ Pokémon TCG ✦</p>
+    <h1 data-i18n="tcg.hero-title">Kort & samlingar</h1>
+    <p data-i18n="tcg.hero-sub">Köp, sälj och upptäck det verkliga värdet på dina Pokémonkort — med ärlig och passionerad service.</p>
   </div>
 
   <!-- Tab bar -->
   <div class="tab-bar-wrap">
     <div class="tab-bar">
-      <button class="tab-btn active" id="tab-btn-services" onclick="switchTab('services', this)">Services</button>
-      <button class="tab-btn" id="tab-btn-vardering" onclick="switchTab('vardering', this)">Värdering</button>
-      <button class="tab-btn" id="tab-btn-why" onclick="switchTab('why', this)">Why Astrelia</button>
-      <button class="tab-btn" id="tab-btn-contact" onclick="switchTab('contact', this)">Contact</button>
+      <button class="tab-btn active" id="tab-btn-services" onclick="switchTab('services', this)" data-i18n="tcg.tab-services">Tjänster</button>
+      <button class="tab-btn" id="tab-btn-vardering" onclick="switchTab('vardering', this)" data-i18n="tcg.tab-val">Värdering</button>
+      <button class="tab-btn" id="tab-btn-why" onclick="switchTab('why', this)" data-i18n="tcg.tab-why">Varför Astrelia</button>
+      <button class="tab-btn" id="tab-btn-contact" onclick="switchTab('contact', this)" data-i18n="tcg.tab-contact">Kontakt</button>
     </div>
   </div>
 
@@ -502,39 +504,39 @@
     <!-- SERVICES -->
     <div class="tab-panel active" id="tab-services">
       <div class="services-intro">
-        <p class="section-label">✦ What We Offer ✦</p>
-        <h2>TCG Services</h2>
-        <p>Everything you need — whether you're building a collection, selling one, or just curious about its worth.</p>
+        <p class="section-label" data-i18n="tcg.srv-label">✦ Vad vi erbjuder ✦</p>
+        <h2 data-i18n="tcg.srv-title">TCG-tjänster</h2>
+        <p data-i18n="tcg.srv-sub">Allt du behöver — oavsett om du bygger en samling, säljer en, eller bara är nyfiken på dess värde.</p>
       </div>
 
       <div class="services-grid">
         <div class="service-card">
           <span class="service-icon">💰</span>
-          <div class="service-title">Buy Cards</div>
-          <p class="service-text">Browse a curated selection of Pokémon cards — from everyday staples to rare holographics. Fair prices, quality guaranteed.</p>
-          <a class="service-action" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;">Get in touch ✦</a>
+          <div class="service-title" data-i18n="tcg.buy-title">Köp kort</div>
+          <p class="service-text" data-i18n="tcg.buy-text">Bläddra bland ett kurerat urval av Pokémonkort — från vardagsstaples till sällsynta holographics. Rättvisa priser, kvalitet garanterad.</p>
+          <a class="service-action" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="tcg.buy-cta">Kontakta oss ✦</a>
         </div>
         <div class="service-card">
           <span class="service-icon">🤝</span>
-          <div class="service-title">Sell Cards</div>
-          <p class="service-text">Looking to move your collection or a specific card? Get a quick, honest offer with no hassle and a smooth transaction.</p>
-          <a class="service-action" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;">Get in touch ✦</a>
+          <div class="service-title" data-i18n="tcg.sell-title">Sälj kort</div>
+          <p class="service-text" data-i18n="tcg.sell-text">Vill du sälja din samling eller ett specifikt kort? Få ett snabbt, ärligt erbjudande utan krångel och en smidig affär.</p>
+          <a class="service-action" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="tcg.sell-cta">Kontakta oss ✦</a>
         </div>
         <div class="service-card">
           <span class="service-icon">🔍</span>
-          <div class="service-title">Collection Valuation</div>
-          <p class="service-text">Not sure what your collection is worth? Send it over and get a thorough, transparent valuation based on current market prices.</p>
-          <a class="service-action" href="#" onclick="switchTab('vardering', document.getElementById('tab-btn-vardering')); return false;">Läs mer om värdering ✦</a>
+          <div class="service-title" data-i18n="tcg.val-srv-title">Samlingsvärdering</div>
+          <p class="service-text" data-i18n="tcg.val-srv-text">Osäker på vad din samling är värd? Skicka in den och få en grundlig, transparent värdering baserad på aktuella marknadspriser.</p>
+          <a class="service-action" href="#" onclick="switchTab('vardering', document.getElementById('tab-btn-vardering')); return false;" data-i18n="tcg.val-srv-cta">Läs mer om värdering ✦</a>
         </div>
       </div>
 
       <!-- Scanner strip -->
       <div class="scanner-strip">
         <div class="scanner-strip-text">
-          <h3>Scan a Card Instantly</h3>
-          <p>Upload a photo and our AI will identify your card, assess its condition, and pull live market prices.</p>
+          <h3 data-i18n="tcg.scan-title">Skanna ett kort direkt</h3>
+          <p data-i18n="tcg.scan-text">Ladda upp ett foto så identifierar vår AI ditt kort, bedömer skicket och hämtar aktuella marknadspriser.</p>
         </div>
-        <a class="btn-primary" href="scan.html">Try the Scanner ✦</a>
+        <a class="btn-primary" href="scan.html" data-i18n="tcg.scan-cta">Prova scannern ✦</a>
       </div>
     </div>
 
@@ -543,91 +545,91 @@
 
       <!-- Hero -->
       <div class="val-hero">
-        <p class="page-hero-label">✦ Värdering ✦</p>
-        <h2>Värdering av Pokémonkort</h2>
-        <p>Få hjälp att förstå värdet på dina Pokémonkort eller din samling. Hos Astrelia kan du börja med en kostnadsfri överblick för att se om din samling verkar innehålla kort av värde.</p>
-        <p>Om du vill gå vidare kan du därefter köpa till en mer djupgående och grundlig värdering, där vi tittar närmare på skick, version, språk och aktuellt marknadsvärde.</p>
-        <a class="btn-primary" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;">Skicka in värderingsförfrågan ✦</a>
-        <span class="val-trust">En första kontakt är alltid avgiftsfri. Du binder dig inte till något köp eller fortsatt uppdrag.</span>
+        <p class="page-hero-label" data-i18n="tcg.val-label">✦ Värdering ✦</p>
+        <h2 data-i18n="tcg.val-title">Värdering av Pokémonkort</h2>
+        <p data-i18n="tcg.val-p1">Få hjälp att förstå värdet på dina Pokémonkort eller din samling. Hos Astrelia kan du börja med en kostnadsfri överblick för att se om din samling verkar innehålla kort av värde.</p>
+        <p data-i18n="tcg.val-p2">Om du vill gå vidare kan du därefter köpa till en mer djupgående och grundlig värdering, där vi tittar närmare på skick, version, språk och aktuellt marknadsvärde.</p>
+        <a class="btn-primary" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="tcg.val-req-btn">Skicka in värderingsförfrågan ✦</a>
+        <span class="val-trust" data-i18n="tcg.val-trust">En första kontakt är alltid avgiftsfri. Du binder dig inte till något köp eller fortsatt uppdrag.</span>
       </div>
 
       <!-- Steps -->
       <div class="val-steps">
-        <h3 class="val-steps-title">Så går värderingen till</h3>
+        <h3 class="val-steps-title" data-i18n="tcg.val-steps-title">Så går värderingen till</h3>
         <div class="val-step">
           <div class="val-step-num">1</div>
           <div class="val-step-body">
-            <h4>Skicka in bilder</h4>
-            <p>Skicka tydliga bilder på korten eller samlingen. Vid större samlingar räcker det ofta med översiktsbilder till att börja med.</p>
+            <h4 data-i18n="tcg.val-s1-title">Skicka in bilder</h4>
+            <p data-i18n="tcg.val-s1-p">Skicka tydliga bilder på korten eller samlingen. Vid större samlingar räcker det ofta med översiktsbilder till att börja med.</p>
           </div>
         </div>
         <div class="val-step">
           <div class="val-step-num">2</div>
           <div class="val-step-body">
-            <h4>Första bedömning</h4>
-            <p>Vi går igenom bilderna och gör en första uppskattning av om samlingen verkar innehålla kort av värde.</p>
+            <h4 data-i18n="tcg.val-s2-title">Första bedömning</h4>
+            <p data-i18n="tcg.val-s2-p">Vi går igenom bilderna och gör en första uppskattning av om samlingen verkar innehålla kort av värde.</p>
           </div>
         </div>
         <div class="val-step">
           <div class="val-step-num">3</div>
           <div class="val-step-body">
-            <h4>Fördjupad genomgång vid behov</h4>
-            <p>Om samlingen verkar ha ett högre värde kan vi komma överens om en mer noggrann genomgång. Då kontrolleras bland annat skick, version, språk och marknadsvärde mer detaljerat.</p>
-            <p class="val-step-note">Den kostnadsfria överblicken avslutas här. Du väljer själv om du vill gå vidare med en detaljerad värdering.</p>
+            <h4 data-i18n="tcg.val-s3-title">Fördjupad genomgång vid behov</h4>
+            <p data-i18n="tcg.val-s3-p">Om samlingen verkar ha ett högre värde kan vi komma överens om en mer noggrann genomgång. Då kontrolleras bland annat skick, version, språk och marknadsvärde mer detaljerat.</p>
+            <p class="val-step-note" data-i18n="tcg.val-s3-note">Den kostnadsfria överblicken avslutas här. Du väljer själv om du vill gå vidare med en detaljerad värdering.</p>
           </div>
         </div>
         <div class="val-step">
           <div class="val-step-num">4</div>
           <div class="val-step-body">
-            <h4>Värdering av kort eller samling</h4>
-            <p>Om du väljer en detaljerad värdering skickas korten eller samlingen till Astrelia enligt överenskommelse. Därefter värderas korten utifrån det upplägg vi har kommit överens om.</p>
+            <h4 data-i18n="tcg.val-s4-title">Värdering av kort eller samling</h4>
+            <p data-i18n="tcg.val-s4-p">Om du väljer en detaljerad värdering skickas korten eller samlingen till Astrelia enligt överenskommelse. Därefter värderas korten utifrån det upplägg vi har kommit överens om.</p>
           </div>
         </div>
         <div class="val-step">
           <div class="val-step-num">5</div>
           <div class="val-step-body">
-            <h4>Samlat värderingsdokument</h4>
-            <p>När värderingen är klar får du ett samlat dokument med den information vi har kommit överens om. Dokumentet kan till exempel innehålla skickbedömning, marknadsvärde, kommentarer och översikt över samlingen.</p>
+            <h4 data-i18n="tcg.val-s5-title">Samlat värderingsdokument</h4>
+            <p data-i18n="tcg.val-s5-p">När värderingen är klar får du ett samlat dokument med den information vi har kommit överens om. Dokumentet kan till exempel innehålla skickbedömning, marknadsvärde, kommentarer och översikt över samlingen.</p>
           </div>
         </div>
       </div>
 
       <!-- Disclaimer -->
       <div class="val-disclaimer">
-        <h3>Viktigt att veta</h3>
-        <p>En värdering från Astrelia är en uppskattning baserad på tillgänglig information, skick och aktuella marknadspriser. Det är inte en garanti för att kortet eller samlingen kommer att säljas för exakt det beloppet.</p>
-        <p style="margin-top:8px">Marknaden för Pokémonkort kan förändras över tid, och ett faktiskt försäljningspris kan bli både högre och lägre än den uppskattade värderingen.</p>
+        <h3 data-i18n="tcg.val-disc-title">Viktigt att veta</h3>
+        <p data-i18n="tcg.val-disc-p1">En värdering från Astrelia är en uppskattning baserad på tillgänglig information, skick och aktuella marknadspriser. Det är inte en garanti för att kortet eller samlingen kommer att säljas för exakt det beloppet.</p>
+        <p style="margin-top:8px" data-i18n="tcg.val-disc-p2">Marknaden för Pokémonkort kan förändras över tid, och ett faktiskt försäljningspris kan bli både högre och lägre än den uppskattade värderingen.</p>
       </div>
 
       <!-- Pricing -->
       <div class="val-pricing">
-        <h3 class="val-pricing-title">Priser</h3>
+        <h3 class="val-pricing-title" data-i18n="tcg.val-price-title">Priser</h3>
         <div class="val-pricing-grid">
           <div class="val-price-card">
-            <h4>Kostnadsfri överblick</h4>
+            <h4 data-i18n="tcg.val-free-title">Kostnadsfri överblick</h4>
             <table class="val-price-table">
               <tr>
-                <td>Överblick av om samlingen verkar ha värde</td>
-                <td>Kostnadsfritt</td>
+                <td data-i18n="tcg.val-free-r1">Överblick av om samlingen verkar ha värde</td>
+                <td data-i18n="tcg.val-free-r1v">Kostnadsfritt</td>
               </tr>
               <tr>
-                <td>Ny överblick efter första tillfället</td>
+                <td data-i18n="tcg.val-free-r2">Ny överblick efter första tillfället</td>
                 <td>49 kr</td>
               </tr>
             </table>
-            <p class="val-price-note">Den kostnadsfria överblicken är en första bedömning via bilder — till för att avgöra om samlingen verkar innehålla kort som kan vara värda att gå vidare med.</p>
+            <p class="val-price-note" data-i18n="tcg.val-free-note">Den kostnadsfria överblicken är en första bedömning via bilder — till för att avgöra om samlingen verkar innehålla kort som kan vara värda att gå vidare med.</p>
           </div>
           <div class="val-price-card">
-            <h4>Detaljerad värdering</h4>
+            <h4 data-i18n="tcg.val-det-title">Detaljerad värdering</h4>
             <table class="val-price-table">
-              <tr><td>Liten värdering (1–25 kort)</td><td>99 kr</td></tr>
-              <tr><td>Standard (26–100 kort)</td><td>199 kr</td></tr>
-              <tr><td>Utökad (101–250 kort)</td><td>299 kr</td></tr>
-              <tr><td>Stor (251–500 kort)</td><td>399 kr</td></tr>
-              <tr><td>Större samling (500+ kort)</td><td>599 kr</td></tr>
-              <tr><td>Förseglade produkter (per st)</td><td>49 kr</td></tr>
+              <tr><td data-i18n="tcg.val-det-r1">Liten värdering (1–25 kort)</td><td>99 kr</td></tr>
+              <tr><td data-i18n="tcg.val-det-r2">Standard (26–100 kort)</td><td>199 kr</td></tr>
+              <tr><td data-i18n="tcg.val-det-r3">Utökad (101–250 kort)</td><td>299 kr</td></tr>
+              <tr><td data-i18n="tcg.val-det-r4">Stor (251–500 kort)</td><td>399 kr</td></tr>
+              <tr><td data-i18n="tcg.val-det-r5">Större samling (500+ kort)</td><td>599 kr</td></tr>
+              <tr><td data-i18n="tcg.val-det-r6">Förseglade produkter (per st)</td><td>49 kr</td></tr>
             </table>
-            <p class="val-price-note">Priserna gäller per samling. En samling kan inte delas upp i flera mindre paket för att kringgå prisnivåerna. För mycket stora eller osorterade samlingar kan pris och upplägg behöva anpassas.</p>
+            <p class="val-price-note" data-i18n="tcg.val-det-note">Priserna gäller per samling. En samling kan inte delas upp i flera mindre paket för att kringgå prisnivåerna. För mycket stora eller osorterade samlingar kan pris och upplägg behöva anpassas.</p>
           </div>
         </div>
       </div>
@@ -635,70 +637,70 @@
       <!-- Includes + sealed -->
       <div class="val-two-col">
         <div class="val-section-card">
-          <h3>Vad ingår i en detaljerad värdering?</h3>
+          <h3 data-i18n="tcg.val-inc-title">Vad ingår i en detaljerad värdering?</h3>
           <ul class="val-list">
-            <li>Noggrann skickbedömning</li>
-            <li>Aktuellt marknadsvärde</li>
-            <li>Sortering av kort</li>
-            <li>Skydd till värdefulla kort (sleeves eller toploaders)</li>
-            <li>Utförligt dokumenterad värdering</li>
-            <li>Samlat dokument med tillgång 24/7 under värderingsprocessen</li>
-            <li>Försäkring hos Astrelia</li>
-            <li>Avtal</li>
+            <li data-i18n="tcg.val-inc-1">Noggrann skickbedömning</li>
+            <li data-i18n="tcg.val-inc-2">Aktuellt marknadsvärde</li>
+            <li data-i18n="tcg.val-inc-3">Sortering av kort</li>
+            <li data-i18n="tcg.val-inc-4">Skydd till värdefulla kort (sleeves eller toploaders)</li>
+            <li data-i18n="tcg.val-inc-5">Utförligt dokumenterad värdering</li>
+            <li data-i18n="tcg.val-inc-6">Samlat dokument med tillgång 24/7 under värderingsprocessen</li>
+            <li data-i18n="tcg.val-inc-7">Försäkring hos Astrelia</li>
+            <li data-i18n="tcg.val-inc-8">Avtal</li>
           </ul>
         </div>
         <div class="val-section-card">
-          <h3>Förseglade produkter</h3>
-          <p style="font-size:.82rem;color:var(--tx4);line-height:1.8;margin-bottom:16px">Förseglade produkter kan ofta värderas online med tydliga bilder.</p>
+          <h3 data-i18n="tcg.val-seal-title">Förseglade produkter</h3>
+          <p style="font-size:.82rem;color:var(--tx4);line-height:1.8;margin-bottom:16px" data-i18n="tcg.val-seal-p">Förseglade produkter kan ofta värderas online med tydliga bilder.</p>
           <ul class="val-list" style="margin-bottom:16px">
-            <li>Marknadsvärde</li>
-            <li>Samlat dokument med tillgång 24/7 under värderingsprocessen vid flera produkter</li>
+            <li data-i18n="tcg.val-seal-l1">Marknadsvärde</li>
+            <li data-i18n="tcg.val-seal-l2">Samlat dokument med tillgång 24/7 under värderingsprocessen vid flera produkter</li>
           </ul>
         </div>
       </div>
 
       <!-- What affects value -->
       <div class="val-sealed">
-        <h3>Vad påverkar värdet?</h3>
+        <h3 data-i18n="tcg.val-aff-title">Vad påverkar värdet?</h3>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:16px">
           <div class="val-affects-item" style="margin-bottom:0">
-            <h5>Skick</h5>
-            <p>Repor, vita kanter, böjningar och slitage påverkar värdet — ofta en av de viktigaste faktorerna.</p>
+            <h5 data-i18n="tcg.val-aff1-h">Skick</h5>
+            <p data-i18n="tcg.val-aff1-p">Repor, vita kanter, böjningar och slitage påverkar värdet — ofta en av de viktigaste faktorerna.</p>
           </div>
           <div class="val-affects-item" style="margin-bottom:0">
-            <h5>Utgåva och set</h5>
-            <p>Vissa expansioner, äldre kort och särskilda utgåvor är mer eftertraktade än andra.</p>
+            <h5 data-i18n="tcg.val-aff2-h">Utgåva och set</h5>
+            <p data-i18n="tcg.val-aff2-p">Vissa expansioner, äldre kort och särskilda utgåvor är mer eftertraktade än andra.</p>
           </div>
           <div class="val-affects-item" style="margin-bottom:0">
-            <h5>Språk</h5>
-            <p>Engelska, japanska och andra språk kan värderas olika beroende på kort, marknad och efterfrågan.</p>
+            <h5 data-i18n="tcg.val-aff3-h">Språk</h5>
+            <p data-i18n="tcg.val-aff3-p">Engelska, japanska och andra språk kan värderas olika beroende på kort, marknad och efterfrågan.</p>
           </div>
           <div class="val-affects-item" style="margin-bottom:0">
-            <h5>Rarity och version</h5>
-            <p>Holo, reverse holo, first edition, promo och secret rare kan alla påverka värdet.</p>
+            <h5 data-i18n="tcg.val-aff4-h">Rarity och version</h5>
+            <p data-i18n="tcg.val-aff4-p">Holo, reverse holo, first edition, promo och secret rare kan alla påverka värdet.</p>
           </div>
           <div class="val-affects-item" style="margin-bottom:0">
-            <h5>Efterfrågan</h5>
-            <p>Marknadspriser förändras med tid och samlartrender.</p>
+            <h5 data-i18n="tcg.val-aff5-h">Efterfrågan</h5>
+            <p data-i18n="tcg.val-aff5-p">Marknadspriser förändras med tid och samlartrender.</p>
           </div>
           <div class="val-affects-item" style="margin-bottom:0">
-            <h5>Gradering</h5>
-            <p>Graderade kort kan ha ett annat värde än ograderade beroende på skick och centering.</p>
+            <h5 data-i18n="tcg.val-aff6-h">Gradering</h5>
+            <p data-i18n="tcg.val-aff6-p">Graderade kort kan ha ett annat värde än ograderade beroende på skick och centering.</p>
           </div>
         </div>
       </div>
 
       <!-- Insurance note -->
       <div class="val-disclaimer" style="max-width:860px;margin:0 auto 64px;text-align:center">
-        <p>Allt som skickas till Astrelia hanteras varsamt och förvaras enligt våra rutiner. Kunders egendom omfattas av vår företagsförsäkring.</p>
+        <p data-i18n="tcg.val-ins">Allt som skickas till Astrelia hanteras varsamt och förvaras enligt våra rutiner. Kunders egendom omfattas av vår företagsförsäkring.</p>
       </div>
 
       <!-- Closing CTA -->
       <div class="val-cta">
-        <p class="section-label">✦ Kom igång ✦</p>
-        <h2>Vill du veta vad dina Pokémonkort kan vara värda?</h2>
-        <p>Skicka in en värderingsförfrågan med bilder och kort information om din samling. Vi börjar med en kostnadsfri överblick och guidar dig vidare därifrån.</p>
-        <a class="btn-primary" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;">Skicka in värderingsförfrågan ✦</a>
+        <p class="section-label" data-i18n="tcg.val-cta-label">✦ Kom igång ✦</p>
+        <h2 data-i18n="tcg.val-cta-title">Vill du veta vad dina Pokémonkort kan vara värda?</h2>
+        <p data-i18n="tcg.val-cta-p">Skicka in en värderingsförfrågan med bilder och kort information om din samling. Vi börjar med en kostnadsfri överblick och guidar dig vidare därifrån.</p>
+        <a class="btn-primary" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="tcg.val-req-btn">Skicka in värderingsförfrågan ✦</a>
       </div>
 
     </div>
@@ -710,17 +712,17 @@
           <div class="orb"><span class="orb-inner">⚡</span></div>
         </div>
         <div class="why-content">
-          <p class="page-hero-label">✦ Why Astrelia ✦</p>
-          <h2>Trusted by Collectors</h2>
+          <p class="page-hero-label" data-i18n="tcg.why-label">✦ Varför Astrelia ✦</p>
+          <h2 data-i18n="tcg.why-title">Betrodd av samlare</h2>
           <ul class="why-list">
-            <li>Genuine passion for Pokémon TCG — not just a business, but a hobby turned calling.</li>
-            <li>Transparent pricing based on real market data, so you always know what you're getting.</li>
-            <li>Personal service — every collection is treated with care and respect, big or small.</li>
-            <li>Fast, reliable communication whether you're buying a single card or an entire collection.</li>
+            <li data-i18n="tcg.why-1">Genuin passion för Pokémon TCG — inte bara ett företag, utan ett hobby som blivit ett kall.</li>
+            <li data-i18n="tcg.why-2">Transparenta priser baserade på verklig marknadsdata, så du alltid vet vad du får.</li>
+            <li data-i18n="tcg.why-3">Personlig service — varje samling behandlas med omsorg och respekt, stor som liten.</li>
+            <li data-i18n="tcg.why-4">Snabb, pålitlig kommunikation oavsett om du köper ett enda kort eller en hel samling.</li>
           </ul>
           <div class="btn-row" style="gap:14px">
-            <a class="btn-primary" href="scan.html">Scan a Card ✦</a>
-            <a class="btn-outline" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;">Get in Touch</a>
+            <a class="btn-primary" href="scan.html" data-i18n="tcg.why-btn-scan">Skanna ett kort ✦</a>
+            <a class="btn-outline" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="tcg.why-btn-con">Kontakta oss</a>
           </div>
         </div>
       </div>
@@ -729,26 +731,26 @@
     <!-- CONTACT -->
     <div class="tab-panel" id="tab-contact">
       <div class="contact-panel">
-        <p class="section-label">✦ Reach Out ✦</p>
-        <h2>Let's Make a Deal</h2>
-        <p>Got a collection to value? A card to buy or sell?<br />Reach out and let's make something happen.</p>
+        <p class="section-label" data-i18n="tcg.con-label">✦ Hör av dig ✦</p>
+        <h2 data-i18n="tcg.con-title">Låt oss göra en affär</h2>
+        <p data-i18n="tcg.con-sub">Har du en samling att värdera? Ett kort att köpa eller sälja?<br />Hör av dig och låt oss göra något av det.</p>
 
         <div class="contact-options">
           <div class="contact-option">
             <span class="contact-option-icon">💌</span>
-            <div class="contact-option-title">Email</div>
-            <p class="contact-option-text">Send a message and expect a reply within 24 hours.</p>
+            <div class="contact-option-title" data-i18n="tcg.con-email-t">E-post</div>
+            <p class="contact-option-text" data-i18n="tcg.con-email-p">Skicka ett meddelande och förvänta dig svar inom 24 timmar.</p>
           </div>
           <div class="contact-option">
             <span class="contact-option-icon">📸</span>
-            <div class="contact-option-title">Instagram</div>
-            <p class="contact-option-text">DM us on Instagram for quick questions or card photos.</p>
+            <div class="contact-option-title" data-i18n="tcg.con-ig-t">Instagram</div>
+            <p class="contact-option-text" data-i18n="tcg.con-ig-p">DM:a oss på Instagram för snabba frågor eller kortfoton.</p>
           </div>
         </div>
 
         <div class="btn-row" style="justify-content:center;gap:14px">
-          <a class="btn-primary" href="mailto:hello@astrelia.com">Send a Message ✦</a>
-          <a class="btn-outline" href="index.html">← Back to Home</a>
+          <a class="btn-primary" href="mailto:hello@astrelia.com" data-i18n="tcg.con-btn-send">Skicka ett meddelande ✦</a>
+          <a class="btn-outline" href="index.html" data-i18n="tcg.con-btn-back">← Tillbaka till startsidan</a>
         </div>
       </div>
     </div>
@@ -761,26 +763,26 @@
   <div class="footer-top">
     <div class="footer-brand">
       <img src="Logga Astrelia.png" alt="Astrelia" />
-      <p>Two worlds, one brand. Pokémon TCG and music, crafted with cosmic passion.</p>
+      <p data-i18n="tcg.ft-brand">Två världar, ett varumärke. Pokémon TCG och musik, skapade med kosmisk passion.</p>
     </div>
     <div class="footer-col">
-      <h4>TCG</h4>
+      <h4 data-i18n="tcg.ft-tcg">TCG</h4>
       <ul>
-        <li><a href="#" onclick="switchTab('services', document.getElementById('tab-btn-services')); window.scrollTo({top:0,behavior:'smooth'}); return false;">Buy Cards</a></li>
-        <li><a href="#" onclick="switchTab('services', document.getElementById('tab-btn-services')); window.scrollTo({top:0,behavior:'smooth'}); return false;">Sell Cards</a></li>
-        <li><a href="#" onclick="switchTab('services', document.getElementById('tab-btn-services')); window.scrollTo({top:0,behavior:'smooth'}); return false;">Collection Valuation</a></li>
+        <li><a href="#" onclick="switchTab('services', document.getElementById('tab-btn-services')); window.scrollTo({top:0,behavior:'smooth'}); return false;" data-i18n="tcg.ft-buy">Köp kort</a></li>
+        <li><a href="#" onclick="switchTab('services', document.getElementById('tab-btn-services')); window.scrollTo({top:0,behavior:'smooth'}); return false;" data-i18n="tcg.ft-sell">Sälj kort</a></li>
+        <li><a href="#" onclick="switchTab('services', document.getElementById('tab-btn-services')); window.scrollTo({top:0,behavior:'smooth'}); return false;" data-i18n="tcg.ft-val">Samlingsvärdering</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Explore</h4>
+      <h4 data-i18n="tcg.ft-explore">Utforska</h4>
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="music.html">Music</a></li>
-        <li><a href="scan.html">Card Scanner</a></li>
+        <li><a href="index.html" data-i18n="tcg.ft-home">Hem</a></li>
+        <li><a href="music.html" data-i18n="tcg.ft-music">Musik</a></li>
+        <li><a href="scan.html" data-i18n="tcg.ft-scanner">Kortscanner</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Follow</h4>
+      <h4 data-i18n="tcg.ft-follow">Följ oss</h4>
       <ul>
         <li><a href="#">Instagram</a></li>
         <li><a href="#">TikTok</a></li>
@@ -789,17 +791,17 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 Astrelia. All rights reserved.</p>
-
-    <p>Crafted with ✦ cosmic love</p>
+    <p data-i18n="ft.copyright">© 2026 Astrelia. Alla rättigheter förbehålls.</p>
+    <p data-i18n="ft.crafted">Skapad med ✦ kosmisk kärlek</p>
   </div>
-  <div style="text-align:center;padding:10px 24px 20px;font-size:.72rem;color:var(--tx4);letter-spacing:.06em">
+  <div style="text-align:center;padding:10px 24px 20px;font-size:.72rem;color:var(--tx4);letter-spacing:.06em" data-i18n="ft.vat">
     Alla priser är inklusive moms.
   </div>
 </footer>
 
 <script src="theme.js"></script>
 <script src="stars.js"></script>
+<script src="lang.js"></script>
 <script>
   function switchTab(name, btn) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
