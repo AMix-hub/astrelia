@@ -197,6 +197,49 @@ const translations = {
     'scan.step-3':       '✦ Hämtar marknadspriser',
     'scan.try-again':    'Försök igen',
     'scan.card-id':      '✦ Kort identifierat',
+
+    /* ── VALUATION FORM ── */
+    'vf.label':         '✦ Skicka in ✦',
+    'vf.title':         'Skicka in värderingsförfrågan',
+    'vf.intro':         'Fyll i formuläret nedan och bifoga gärna tydliga bilder på dina kort eller din samling. Vi återkommer med en första kostnadsfri överblick och guidar dig vidare om en detaljerad värdering kan vara aktuell.',
+    'vf.s-contact':     'Kontaktuppgifter',
+    'vf.name':          'Namn',
+    'vf.name-ph':       'Ditt namn',
+    'vf.email':         'E-post',
+    'vf.email-ph':      'din@epost.se',
+    'vf.optional':      '(valfritt)',
+    'vf.phone-ph':      '+46 70 000 00 00',
+    'vf.s-collection':  'Om samlingen',
+    'vf.q-help':        'Vad vill du ha hjälp med?',
+    'vf.h-free':        'Kostnadsfri överblick',
+    'vf.h-detail':      'Detaljerad värdering',
+    'vf.h-sealed':      'Värdering av förseglad produkt',
+    'vf.h-unsure':      'Jag är osäker',
+    'vf.q-count':       'Ungefär hur många kort gäller det?',
+    'vf.q-type':        'Vad består samlingen av?',
+    'vf.t-single':      'Enstaka kort',
+    'vf.t-binder':      'Pärm',
+    'vf.t-bulk':        'Låda/bulk',
+    'vf.t-sealed':      'Förseglade produkter',
+    'vf.t-mixed':       'Blandat',
+    'vf.q-lang':        'Vilket språk är korten på?',
+    'vf.l-en':          'Engelska',
+    'vf.l-jp':          'Japanska',
+    'vf.l-other':       'Annat',
+    'vf.l-mixed':       'Blandat',
+    'vf.l-unknown':     'Vet ej',
+    'vf.s-images':      'Bilder',
+    'vf.upload-label':  'Ladda upp bilder',
+    'vf.upload-hint':   'Ladda gärna upp översiktsbilder på samlingen samt närbilder på kort du tror kan vara extra värdefulla. Vid större samlingar behöver du inte fotografera varje kort.',
+    'vf.msg-ph':        'Berätta kort om samlingen…',
+    'vf.s-agree':       'Godkännanden',
+    'vf.ag1':           'Jag förstår att den första överblicken är en uppskattning via bilder.',
+    'vf.ag2':           'Jag förstår att en värdering inte är en garanti för framtida försäljningspris.',
+    'vf.ag3':           'Jag godkänner att Astrelia behandlar mina kontaktuppgifter för att kunna hantera min förfrågan.',
+    'vf.submit':        'Skicka förfrågan ✦',
+    'vf.ok-title':      'Tack för din förfrågan',
+    'vf.ok-p':          'Vi har tagit emot din värderingsförfrågan och återkommer så snart vi har gått igenom informationen. Om vi behöver fler bilder eller mer information kontaktar vi dig via e-post.',
+    'vf.ok-warn':       '❗ Skicka inga kort till Astrelia innan du har fått instruktioner och eventuell överenskommelse från oss.',
   },
 
   en: {
@@ -397,6 +440,49 @@ const translations = {
     'scan.step-3':       '✦ Fetching market prices',
     'scan.try-again':    'Try Again',
     'scan.card-id':      '✦ Card Identified',
+
+    /* ── VALUATION FORM ── */
+    'vf.label':         '✦ Submit ✦',
+    'vf.title':         'Submit a Valuation Request',
+    'vf.intro':         'Fill in the form below and feel free to attach clear photos of your cards or collection. We\'ll get back to you with a first free overview and guide you further if a detailed valuation seems relevant.',
+    'vf.s-contact':     'Contact Details',
+    'vf.name':          'Name',
+    'vf.name-ph':       'Your name',
+    'vf.email':         'Email',
+    'vf.email-ph':      'your@email.com',
+    'vf.optional':      '(optional)',
+    'vf.phone-ph':      '+1 000 000 0000',
+    'vf.s-collection':  'About the Collection',
+    'vf.q-help':        'What would you like help with?',
+    'vf.h-free':        'Free overview',
+    'vf.h-detail':      'Detailed valuation',
+    'vf.h-sealed':      'Sealed product valuation',
+    'vf.h-unsure':      'I\'m not sure',
+    'vf.q-count':       'Approximately how many cards?',
+    'vf.q-type':        'What does the collection consist of?',
+    'vf.t-single':      'Individual cards',
+    'vf.t-binder':      'Binder',
+    'vf.t-bulk':        'Box/bulk',
+    'vf.t-sealed':      'Sealed products',
+    'vf.t-mixed':       'Mixed',
+    'vf.q-lang':        'What language are the cards in?',
+    'vf.l-en':          'English',
+    'vf.l-jp':          'Japanese',
+    'vf.l-other':       'Other',
+    'vf.l-mixed':       'Mixed',
+    'vf.l-unknown':     'Not sure',
+    'vf.s-images':      'Images',
+    'vf.upload-label':  'Upload images',
+    'vf.upload-hint':   'Feel free to upload overview photos of the collection as well as close-ups of cards you think may be particularly valuable. For larger collections you don\'t need to photograph every card.',
+    'vf.msg-ph':        'Tell us briefly about the collection…',
+    'vf.s-agree':       'Agreements',
+    'vf.ag1':           'I understand that the first overview is an estimate based on photos.',
+    'vf.ag2':           'I understand that a valuation is not a guarantee of a future sale price.',
+    'vf.ag3':           'I agree that Astrelia may process my contact details to handle my request.',
+    'vf.submit':        'Submit Request ✦',
+    'vf.ok-title':      'Thank You for Your Request',
+    'vf.ok-p':          'We have received your valuation request and will get back to you as soon as we have reviewed the information. If we need more photos or information we will contact you by email.',
+    'vf.ok-warn':       '❗ Do not send any cards to Astrelia until you have received instructions and a possible agreement from us.',
   }
 };
 
@@ -407,6 +493,10 @@ function applyLang(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.dataset.i18nPh;
+    if (t[key] !== undefined) el.placeholder = t[key];
   });
   document.querySelectorAll('.lang-toggle').forEach(btn => {
     btn.textContent = lang === 'sv' ? 'EN' : 'SV';

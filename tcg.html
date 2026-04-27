@@ -437,6 +437,158 @@
       .service-card { padding: 32px 20px 28px; }
       .scanner-strip { padding: 24px 20px; }
     }
+
+    /* ── VALUATION FORM ── */
+    .vf-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .vf-intro {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    .vf-intro h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 300; color: var(--tx);
+      letter-spacing: .06em; margin-bottom: 14px;
+    }
+    .vf-intro p { font-size: .86rem; color: var(--tx4); line-height: 1.9; max-width: 540px; margin: 0 auto; }
+
+    .vf-section { margin-bottom: 40px; }
+    .vf-section-title {
+      font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--a1); margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(var(--a1r), .18);
+    }
+    .vf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .vf-field { display: flex; flex-direction: column; gap: 7px; }
+    .vf-field.full { grid-column: 1 / -1; }
+    .vf-label {
+      font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--tx3);
+    }
+    .vf-label .vf-opt { color: var(--tx5); letter-spacing: .06em; text-transform: none; font-size: .68rem; margin-left: 4px; }
+    .vf-input, .vf-textarea {
+      background: var(--card-bg);
+      border: 1px solid rgba(var(--a2r), .28);
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .83rem; color: var(--tx);
+      transition: border-color .25s, box-shadow .25s;
+      width: 100%; box-sizing: border-box;
+    }
+    .vf-input:focus, .vf-textarea:focus {
+      outline: none;
+      border-color: rgba(var(--a1r), .55);
+      box-shadow: 0 0 0 3px rgba(var(--a1r), .07);
+    }
+    .vf-input::placeholder, .vf-textarea::placeholder { color: var(--tx5); }
+    .vf-textarea { min-height: 110px; resize: vertical; line-height: 1.7; }
+
+    /* Pill options */
+    .vf-options { display: flex; flex-wrap: wrap; gap: 9px; }
+    .vf-pill-input { display: none; }
+    .vf-pill-input + label {
+      padding: 8px 18px;
+      border: 1px solid rgba(var(--a2r), .3);
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .76rem; color: var(--tx4);
+      cursor: pointer;
+      transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+      user-select: none;
+    }
+    .vf-pill-input + label:hover { border-color: rgba(var(--a1r), .4); color: var(--tx2); }
+    .vf-pill-input:checked + label {
+      border-color: var(--a1);
+      color: var(--tx);
+      background: rgba(var(--a1r), .09);
+      box-shadow: 0 0 14px rgba(var(--a1r), .14);
+    }
+
+    /* Upload */
+    .vf-upload {
+      border: 2px dashed rgba(var(--a2r), .35);
+      border-radius: 16px;
+      background: var(--card-bg);
+      padding: 36px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .3s, box-shadow .3s;
+      position: relative;
+    }
+    .vf-upload:hover { border-color: var(--a1); box-shadow: 0 0 28px rgba(var(--a1r), .1); }
+    .vf-upload input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .vf-upload-icon { font-size: 2rem; margin-bottom: 10px; filter: drop-shadow(0 0 8px rgba(var(--a1r),.4)); }
+    .vf-upload-label { font-size: .8rem; color: var(--tx2); margin-bottom: 4px; font-family: 'Montserrat', sans-serif; }
+    .vf-upload-hint { font-size: .74rem; color: var(--tx5); line-height: 1.6; }
+    .vf-file-list { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .vf-file-chip { font-size: .7rem; color: var(--a1); background: rgba(var(--a1r), .1); border-radius: 6px; padding: 3px 10px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* Agreements */
+    .vf-agree-list { display: flex; flex-direction: column; gap: 14px; }
+    .vf-agree-item { display: flex; align-items: flex-start; gap: 13px; cursor: pointer; }
+    .vf-checkbox {
+      appearance: none; -webkit-appearance: none;
+      width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
+      border: 1.5px solid rgba(var(--a2r), .45);
+      border-radius: 5px; cursor: pointer;
+      background: transparent;
+      transition: border-color .2s, background .2s;
+      position: relative;
+    }
+    .vf-checkbox:checked {
+      border-color: var(--a1);
+      background: var(--a1);
+    }
+    .vf-checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff; font-size: .68rem; font-weight: 700;
+    }
+    .vf-agree-text { font-size: .8rem; color: var(--tx4); line-height: 1.65; }
+
+    /* Submit */
+    .vf-submit-row { text-align: center; margin-top: 44px; }
+    .vf-submit-row .btn-primary { font-size: .82rem; padding: 15px 48px; }
+
+    /* Success */
+    .vf-success {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 60px 0;
+    }
+    .vf-success-star {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      color: var(--a1);
+      text-shadow: 0 0 24px rgba(var(--a1r), .6);
+    }
+    .vf-success h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 300; color: var(--tx);
+      letter-spacing: .06em; margin-bottom: 16px;
+    }
+    .vf-success p { font-size: .86rem; color: var(--tx4); line-height: 1.9; margin-bottom: 28px; }
+    .vf-success-warning {
+      background: linear-gradient(135deg, rgba(var(--a1r),.07), rgba(var(--a2r),.05));
+      border: 1px solid rgba(var(--a1r), .2);
+      border-radius: 14px;
+      padding: 18px 24px;
+      font-size: .8rem; color: var(--tx3); line-height: 1.7;
+    }
+
+    @media (max-width: 700px) {
+      .vf-row { grid-template-columns: 1fr; }
+      .vf-field.full { grid-column: 1; }
+    }
   </style>
 </head>
 <body>
@@ -549,7 +701,7 @@
         <h2 data-i18n="tcg.val-title">Värdering av Pokémonkort</h2>
         <p data-i18n="tcg.val-p1">Få hjälp att förstå värdet på dina Pokémonkort eller din samling. Hos Astrelia kan du börja med en kostnadsfri överblick för att se om din samling verkar innehålla kort av värde.</p>
         <p data-i18n="tcg.val-p2">Om du vill gå vidare kan du därefter köpa till en mer djupgående och grundlig värdering, där vi tittar närmare på skick, version, språk och aktuellt marknadsvärde.</p>
-        <a class="btn-primary" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="tcg.val-req-btn">Skicka in värderingsförfrågan ✦</a>
+        <a class="btn-primary" href="#val-form-anchor" onclick="document.getElementById('val-form-anchor').scrollIntoView({behavior:'smooth'}); return false;" data-i18n="tcg.val-req-btn">Skicka in värderingsförfrågan ✦</a>
         <span class="val-trust" data-i18n="tcg.val-trust">En första kontakt är alltid avgiftsfri. Du binder dig inte till något köp eller fortsatt uppdrag.</span>
       </div>
 
@@ -695,12 +847,159 @@
         <p data-i18n="tcg.val-ins">Allt som skickas till Astrelia hanteras varsamt och förvaras enligt våra rutiner. Kunders egendom omfattas av vår företagsförsäkring.</p>
       </div>
 
-      <!-- Closing CTA -->
-      <div class="val-cta">
-        <p class="section-label" data-i18n="tcg.val-cta-label">✦ Kom igång ✦</p>
-        <h2 data-i18n="tcg.val-cta-title">Vill du veta vad dina Pokémonkort kan vara värda?</h2>
-        <p data-i18n="tcg.val-cta-p">Skicka in en värderingsförfrågan med bilder och kort information om din samling. Vi börjar med en kostnadsfri överblick och guidar dig vidare därifrån.</p>
-        <a class="btn-primary" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="tcg.val-req-btn">Skicka in värderingsförfrågan ✦</a>
+      <!-- Valuation Form -->
+      <div id="val-form-anchor" class="vf-wrap">
+
+        <div class="vf-intro">
+          <p class="section-label" data-i18n="vf.label">✦ Skicka in ✦</p>
+          <h2 data-i18n="vf.title">Skicka in värderingsförfrågan</h2>
+          <p data-i18n="vf.intro">Fyll i formuläret nedan och bifoga gärna tydliga bilder på dina kort eller din samling. Vi återkommer med en första kostnadsfri överblick och guidar dig vidare om en detaljerad värdering kan vara aktuell.</p>
+        </div>
+
+        <!-- Form -->
+        <div id="vf-form-wrap">
+          <form id="vf-form" onsubmit="submitValForm(event)" novalidate>
+
+            <!-- Kontaktuppgifter -->
+            <div class="vf-section">
+              <div class="vf-section-title" data-i18n="vf.s-contact">Kontaktuppgifter</div>
+              <div class="vf-row">
+                <div class="vf-field">
+                  <label class="vf-label" for="vf-name" data-i18n="vf.name">Namn</label>
+                  <input class="vf-input" type="text" id="vf-name" required data-i18n-ph="vf.name-ph" placeholder="Ditt namn" />
+                </div>
+                <div class="vf-field">
+                  <label class="vf-label" for="vf-email" data-i18n="vf.email">E-post</label>
+                  <input class="vf-input" type="email" id="vf-email" required data-i18n-ph="vf.email-ph" placeholder="din@epost.se" />
+                </div>
+                <div class="vf-field full">
+                  <label class="vf-label" for="vf-phone">Telefonnummer <span class="vf-opt" data-i18n="vf.optional">(valfritt)</span></label>
+                  <input class="vf-input" type="tel" id="vf-phone" data-i18n-ph="vf.phone-ph" placeholder="+46 70 000 00 00" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Om samlingen -->
+            <div class="vf-section">
+              <div class="vf-section-title" data-i18n="vf.s-collection">Om samlingen</div>
+
+              <div class="vf-field" style="margin-bottom:24px">
+                <label class="vf-label" data-i18n="vf.q-help">Vad vill du ha hjälp med?</label>
+                <div class="vf-options">
+                  <input class="vf-pill-input" type="radio" name="help" id="h1" value="overblick" />
+                  <label for="h1" data-i18n="vf.h-free">Kostnadsfri överblick</label>
+                  <input class="vf-pill-input" type="radio" name="help" id="h2" value="detaljerad" />
+                  <label for="h2" data-i18n="vf.h-detail">Detaljerad värdering</label>
+                  <input class="vf-pill-input" type="radio" name="help" id="h3" value="forseglad" />
+                  <label for="h3" data-i18n="vf.h-sealed">Värdering av förseglad produkt</label>
+                  <input class="vf-pill-input" type="radio" name="help" id="h4" value="osaker" />
+                  <label for="h4" data-i18n="vf.h-unsure">Jag är osäker</label>
+                </div>
+              </div>
+
+              <div class="vf-field" style="margin-bottom:24px">
+                <label class="vf-label" data-i18n="vf.q-count">Ungefär hur många kort gäller det?</label>
+                <div class="vf-options">
+                  <input class="vf-pill-input" type="radio" name="count" id="c1" value="1-25" />
+                  <label for="c1">1–25</label>
+                  <input class="vf-pill-input" type="radio" name="count" id="c2" value="26-100" />
+                  <label for="c2">26–100</label>
+                  <input class="vf-pill-input" type="radio" name="count" id="c3" value="101-250" />
+                  <label for="c3">101–250</label>
+                  <input class="vf-pill-input" type="radio" name="count" id="c4" value="251-500" />
+                  <label for="c4">251–500</label>
+                  <input class="vf-pill-input" type="radio" name="count" id="c5" value="500+" />
+                  <label for="c5">500+</label>
+                </div>
+              </div>
+
+              <div class="vf-field" style="margin-bottom:24px">
+                <label class="vf-label" data-i18n="vf.q-type">Vad består samlingen av?</label>
+                <div class="vf-options">
+                  <input class="vf-pill-input" type="checkbox" name="type" id="t1" value="enstaka" />
+                  <label for="t1" data-i18n="vf.t-single">Enstaka kort</label>
+                  <input class="vf-pill-input" type="checkbox" name="type" id="t2" value="parm" />
+                  <label for="t2" data-i18n="vf.t-binder">Pärm</label>
+                  <input class="vf-pill-input" type="checkbox" name="type" id="t3" value="bulk" />
+                  <label for="t3" data-i18n="vf.t-bulk">Låda/bulk</label>
+                  <input class="vf-pill-input" type="checkbox" name="type" id="t4" value="forseglat" />
+                  <label for="t4" data-i18n="vf.t-sealed">Förseglade produkter</label>
+                  <input class="vf-pill-input" type="checkbox" name="type" id="t5" value="blandat" />
+                  <label for="t5" data-i18n="vf.t-mixed">Blandat</label>
+                </div>
+              </div>
+
+              <div class="vf-field">
+                <label class="vf-label" data-i18n="vf.q-lang">Vilket språk är korten på?</label>
+                <div class="vf-options">
+                  <input class="vf-pill-input" type="checkbox" name="lang" id="l1" value="engelska" />
+                  <label for="l1" data-i18n="vf.l-en">Engelska</label>
+                  <input class="vf-pill-input" type="checkbox" name="lang" id="l2" value="japanska" />
+                  <label for="l2" data-i18n="vf.l-jp">Japanska</label>
+                  <input class="vf-pill-input" type="checkbox" name="lang" id="l3" value="annat" />
+                  <label for="l3" data-i18n="vf.l-other">Annat</label>
+                  <input class="vf-pill-input" type="checkbox" name="lang" id="l4" value="blandat" />
+                  <label for="l4" data-i18n="vf.l-mixed">Blandat</label>
+                  <input class="vf-pill-input" type="checkbox" name="lang" id="l5" value="vet-ej" />
+                  <label for="l5" data-i18n="vf.l-unknown">Vet ej</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bilder -->
+            <div class="vf-section">
+              <div class="vf-section-title" data-i18n="vf.s-images">Bilder</div>
+              <div class="vf-upload" id="vf-upload-zone">
+                <input type="file" id="vf-images" accept="image/*" multiple onchange="handleVfFiles(this)" />
+                <div class="vf-upload-icon">📷</div>
+                <div class="vf-upload-label" data-i18n="vf.upload-label">Ladda upp bilder</div>
+                <div class="vf-upload-hint" data-i18n="vf.upload-hint">Ladda gärna upp översiktsbilder på samlingen samt närbilder på kort du tror kan vara extra värdefulla. Vid större samlingar behöver du inte fotografera varje kort.</div>
+                <div class="vf-file-list" id="vf-file-list"></div>
+              </div>
+            </div>
+
+            <!-- Meddelande -->
+            <div class="vf-section">
+              <div class="vf-section-title">Meddelande <span class="vf-opt" data-i18n="vf.optional">(valfritt)</span></div>
+              <textarea class="vf-textarea" id="vf-message" data-i18n-ph="vf.msg-ph" placeholder="Berätta kort om samlingen…"></textarea>
+            </div>
+
+            <!-- Godkännanden -->
+            <div class="vf-section">
+              <div class="vf-section-title" data-i18n="vf.s-agree">Godkännanden</div>
+              <div class="vf-agree-list">
+                <label class="vf-agree-item">
+                  <input class="vf-checkbox" type="checkbox" id="ag1" required />
+                  <span class="vf-agree-text" data-i18n="vf.ag1">Jag förstår att den första överblicken är en uppskattning via bilder.</span>
+                </label>
+                <label class="vf-agree-item">
+                  <input class="vf-checkbox" type="checkbox" id="ag2" required />
+                  <span class="vf-agree-text" data-i18n="vf.ag2">Jag förstår att en värdering inte är en garanti för framtida försäljningspris.</span>
+                </label>
+                <label class="vf-agree-item">
+                  <input class="vf-checkbox" type="checkbox" id="ag3" required />
+                  <span class="vf-agree-text" data-i18n="vf.ag3">Jag godkänner att Astrelia behandlar mina kontaktuppgifter för att kunna hantera min förfrågan.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="vf-submit-row">
+              <button type="submit" class="btn-primary" data-i18n="vf.submit">Skicka förfrågan ✦</button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Success state -->
+        <div id="vf-success" style="display:none">
+          <div class="vf-success">
+            <div class="vf-success-star">✦</div>
+            <h2 data-i18n="vf.ok-title">Tack för din förfrågan</h2>
+            <p data-i18n="vf.ok-p">Vi har tagit emot din värderingsförfrågan och återkommer så snart vi har gått igenom informationen. Om vi behöver fler bilder eller mer information kontaktar vi dig via e-post.</p>
+            <div class="vf-success-warning" data-i18n="vf.ok-warn">❗ Skicka inga kort till Astrelia innan du har fått instruktioner och eventuell överenskommelse från oss.</div>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -829,6 +1128,45 @@
 
   // Open contact tab if URL has #contact
   if (location.hash === '#contact') switchTab('contact', null);
+
+  // Valuation form
+  function handleVfFiles(input) {
+    const list = document.getElementById('vf-file-list');
+    list.innerHTML = '';
+    Array.from(input.files).forEach(f => {
+      const chip = document.createElement('span');
+      chip.className = 'vf-file-chip';
+      chip.textContent = f.name;
+      list.appendChild(chip);
+    });
+    const zone = document.getElementById('vf-upload-zone');
+    if (input.files.length) zone.style.borderStyle = 'solid';
+  }
+
+  function submitValForm(e) {
+    e.preventDefault();
+    const form = document.getElementById('vf-form');
+
+    // Validate required fields
+    const name  = document.getElementById('vf-name').value.trim();
+    const email = document.getElementById('vf-email').value.trim();
+    const ag1   = document.getElementById('ag1').checked;
+    const ag2   = document.getElementById('ag2').checked;
+    const ag3   = document.getElementById('ag3').checked;
+
+    if (!name || !email || !ag1 || !ag2 || !ag3) {
+      // Highlight first invalid field
+      if (!name)  { document.getElementById('vf-name').focus();  return; }
+      if (!email) { document.getElementById('vf-email').focus(); return; }
+      return;
+    }
+
+    // Show success
+    document.getElementById('vf-form-wrap').style.display = 'none';
+    const success = document.getElementById('vf-success');
+    success.style.display = 'block';
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 </script>
 </body>
 </html>
