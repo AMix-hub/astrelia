@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astrelia — Integritetspolicy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .policy-page {
+      min-height: 100vh;
+      padding-top: 80px;
+    }
+
+    .policy-hero {
+      text-align: center;
+      padding: 60px 24px 48px;
+    }
+    .policy-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 300;
+      color: var(--tx);
+      letter-spacing: .06em;
+      margin-bottom: 10px;
+    }
+    .policy-hero .updated {
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--tx4);
+    }
+
+    .policy-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 32px 100px;
+    }
+
+    .policy-intro {
+      background: linear-gradient(145deg, var(--card-bg), var(--card-bg2));
+      border: 1px solid rgba(var(--a2r), .22);
+      border-radius: 20px;
+      padding: 32px 36px;
+      margin-bottom: 48px;
+    }
+    .policy-intro p {
+      font-size: .88rem;
+      color: var(--tx3);
+      line-height: 1.9;
+      margin-bottom: 12px;
+    }
+    .policy-intro p:last-child { margin-bottom: 0; }
+
+    .policy-section {
+      margin-bottom: 48px;
+    }
+    .policy-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 300;
+      color: var(--tx);
+      letter-spacing: .05em;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(var(--a1r), .18);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .policy-section h2 .num {
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--a1);
+      text-shadow: 0 0 8px rgba(var(--a1r), .4);
+      flex-shrink: 0;
+    }
+    .policy-section p {
+      font-size: .86rem;
+      color: var(--tx3);
+      line-height: 1.9;
+      margin-bottom: 12px;
+    }
+    .policy-section p:last-child { margin-bottom: 0; }
+
+    .policy-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .policy-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .84rem;
+      color: var(--tx3);
+      line-height: 1.7;
+    }
+    .policy-list li::before {
+      content: '✦';
+      color: var(--a1);
+      text-shadow: 0 0 8px rgba(var(--a1r), .5);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .policy-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--tx2);
+      letter-spacing: .04em;
+      margin: 20px 0 8px;
+    }
+
+    .policy-contact {
+      background: linear-gradient(135deg, rgba(var(--a1r), .08), rgba(var(--a2r), .05));
+      border: 1px solid rgba(var(--a1r), .22);
+      border-radius: 20px;
+      padding: 32px 36px;
+      margin-top: 56px;
+      text-align: center;
+    }
+    .policy-contact h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 300;
+      color: var(--tx);
+      letter-spacing: .06em;
+      margin-bottom: 10px;
+    }
+    .policy-contact p {
+      font-size: .86rem;
+      color: var(--tx4);
+      line-height: 1.9;
+      margin-bottom: 6px;
+    }
+    .policy-contact a {
+      color: var(--a1);
+      text-decoration: none;
+      text-shadow: 0 0 8px rgba(var(--a1r), .3);
+    }
+    .policy-contact a:hover { text-decoration: underline; }
+    .policy-imy {
+      margin-top: 20px;
+      font-size: .8rem;
+      color: var(--tx4);
+      line-height: 1.8;
+    }
+
+    @media (max-width: 600px) {
+      .policy-body { padding: 0 18px 80px; }
+      .policy-intro, .policy-contact { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a class="nav-logo" href="index.html"><img src="Logga Astrelia.png" alt="Astrelia" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Hem</a></li>
+    <li><a href="tcg.html">TCG</a></li>
+    <li><a href="music.html">Musik</a></li>
+    <li><a href="collection.html">Min samling</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon">☀️</span>
+      <span id="toggle-label">Sun</span>
+    </button>
+  </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="index.html">Hem</a>
+  <a href="tcg.html">TCG</a>
+  <a href="music.html">Musik</a>
+  <a href="collection.html">Min samling</a>
+  <div class="nav-mobile-toggle">
+    <button class="theme-toggle" id="theme-toggle-mobile" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon-mobile">☀️</span>
+      <span id="toggle-label-mobile">Sun</span>
+    </button>
+  </div>
+</div>
+
+<div class="policy-page">
+
+  <div class="policy-hero">
+    <p class="page-hero-label">✦ Juridisk information ✦</p>
+    <h1>Integritetspolicy</h1>
+    <p class="updated">Senast uppdaterad: 2 maj 2026</p>
+  </div>
+
+  <div class="policy-body">
+
+    <div class="policy-intro">
+      <p>Astrelia värnar om din personliga integritet. Den här integritetspolicyn beskriver hur vi samlar in, använder, sparar och skyddar dina personuppgifter när du kontaktar oss, använder våra tjänster eller besöker vår webbplats.</p>
+      <p>Med personuppgifter menas information som direkt eller indirekt kan kopplas till en fysisk person, till exempel namn, kontaktuppgifter, adress, betalningsuppgifter, avtal och kommunikation.</p>
+      <p>Astrelia behandlar personuppgifter i enlighet med dataskyddsförordningen, GDPR. Enligt GDPR måste all behandling av personuppgifter ha en rättslig grund, till exempel avtal, rättslig förpliktelse eller berättigat intresse.</p>
+    </div>
+
+    <!-- 1 -->
+    <div class="policy-section">
+      <h2><span class="num">01</span> Personuppgiftsansvarig</h2>
+      <p>Personuppgiftsansvarig för behandlingen av dina personuppgifter är:</p>
+      <ul class="policy-list">
+        <li><strong>Astrelia</strong> — Amandah Klingsten</li>
+        <li>Organisationsnummer: 9510171029</li>
+        <li>E-post: <a href="mailto:info@astrelia.se">info@astrelia.se</a></li>
+      </ul>
+    </div>
+
+    <!-- 2 -->
+    <div class="policy-section">
+      <h2><span class="num">02</span> Vilka personuppgifter vi behandlar</h2>
+      <p>Vi kan behandla följande personuppgifter:</p>
+      <ul class="policy-list">
+        <li>Namn</li>
+        <li>E-postadress</li>
+        <li>Telefonnummer</li>
+        <li>Adress</li>
+        <li>Betalnings- och utbetalningsuppgifter</li>
+        <li>Uppgifter i avtal</li>
+        <li>Bilder på kort, samlingar eller produkter</li>
+        <li>Information om inskickade eller inlämnade kort</li>
+        <li>Försäljningshistorik och redovisningsunderlag</li>
+        <li>Kommunikation via e-post, kontaktformulär eller andra meddelanden</li>
+        <li>Uppgifter som behövs för bokföring, redovisning och administration</li>
+      </ul>
+      <p>Vi samlar endast in uppgifter som behövs för att kunna hantera din förfrågan, utföra våra tjänster, fullgöra avtal eller följa lagkrav.</p>
+    </div>
+
+    <!-- 3 -->
+    <div class="policy-section">
+      <h2><span class="num">03</span> Varför vi behandlar personuppgifter</h2>
+      <p>Vi behandlar personuppgifter för att kunna:</p>
+      <ul class="policy-list">
+        <li>Svara på förfrågningar</li>
+        <li>Göra en första bedömning av kort, samlingar eller produkter</li>
+        <li>Hantera kundkontakt</li>
+        <li>Skapa och administrera avtal</li>
+        <li>Ta emot, registrera och hantera kort eller samlingar</li>
+        <li>Utföra värdering, sortering och försäljningstjänster</li>
+        <li>Redovisa försäljning och provision</li>
+        <li>Hantera utbetalningar till kund</li>
+        <li>Hantera returer eller hemskick av osålda kort</li>
+        <li>Sköta bokföring och annan lagstadgad administration</li>
+        <li>Skydda Astrelias och kundens rättigheter vid eventuell tvist eller oklarhet</li>
+      </ul>
+    </div>
+
+    <!-- 4 -->
+    <div class="policy-section">
+      <h2><span class="num">04</span> Rättslig grund</h2>
+
+      <p class="policy-sub">Avtal</p>
+      <p>När du anlitar Astrelia eller skickar en förfrågan inför ett möjligt uppdrag behandlar vi personuppgifter som är nödvändiga för att kunna förbereda, ingå eller fullgöra ett avtal. Det kan till exempel gälla namn, kontaktuppgifter, uppgifter om din samling, avtal, försäljningsredovisning och utbetalningsuppgifter.</p>
+
+      <p class="policy-sub">Rättslig förpliktelse</p>
+      <p>Vissa uppgifter måste vi behandla och spara för att följa lagar och regler, till exempel bokföringslagen, skatteregler och andra myndighetskrav. Rättslig förpliktelse innebär att personuppgifter får behandlas när det krävs enligt EU-rätt eller svensk rätt.</p>
+
+      <p class="policy-sub">Berättigat intresse</p>
+      <p>Vi kan behandla vissa personuppgifter när vi har ett berättigat intresse, till exempel för att besvara meddelanden, hantera kundservice, dokumentera överenskommelser eller skydda oss vid en eventuell tvist. Vi behandlar inte fler uppgifter än vad som är nödvändigt för ändamålet.</p>
+    </div>
+
+    <!-- 5 -->
+    <div class="policy-section">
+      <h2><span class="num">05</span> Bilder på kort och samlingar</h2>
+      <p>När du skickar bilder på kort, samlingar eller produkter kan dessa behandlas för att vi ska kunna göra en första bedömning, ge information, värdera materialet eller avgöra om Astrelia kan ta emot uppdraget.</p>
+      <p>Vi rekommenderar att du inte skickar bilder som innehåller känslig privat information, till exempel personnummer, bankuppgifter eller andra uppgifter som inte behövs för ärendet.</p>
+    </div>
+
+    <!-- 6 -->
+    <div class="policy-section">
+      <h2><span class="num">06</span> Hur länge vi sparar personuppgifter</h2>
+      <p>Vi sparar personuppgifter så länge det behövs för det syfte de samlades in för.</p>
+      <ul class="policy-list">
+        <li>Förfrågningar som inte leder till uppdrag sparas endast så länge det behövs för att hantera ärendet.</li>
+        <li>Uppgifter kopplade till aktiva kunduppdrag sparas under uppdragets gång.</li>
+        <li>Avtal, betalningsunderlag, försäljningsredovisning och bokföringsmaterial sparas så länge vi är skyldiga enligt lag.</li>
+        <li>Uppgifter som behövs vid eventuell reklamation, tvist eller uppföljning kan sparas längre om det är nödvändigt.</li>
+        <li>Räkenskapsinformation ska normalt sparas i sju år efter utgången av det kalenderår då räkenskapsåret avslutades.</li>
+      </ul>
+    </div>
+
+    <!-- 7 -->
+    <div class="policy-section">
+      <h2><span class="num">07</span> Vilka vi kan dela personuppgifter med</h2>
+      <p>Vi säljer aldrig dina personuppgifter vidare. Vi kan däremot behöva dela personuppgifter med aktörer som hjälper oss att utföra våra tjänster eller följa lagkrav, till exempel:</p>
+      <ul class="policy-list">
+        <li>Bokföringssystem</li>
+        <li>Bank eller betaltjänst</li>
+        <li>Fraktbolag</li>
+        <li>Försäljningsplattformar, till exempel Cardmarket</li>
+        <li>E-post- och webbhotellstjänster</li>
+        <li>Digitala signeringstjänster</li>
+        <li>Redovisningskonsult eller rådgivare</li>
+        <li>Myndigheter, om vi är skyldiga enligt lag</li>
+      </ul>
+      <p>Endast de uppgifter som är nödvändiga delas.</p>
+    </div>
+
+    <!-- 8 -->
+    <div class="policy-section">
+      <h2><span class="num">08</span> Försäljning via Cardmarket</h2>
+      <p>Om du anlitar Astrelia för försäljning av Pokémonkort via Astrelias Cardmarket-konto kan uppgifter kopplade till försäljningen behandlas. Det kan till exempel handla om information om vilka kort som sålts, orderunderlag, försäljningspris, provision, redovisning och utbetalning till dig som kund.</p>
+      <p>Dessa uppgifter behövs för att kunna genomföra uppdraget, redovisa försäljningen korrekt och uppfylla bokförings- och skattekrav.</p>
+    </div>
+
+    <!-- 9 -->
+    <div class="policy-section">
+      <h2><span class="num">09</span> Hur vi skyddar dina personuppgifter</h2>
+      <p>Vi arbetar för att skydda dina personuppgifter från obehörig åtkomst, förlust, ändring eller otillåten spridning. Det kan till exempel ske genom:</p>
+      <ul class="policy-list">
+        <li>Lösenordsskyddade konton</li>
+        <li>Begränsad åtkomst till kunduppgifter</li>
+        <li>Säkra digitala system</li>
+        <li>Strukturerad hantering av avtal och kundunderlag</li>
+        <li>Försiktig hantering av inskickade bilder och dokument</li>
+      </ul>
+      <p>Vi behandlar endast personuppgifter som behövs för verksamheten och försöker hålla informationen korrekt och uppdaterad.</p>
+    </div>
+
+    <!-- 10 -->
+    <div class="policy-section">
+      <h2><span class="num">10</span> Dina rättigheter</h2>
+      <p>Du har rätt att kontakta oss om du vill:</p>
+      <ul class="policy-list">
+        <li>Få information om vilka personuppgifter vi behandlar om dig</li>
+        <li>Begära rättelse av felaktiga uppgifter</li>
+        <li>Begära radering av uppgifter, i de fall vi inte behöver spara dem enligt lag eller avtal</li>
+        <li>Begära begränsning av behandlingen</li>
+        <li>Invända mot viss behandling</li>
+        <li>Begära dataportabilitet i vissa fall</li>
+      </ul>
+      <p>Om du vill använda någon av dina rättigheter kontaktar du oss på <a href="mailto:info@astrelia.se">info@astrelia.se</a>. Vi kan behöva kontrollera din identitet innan vi lämnar ut eller ändrar uppgifter.</p>
+    </div>
+
+    <!-- 11 -->
+    <div class="policy-section">
+      <h2><span class="num">11</span> Cookies och webbplatsdata</h2>
+      <p>Astrelia kan använda cookies eller liknande tekniker på webbplatsen för att sidan ska fungera, förbättra användarupplevelsen eller samla in enkel statistik. Om vi använder analysverktyg eller marknadsföringscookies ska information om detta framgå på webbplatsen och, där det krävs, godkännas av besökaren.</p>
+    </div>
+
+    <!-- 12 -->
+    <div class="policy-section">
+      <h2><span class="num">12</span> Länkar till andra webbplatser</h2>
+      <p>Vår webbplats kan innehålla länkar till andra webbplatser eller tjänster, till exempel Cardmarket eller fraktbolag. Astrelia ansvarar inte för hur externa webbplatser hanterar personuppgifter. Vi rekommenderar att du läser deras egna integritetspolicys.</p>
+    </div>
+
+    <!-- 13 -->
+    <div class="policy-section">
+      <h2><span class="num">13</span> Ändringar i denna integritetspolicy</h2>
+      <p>Astrelia kan komma att uppdatera denna integritetspolicy vid behov, till exempel om våra tjänster, system eller lagkrav förändras. Den senaste versionen finns alltid tillgänglig på vår webbplats.</p>
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="policy-contact">
+      <h2>Kontakt</h2>
+      <p>Om du har frågor om hur Astrelia hanterar personuppgifter är du välkommen att kontakta oss.</p>
+      <p><a href="mailto:info@astrelia.se">info@astrelia.se</a></p>
+      <p>Organisationsnummer: 9510171029</p>
+      <p class="policy-imy">Om du anser att vi behandlar dina personuppgifter på ett felaktigt sätt har du rätt att lämna klagomål till Integritetsskyddsmyndigheten (IMY).</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 Astrelia. Alla rättigheter förbehålls.</p>
+    <p>Skapad med ✦ kosmisk kärlek</p>
+  </div>
+</footer>
+
+<script src="theme.js"></script>
+<script src="stars.js"></script>
+<script>
+  function toggleMobileMenu() {
+    const menu = document.getElementById('nav-mobile-menu');
+    const btn  = document.getElementById('nav-hamburger');
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  document.querySelectorAll('.nav-mobile-menu a').forEach(a =>
+    a.addEventListener('click', () => {
+      document.getElementById('nav-mobile-menu').classList.remove('open');
+      document.getElementById('nav-hamburger').classList.remove('open');
+      document.body.style.overflow = '';
+    })
+  );
+</script>
+</body>
+</html>

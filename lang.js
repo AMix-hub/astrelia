@@ -161,6 +161,7 @@ const translations = {
     /* ── SHARED FOOTER ── */
     'ft.copyright': '© 2026 Astrelia. Alla rättigheter förbehålls.',
     'ft.crafted':   'Skapad med ✦ kosmisk kärlek',
+    'ft.privacy':   'Integritetspolicy',
     'ft.vat':       'Alla priser är inklusive moms.',
 
     /* ── COLLECTION PAGE ── */
@@ -519,6 +520,7 @@ const translations = {
     /* ── SHARED FOOTER ── */
     'ft.copyright': '© 2026 Astrelia. All rights reserved.',
     'ft.crafted':   'Crafted with ✦ cosmic love',
+    'ft.privacy':   'Privacy Policy',
     'ft.vat':       'All prices include VAT.',
 
     /* ── COLLECTION PAGE ── */
