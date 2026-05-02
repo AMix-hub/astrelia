@@ -43,18 +43,22 @@
     }
     .tab-bar {
       display: flex;
-      max-width: 700px;
+      max-width: 980px;
       margin: 0 auto;
       gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .tab-bar::-webkit-scrollbar { display: none; }
     .tab-btn {
-      flex: 1;
+      flex: 1 1 auto;
+      white-space: nowrap;
       background: none;
       border: none;
-      padding: 18px 16px;
+      padding: 18px 14px;
       font-family: 'Montserrat', sans-serif;
-      font-size: .78rem;
-      letter-spacing: .16em;
+      font-size: .76rem;
+      letter-spacing: .14em;
       text-transform: uppercase;
       color: var(--tx4);
       cursor: pointer;
@@ -438,6 +442,344 @@
       .scanner-strip { padding: 24px 20px; }
     }
 
+    /* ── SELL TAB ── */
+    .sell-hero {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 56px;
+    }
+    .sell-hero h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+      font-weight: 300; color: var(--tx);
+      letter-spacing: .06em; margin-bottom: 14px;
+    }
+    .sell-hero p { font-size: .88rem; color: var(--tx4); line-height: 1.9; margin-bottom: 14px; }
+    .sell-hero .val-trust { margin-top: 18px; }
+
+    /* Commission feature card */
+    .sell-commission {
+      max-width: 880px;
+      margin: 0 auto 56px;
+      background: linear-gradient(135deg, rgba(var(--a1r), .09), rgba(var(--a2r), .06));
+      border: 1px solid rgba(var(--a1r), .28);
+      border-radius: 22px;
+      padding: 44px 40px;
+      display: grid;
+      grid-template-columns: minmax(180px, 220px) 1fr;
+      gap: 40px;
+      align-items: center;
+      box-shadow: 0 0 60px rgba(var(--a1r), .07);
+    }
+    .sell-commission-num {
+      text-align: center;
+      border-right: 1px solid rgba(var(--a2r), .18);
+      padding-right: 32px;
+    }
+    .sell-commission-num .pct {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.6rem, 7vw, 5rem);
+      font-weight: 300;
+      background: linear-gradient(135deg, var(--a1), var(--a2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      display: block;
+      filter: drop-shadow(0 0 16px rgba(var(--a1r), .3));
+    }
+    .sell-commission-num .lbl {
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--tx3);
+      margin-top: 10px;
+      display: block;
+    }
+    .sell-commission-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--tx);
+      letter-spacing: .05em; margin-bottom: 8px;
+    }
+    .sell-commission-body > p {
+      font-size: .82rem; color: var(--tx4); line-height: 1.75; margin-bottom: 16px;
+    }
+    .sell-incl {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 18px;
+    }
+    .sell-incl li {
+      display: flex; align-items: flex-start; gap: 9px;
+      font-size: .8rem; color: var(--tx3); line-height: 1.55;
+    }
+    .sell-incl li::before {
+      content: '✦';
+      color: var(--a1);
+      text-shadow: 0 0 8px rgba(var(--a1r), .5);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Example calc card */
+    .sell-example {
+      max-width: 880px;
+      margin: 0 auto 56px;
+      background: linear-gradient(145deg, var(--card-bg), var(--card-bg2));
+      border: 1px solid rgba(var(--a2r), .22);
+      border-radius: 20px;
+      padding: 32px 36px;
+    }
+    .sell-example h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; color: var(--tx);
+      letter-spacing: .05em; margin-bottom: 18px;
+      text-align: center;
+    }
+    .sell-calc {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .sell-calc-step {
+      text-align: center;
+    }
+    .sell-calc-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      color: var(--tx);
+      letter-spacing: .04em;
+      display: block;
+    }
+    .sell-calc-val.accent {
+      background: linear-gradient(135deg, var(--a1), var(--a2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sell-calc-lbl {
+      font-size: .68rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--tx5);
+      margin-top: 6px;
+      display: block;
+    }
+    .sell-calc-op {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--a1);
+      opacity: .65;
+    }
+    .sell-example p {
+      font-size: .8rem; color: var(--tx4); line-height: 1.75;
+      text-align: center;
+      max-width: 620px; margin: 0 auto;
+    }
+
+    /* Period card */
+    .sell-period {
+      max-width: 880px;
+      margin: 0 auto 56px;
+      background: linear-gradient(145deg, var(--card-bg), var(--card-bg2));
+      border: 1px solid rgba(var(--a2r), .22);
+      border-radius: 20px;
+      padding: 32px 36px;
+    }
+    .sell-period h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--tx);
+      letter-spacing: .05em; margin-bottom: 12px;
+    }
+    .sell-period > p {
+      font-size: .84rem; color: var(--tx4); line-height: 1.8; margin-bottom: 18px;
+    }
+    .sell-period-options {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .sell-period-options li {
+      background: rgba(var(--a1r), .05);
+      border: 1px solid rgba(var(--a2r), .18);
+      border-radius: 14px;
+      padding: 18px 18px;
+      font-size: .82rem;
+      color: var(--tx3);
+      line-height: 1.55;
+      text-align: center;
+    }
+    .sell-period-options li strong {
+      display: block;
+      color: var(--a1);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .sell-period .sell-period-note {
+      font-size: .78rem;
+      color: var(--tx4);
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    /* Sell steps reuse val-step styles via a wrapper */
+    .sell-steps {
+      max-width: 760px;
+      margin: 0 auto 56px;
+    }
+    .sell-steps-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 300; color: var(--tx);
+      letter-spacing: .06em;
+      text-align: center; margin-bottom: 36px;
+    }
+
+    /* ── SEALED / OTHER TCG TAB ── */
+    .sealed-hero {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 56px;
+    }
+    .sealed-hero h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+      font-weight: 300; color: var(--tx);
+      letter-spacing: .06em; margin-bottom: 14px;
+    }
+    .sealed-hero p { font-size: .88rem; color: var(--tx4); line-height: 1.9; }
+
+    .sealed-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 920px;
+      margin: 0 auto 56px;
+    }
+    .sealed-card {
+      background: linear-gradient(145deg, var(--card-bg), var(--card-bg2));
+      border: 1px solid rgba(var(--a2r), .22);
+      border-radius: 22px;
+      padding: 36px 32px;
+      transition: border-color .3s, box-shadow .3s, transform .3s;
+      position: relative;
+    }
+    .sealed-card:hover {
+      border-color: rgba(var(--a1r), .4);
+      box-shadow: 0 0 36px rgba(var(--a1r), .1);
+      transform: translateY(-3px);
+    }
+    .sealed-card-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 10px rgba(var(--a1r), .5));
+    }
+    .sealed-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; color: var(--tx);
+      letter-spacing: .05em; margin-bottom: 12px;
+    }
+    .sealed-card > p {
+      font-size: .83rem; color: var(--tx4); line-height: 1.8; margin-bottom: 16px;
+    }
+    .sealed-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+    .sealed-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .8rem; color: var(--tx3); line-height: 1.6;
+    }
+    .sealed-list li::before {
+      content: '✦';
+      color: var(--a1);
+      text-shadow: 0 0 8px rgba(var(--a1r), .5);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .sealed-card-note {
+      font-size: .78rem;
+      color: var(--tx4);
+      line-height: 1.7;
+      font-style: italic;
+      padding-top: 16px;
+      border-top: 1px solid rgba(var(--a2r), .12);
+    }
+
+    .sealed-info {
+      max-width: 920px;
+      margin: 0 auto 48px;
+      background: linear-gradient(135deg, rgba(var(--a1r), .06), rgba(var(--a2r), .04));
+      border: 1px solid rgba(var(--a1r), .2);
+      border-radius: 20px;
+      padding: 32px 40px;
+    }
+    .sealed-info h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; color: var(--tx);
+      letter-spacing: .05em; margin-bottom: 12px;
+    }
+    .sealed-info p {
+      font-size: .83rem; color: var(--tx4); line-height: 1.8;
+      margin-bottom: 10px;
+    }
+    .sealed-info p:last-child { margin-bottom: 0; }
+    .sealed-info ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .sealed-info ul li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .82rem; color: var(--tx3); line-height: 1.65;
+    }
+    .sealed-info ul li::before {
+      content: '✦';
+      color: var(--a1);
+      text-shadow: 0 0 8px rgba(var(--a1r), .5);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    @media (max-width: 900px) {
+      .sell-commission {
+        grid-template-columns: 1fr;
+        padding: 36px 28px;
+        gap: 24px;
+      }
+      .sell-commission-num {
+        border-right: none;
+        border-bottom: 1px solid rgba(var(--a2r), .18);
+        padding-right: 0;
+        padding-bottom: 24px;
+      }
+      .sell-incl { grid-template-columns: 1fr; }
+      .sell-period-options { grid-template-columns: 1fr; }
+      .sealed-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .sell-commission { padding: 28px 20px; }
+      .sell-example, .sell-period { padding: 24px 20px; }
+      .sealed-card { padding: 28px 22px; }
+      .sealed-info { padding: 24px 22px; }
+      .sell-calc { gap: 10px; }
+    }
+
     /* ── VALUATION FORM ── */
     .vf-wrap {
       max-width: 720px;
@@ -644,7 +986,9 @@
   <div class="tab-bar-wrap">
     <div class="tab-bar">
       <button class="tab-btn active" id="tab-btn-services" onclick="switchTab('services', this)" data-i18n="tcg.tab-services">Tjänster</button>
+      <button class="tab-btn" id="tab-btn-sell" onclick="switchTab('sell', this)" data-i18n="tcg.tab-sell">Sälj</button>
       <button class="tab-btn" id="tab-btn-vardering" onclick="switchTab('vardering', this)" data-i18n="tcg.tab-val">Värdering</button>
+      <button class="tab-btn" id="tab-btn-sealed" onclick="switchTab('sealed', this)" data-i18n="tcg.tab-sealed">Förseglat</button>
       <button class="tab-btn" id="tab-btn-why" onclick="switchTab('why', this)" data-i18n="tcg.tab-why">Varför Astrelia</button>
       <button class="tab-btn" id="tab-btn-contact" onclick="switchTab('contact', this)" data-i18n="tcg.tab-contact">Kontakt</button>
     </div>
@@ -672,7 +1016,7 @@
           <span class="service-icon">🤝</span>
           <div class="service-title" data-i18n="tcg.sell-title">Sälj kort</div>
           <p class="service-text" data-i18n="tcg.sell-text">Vill du sälja din samling eller ett specifikt kort? Få ett snabbt, ärligt erbjudande utan krångel och en smidig affär.</p>
-          <a class="service-action" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="tcg.sell-cta">Kontakta oss ✦</a>
+          <a class="service-action" href="#" onclick="switchTab('sell', document.getElementById('tab-btn-sell')); return false;" data-i18n="tcg.sell-cta">Läs mer om försäljning ✦</a>
         </div>
         <div class="service-card">
           <span class="service-icon">🔍</span>
@@ -690,6 +1034,165 @@
         </div>
         <a class="btn-primary" href="scan.html" data-i18n="tcg.scan-cta">Prova scannern ✦</a>
       </div>
+    </div>
+
+    <!-- SÄLJ -->
+    <div class="tab-panel" id="tab-sell">
+
+      <!-- Hero -->
+      <div class="sell-hero">
+        <p class="page-hero-label" data-i18n="sell.label">✦ Sälj din samling ✦</p>
+        <h2 data-i18n="sell.title">Sälj dina Pokémonkort via Astrelia</h2>
+        <p data-i18n="sell.p1">Har du Pokémonkort du vill sälja men inte tid att sortera, värdera, lägga upp och hantera köpare själv? Lämna in din samling — vi tar hand om hela försäljningen via Cardmarket.</p>
+        <p data-i18n="sell.p2">Du slipper annonser, meddelanden, packning och administration, samtidigt som dina kort hanteras strukturerat och varsamt.</p>
+        <a class="btn-primary" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="sell.cta">Skicka en förfrågan ✦</a>
+        <span class="val-trust" data-i18n="sell.trust">Alla uppdrag sker enligt skriftligt avtal — för en trygg och tydlig process.</span>
+      </div>
+
+      <!-- Commission feature -->
+      <div class="sell-commission">
+        <div class="sell-commission-num">
+          <span class="pct">20<span style="font-size:.55em">%</span></span>
+          <span class="lbl" data-i18n="sell.com-lbl">Provision</span>
+        </div>
+        <div class="sell-commission-body">
+          <h3 data-i18n="sell.com-title">Försäljning via Cardmarket</h3>
+          <p data-i18n="sell.com-p">Provisionen är 20 % av faktiskt försäljningspris och dras direkt vid utbetalning. I provisionen ingår allt arbete, materialet och alla försäljningsrelaterade avgifter:</p>
+          <ul class="sell-incl">
+            <li data-i18n="sell.inc1">Sortering och genomgång</li>
+            <li data-i18n="sell.inc2">Värdering inför försäljning</li>
+            <li data-i18n="sell.inc3">Uppläggning på Cardmarket</li>
+            <li data-i18n="sell.inc4">Kundkontakt och orderhantering</li>
+            <li data-i18n="sell.inc5">Packmaterial</li>
+            <li data-i18n="sell.inc6">Cardmarket- och plattformsavgifter</li>
+            <li data-i18n="sell.inc7">Moms på Astrelias provision</li>
+            <li data-i18n="sell.inc8">Redovisning av försäljning</li>
+            <li data-i18n="sell.inc9">Trygg och varsam hantering</li>
+            <li data-i18n="sell.inc10">Försäkring hos Astrelia</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Calculation example -->
+      <div class="sell-example">
+        <h3 data-i18n="sell.ex-title">Så fungerar provisionen</h3>
+        <div class="sell-calc">
+          <div class="sell-calc-step">
+            <span class="sell-calc-val">1 000 kr</span>
+            <span class="sell-calc-lbl" data-i18n="sell.ex-sale">Försäljning</span>
+          </div>
+          <span class="sell-calc-op">−</span>
+          <div class="sell-calc-step">
+            <span class="sell-calc-val">200 kr</span>
+            <span class="sell-calc-lbl" data-i18n="sell.ex-com">Provision 20 %</span>
+          </div>
+          <span class="sell-calc-op">=</span>
+          <div class="sell-calc-step">
+            <span class="sell-calc-val accent">800 kr</span>
+            <span class="sell-calc-lbl" data-i18n="sell.ex-out">Till dig</span>
+          </div>
+        </div>
+        <p data-i18n="sell.ex-p">Provisionen täcker arbetet med försäljningen och alla kostnader som uppstår längs vägen — packmaterial, plattformsavgifter och moms.</p>
+      </div>
+
+      <!-- Steps -->
+      <div class="sell-steps">
+        <h3 class="sell-steps-title" data-i18n="sell.steps-title">Så går det till</h3>
+        <div class="val-step">
+          <div class="val-step-num">1</div>
+          <div class="val-step-body">
+            <h4 data-i18n="sell.s1-t">Du skickar en förfrågan</h4>
+            <p data-i18n="sell.s1-p">Berätta kort om samlingen — ungefärligt antal kort, skick, språk, set och gärna bilder.</p>
+          </div>
+        </div>
+        <div class="val-step">
+          <div class="val-step-num">2</div>
+          <div class="val-step-body">
+            <h4 data-i18n="sell.s2-t">Första bedömning</h4>
+            <p data-i18n="sell.s2-p">Vi gör en första bedömning av om samlingen passar för försäljning via Astrelia och återkommer med nästa steg.</p>
+          </div>
+        </div>
+        <div class="val-step">
+          <div class="val-step-num">3</div>
+          <div class="val-step-body">
+            <h4 data-i18n="sell.s3-t">Avtal skrivs</h4>
+            <p data-i18n="sell.s3-p">Innan korten skickas eller lämnas över skriver vi ett avtal som tydliggör provision, ansvar, hantering, försäljningsperiod, redovisning och utbetalning.</p>
+          </div>
+        </div>
+        <div class="val-step">
+          <div class="val-step-num">4</div>
+          <div class="val-step-body">
+            <h4 data-i18n="sell.s4-t">Korten skickas eller lämnas in</h4>
+            <p data-i18n="sell.s4-p">Du ansvarar för frakten till Astrelia — vi rekommenderar alltid spårbar frakt och noggrann paketering. Samlingar kan även lämnas hos oss på plats i Eskilstuna.</p>
+          </div>
+        </div>
+        <div class="val-step">
+          <div class="val-step-num">5</div>
+          <div class="val-step-body">
+            <h4 data-i18n="sell.s5-t">Sortering och förberedelse</h4>
+            <p data-i18n="sell.s5-p">Vi går igenom samlingen, sorterar korten och förbereder dem för försäljning.</p>
+          </div>
+        </div>
+        <div class="val-step">
+          <div class="val-step-num">6</div>
+          <div class="val-step-body">
+            <h4 data-i18n="sell.s6-t">Försäljning via Cardmarket</h4>
+            <p data-i18n="sell.s6-p">Korten säljs via Astrelias Cardmarket-konto. Vi hanterar kundkontakt, order och hela försäljningsprocessen.</p>
+          </div>
+        </div>
+        <div class="val-step">
+          <div class="val-step-num">7</div>
+          <div class="val-step-body">
+            <h4 data-i18n="sell.s7-t">Redovisning och utbetalning</h4>
+            <p data-i18n="sell.s7-p">När kort säljs redovisas försäljningen enligt avtalet. Provisionen dras av och resterande belopp betalas ut till dig.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Period -->
+      <div class="sell-period">
+        <h3 data-i18n="sell.per-title">Försäljningsperiod</h3>
+        <p data-i18n="sell.per-p">Försäljningsperioden är 3 månader från det att korten mottagits och registrerats. När perioden närmar sig sitt slut sammanställer vi försäljningen och går igenom nästa steg tillsammans:</p>
+        <ul class="sell-period-options">
+          <li><strong data-i18n="sell.per-o1-t">Förläng</strong><span data-i18n="sell.per-o1-p">Förläng försäljningsperioden ytterligare.</span></li>
+          <li><strong data-i18n="sell.per-o2-t">Justera</strong><span data-i18n="sell.per-o2-p">Justera priserna för fortsatt försäljning.</span></li>
+          <li><strong data-i18n="sell.per-o3-t">Returnera</strong><span data-i18n="sell.per-o3-p">Returnera osålda kort till dig.</span></li>
+        </ul>
+        <p class="sell-period-note" data-i18n="sell.per-note">Om korten ska skickas tillbaka står du för returfrakten, om inget annat har avtalats.</p>
+      </div>
+
+      <!-- Two-col: Garantier + Trygghet -->
+      <div class="val-two-col">
+        <div class="val-section-card">
+          <h3 data-i18n="sell.gua-title">Viktigt om garantier</h3>
+          <ul class="val-list">
+            <li data-i18n="sell.gua-1">Astrelia kan inte garantera att alla kort blir sålda, eller inom en viss tid.</li>
+            <li data-i18n="sell.gua-2">Försäljning beror på efterfrågan, skick, språk, set, prisnivå och marknadsläge.</li>
+            <li data-i18n="sell.gua-3">Värderingar är uppskattningar baserade på tillgänglig marknadsinformation.</li>
+            <li data-i18n="sell.gua-4">Slutpriser kan inte garanteras — varje försäljning kräver en köpare.</li>
+          </ul>
+        </div>
+        <div class="val-section-card">
+          <h3 data-i18n="sell.tru-title">Trygghet och tydlighet</h3>
+          <ul class="val-list">
+            <li data-i18n="sell.tru-1">Korten ägs av dig fram till försäljning.</li>
+            <li data-i18n="sell.tru-2">Provision och vad den inkluderar framgår tydligt.</li>
+            <li data-i18n="sell.tru-3">Försäljningsperiod, redovisning och utbetalning är reglerat i avtal.</li>
+            <li data-i18n="sell.tru-4">Hantering av eventuellt osålda kort sker enligt överenskommelse.</li>
+            <li data-i18n="sell.tru-5">Korten omfattas av Astrelias försäkring under förvaring.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="val-cta">
+        <h2 data-i18n="sell.cta-title">Vill du sälja din samling?</h2>
+        <p data-i18n="sell.cta-p">Skicka en förfrågan med ungefärligt antal kort, bilder, skick och språk — så återkommer vi med en första bedömning.</p>
+        <div class="btn-row" style="justify-content:center;gap:14px">
+          <a class="btn-primary" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="sell.cta-btn">Skicka förfrågan ✦</a>
+        </div>
+      </div>
+
     </div>
 
     <!-- VÄRDERING -->
@@ -1004,6 +1507,79 @@
 
     </div>
 
+    <!-- SEALED & OTHER TCG -->
+    <div class="tab-panel" id="tab-sealed">
+
+      <!-- Hero -->
+      <div class="sealed-hero">
+        <p class="page-hero-label" data-i18n="sealed.label">✦ Förseglat & andra TCG ✦</p>
+        <h2 data-i18n="sealed.title">Förseglade produkter och andra TCG</h2>
+        <p data-i18n="sealed.p1">Astrelia är specialiserade på Pokémonkort och vårt främsta fokus ligger på lösa kort, samlingar och försäljning via Cardmarket. Förseglade produkter och andra TCG hanteras därför endast efter individuell bedömning.</p>
+      </div>
+
+      <!-- Two cards -->
+      <div class="sealed-grid">
+        <div class="sealed-card">
+          <span class="sealed-card-icon">📦</span>
+          <h3 data-i18n="sealed.fp-title">Förseglade Pokémonprodukter</h3>
+          <p data-i18n="sealed.fp-p">Förseglade produkter skiljer sig från lösa kort när det gäller värdering, efterfrågan, frakt, äkthetsbedömning och försäljningsrisk. Vi erbjuder normalt inte försäljningstjänst för dessa.</p>
+          <ul class="sealed-list">
+            <li data-i18n="sealed.fp-1">Booster boxes</li>
+            <li data-i18n="sealed.fp-2">Elite Trainer Boxes</li>
+            <li data-i18n="sealed.fp-3">Blister packs</li>
+            <li data-i18n="sealed.fp-4">Tin boxes</li>
+            <li data-i18n="sealed.fp-5">Andra förseglade samlarprodukter</li>
+          </ul>
+          <p class="sealed-card-note" data-i18n="sealed.fp-note">Har du inte någon annan möjlighet att sälja dina förseglade produkter? Skicka en förfrågan så gör vi en individuell bedömning.</p>
+        </div>
+
+        <div class="sealed-card">
+          <span class="sealed-card-icon">🃏</span>
+          <h3 data-i18n="sealed.tcg-title">Andra TCG</h3>
+          <p data-i18n="sealed.tcg-p">Vi har inte samma djupa marknadskännedom, sorteringssystem eller försäljningsstruktur för andra samlarkortsspel som vi har för Pokémon, och erbjuder därför inte ordinarie försäljningstjänst för:</p>
+          <ul class="sealed-list">
+            <li data-i18n="sealed.tcg-1">Magic: The Gathering</li>
+            <li data-i18n="sealed.tcg-2">Yu-Gi-Oh!</li>
+            <li data-i18n="sealed.tcg-3">Disney Lorcana</li>
+            <li data-i18n="sealed.tcg-4">One Piece Card Game</li>
+            <li data-i18n="sealed.tcg-5">Digimon Card Game</li>
+            <li data-i18n="sealed.tcg-6">Andra samlarkortsspel</li>
+          </ul>
+          <p class="sealed-card-note" data-i18n="sealed.tcg-note">Hittar du inget annat alternativ? Skicka en förfrågan — vi kan göra en enklare bedömning och se om vi har möjlighet att hjälpa dig vidare.</p>
+        </div>
+      </div>
+
+      <!-- Send a request -->
+      <div class="sealed-info">
+        <h3 data-i18n="sealed.req-title">Skicka en förfrågan</h3>
+        <p data-i18n="sealed.req-p">Har du förseglade produkter eller kort från andra TCG och vill ändå höra av dig? Du är välkommen att skicka en förfrågan med:</p>
+        <ul>
+          <li data-i18n="sealed.req-1">Bilder på produkterna eller korten</li>
+          <li data-i18n="sealed.req-2">Information om vilket TCG det gäller</li>
+          <li data-i18n="sealed.req-3">Ungefärligt antal produkter eller kort</li>
+          <li data-i18n="sealed.req-4">Skick och eventuell försegling</li>
+          <li data-i18n="sealed.req-5">Eventuellt önskat upplägg eller särskilda frågor</li>
+        </ul>
+      </div>
+
+      <!-- Important to know -->
+      <div class="sealed-info">
+        <h3 data-i18n="sealed.imp-title">Viktigt att veta</h3>
+        <p data-i18n="sealed.imp-p1">Astrelias huvudområde är Pokémonkort. Förseglade produkter och andra TCG hanteras endast efter individuell bedömning, och en inskickad förfrågan innebär inte att uppdraget accepteras.</p>
+        <p data-i18n="sealed.imp-p2">Vi förbehåller oss rätten att tacka nej till uppdrag som ligger utanför vårt kunskapsområde, våra försäljningskanaler eller vår praktiska hantering. Vårt mål är alltid att vara tydliga, ärliga och trygga i det vi erbjuder.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="val-cta">
+        <h2 data-i18n="sealed.cta-title">Vill du höra med oss?</h2>
+        <p data-i18n="sealed.cta-p">Skicka en förfrågan så återkommer vi med en individuell bedömning och information om ifall Astrelia kan hjälpa till.</p>
+        <div class="btn-row" style="justify-content:center;gap:14px">
+          <a class="btn-primary" href="#" onclick="switchTab('contact', document.getElementById('tab-btn-contact')); return false;" data-i18n="sealed.cta-btn">Skicka förfrågan ✦</a>
+        </div>
+      </div>
+
+    </div>
+
     <!-- WHY ASTRELIA -->
     <div class="tab-panel" id="tab-why">
       <div class="why-grid">
@@ -1068,7 +1644,7 @@
       <h4 data-i18n="tcg.ft-tcg">TCG</h4>
       <ul>
         <li><a href="#" onclick="switchTab('services', document.getElementById('tab-btn-services')); window.scrollTo({top:0,behavior:'smooth'}); return false;" data-i18n="tcg.ft-buy">Köp kort</a></li>
-        <li><a href="#" onclick="switchTab('services', document.getElementById('tab-btn-services')); window.scrollTo({top:0,behavior:'smooth'}); return false;" data-i18n="tcg.ft-sell">Sälj kort</a></li>
+        <li><a href="#" onclick="switchTab('sell', document.getElementById('tab-btn-sell')); window.scrollTo({top:0,behavior:'smooth'}); return false;" data-i18n="tcg.ft-sell">Sälj kort</a></li>
         <li><a href="#" onclick="switchTab('services', document.getElementById('tab-btn-services')); window.scrollTo({top:0,behavior:'smooth'}); return false;" data-i18n="tcg.ft-val">Samlingsvärdering</a></li>
       </ul>
     </div>
@@ -1100,7 +1676,7 @@
 
 <script src="theme.js"></script>
 <script src="stars.js"></script>
-<script src="lang.js?v=2"></script>
+<script src="lang.js?v=3"></script>
 <script>
   function switchTab(name, btn) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
